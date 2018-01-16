@@ -1,9 +1,119 @@
-
+<link rel="stylesheet" href="scripts/istyle.css" type="text/css" />
 <html>
-  <head>
-    <title>Feedback System</title>
-  </head>
-  <body>
-  Hi Feedback
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+
+  <script>
+      function getTasks() {
+          $.get("http://localhost:8080/WebService1_war_exploded/ws/Hello/all",
+              function(data){
+                  var l=data.length;
+                  // var tbl=document.getElementById('tbl');
+
+                  alert("Data Loaded of size : " + l);
+                /* for(i=1,j=0;j<l;i++,j++)
+                 {
+                 var x=tbl.insertRow(i);
+                 x.insertCell(0);
+                 x.insertCell(1);
+                 tbl.rows[i].cells[0].innerHTML=data[j].id;
+                 tbl.rows[i].cells[1].innerHTML=data[j].name;
+                 }*/
+              });
+      }
+  </script>
+  <script>
+
+      var email = document.forms["fillform"]["email"];
+      var pwd = document.forms["fillform"]["pwd"];
+
+      // GETTING ALL ERROR OBJECTS
+      var email_error = document.getElementById("email_error");
+      var pwd_error = document.getElementById("pwd_error");
+
+      function Validate(){
+
+
+          // SETTING ALL EVENT LISTENERS
+          email.addEventListener("blur", emailVerify, true);
+          pwd.addEventListener("blur", pwdVerify, true);
+          // VALIDATE USERNAME
+          if(email.value == ""){
+              email_error.textContent = "Enter UserName";
+              email.style.border = "1px solid red";
+              email.focus();
+              return false;
+          }
+
+          if(pwd.value == ""){
+              pwd_error.textContent = "Enter password";
+              pwd.style.border = "1px solid red";
+              pwd.focus();
+              return false;
+          }
+      }
+
+      // ADD EVENT LISTENERS
+      function emailVerify(){
+          if (email.value != "") {
+              email_error.innerHTML = "";
+              email.style.border = "1px solid #110E0F";
+              return true;
+          }
+      }
+      function pwdVerify(){
+          if (pwd.value != "") {
+              pwd_error.innerHTML = "";
+              pwd.style.border = "1px solid #110E0F";
+              return true;
+          }
+      }
+
+  </script>
+</head>
+
+<body>
+<div class="main-center main-login">
+  <form action="javascript:getTasks();" name="fillform" onsubmit="javascript:Validate();">
+    <div class="container">
+
+      <div>
+        <label><center><b>ADMIN LOGIN</b></center></label><br>
+      </div>
+
+      <div class="col-sm-12">
+
+        <table class="table table-hover" >
+          <tr>
+            <td><b>User Name</b></td>
+          </tr>
+          <tr Class="info">
+            <td><input type="text"name="email" id="email" style="height: 50px;width: 320px">
+              <div id="email_error" class="val_error" style="color:red;"></div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><b>Password</b></td>
+          </tr>
+          <tr Class="info">
+            <td><input type="password"name="pwd" id="pwd">
+              <div id="pwd_error" class="val_error" style="color:red;"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div>
+
+        <p style="float: right"> <a href="">Forgot Password</a>.</p>
+      </div>
+      <div class="clearfix">
+        <div><button type="submit" class="signupbtn">Login</button></div>
+        <div><button type="reset"  class="cancelbtn">Reset</button></div>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
 </html>
