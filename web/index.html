@@ -1,17 +1,105 @@
-<link rel="stylesheet" href="scripts/istyle.css" type="text/css" />
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    .container {
+      position: relative;
+      font-family: Arial;
+      background:image("images/content_back.png") repeat-y;
+    }
+    .text-block {
+      position: absolute;
+      top: 100px;
+      left: 300px;
+      color: #343a40;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .text-blockfoot {
+      text-align: center;
+      top: 5px;
+      color: #343a40;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .img-fluid{
+      position: absolute;
+      top: 45px;
+      left:50px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .row.content {
+      margin-left: 2px;
+      margin-right: 21px;
+      background-image: url("images/content_back.png");
+      /*background-color: #f1f1f1;*/
+    }
+    .sidenav {
+      padding-top: 30px;
+      padding-left: 20px;
+      padding-right: 20px;
+      background-color: #9fcdff;
+      height: 100%;
+    }
+    .mainnav{
+      padding-left: 50px;
+      padding-top: 50px;
+      text-align: center;
+    }
+    .footer {
+
+      text-align: center;
+      padding: 10px;
+    }
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        align-content: center;
+        align-items: center;
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;}
+    }
+
+  </style>
   <script>
       function getTasks() {
-          $.get("http://localhost:8080/WebService1_war_exploded/ws/Hello/all",
+          /*
+          sessionStorage.setItem("MyId", 123);    //set session using javascript
+          var value = sessionStorage.getItem("MyId");
+          //session setting
+          */
+          var role = document.getElementById('role')
+          if (role.value == 0) {
+              alert("Please select Role...!!!");
+          }
+          else {
+              var uname = document.getElementById('uname');
+              var pass = document.getElementById('pass');
+              $.post("http://localhost:8080/Feedback_System_war_exploded/global/Login/login_check",
+                  {param1: uname.value, param2: pass.value, param3: role.value},
+                  function (data) {
+                      if(data=='1')
+                      {
+                          window.location="http://localhost:8080/Feedback_System_war_exploded/ahome.html";
+                      }
+                      else
+                      {
+                          alert("Invalid Username or Password...!!!");
+                      }
+                  });
+            }
+            /*  $.get("http://localhost:8080/Feedback_System_war_exploded/ws/Hello/all",
               function(data){
                   var l=data.length;
-                  // var tbl=document.getElementById('tbl');
-
-                  alert("Data Loaded of size : " + l);
+                  alert("Data Loaded of size : " +uname.value+" "+pass.value);
                 /* for(i=1,j=0;j<l;i++,j++)
                  {
                  var x=tbl.insertRow(i);
@@ -19,101 +107,80 @@
                  x.insertCell(1);
                  tbl.rows[i].cells[0].innerHTML=data[j].id;
                  tbl.rows[i].cells[1].innerHTML=data[j].name;
-                 }*/
-              });
+                 }
+              });*/
       }
-  </script>
-  <script>
-
-      var email = document.forms["fillform"]["email"];
-      var pwd = document.forms["fillform"]["pwd"];
-
-      // GETTING ALL ERROR OBJECTS
-      var email_error = document.getElementById("email_error");
-      var pwd_error = document.getElementById("pwd_error");
-
-      function Validate(){
-
-
-          // SETTING ALL EVENT LISTENERS
-          email.addEventListener("blur", emailVerify, true);
-          pwd.addEventListener("blur", pwdVerify, true);
-          // VALIDATE USERNAME
-          if(email.value == ""){
-              email_error.textContent = "Enter UserName";
-              email.style.border = "1px solid red";
-              email.focus();
-              return false;
-          }
-
-          if(pwd.value == ""){
-              pwd_error.textContent = "Enter password";
-              pwd.style.border = "1px solid red";
-              pwd.focus();
-              return false;
-          }
-      }
-
-      // ADD EVENT LISTENERS
-      function emailVerify(){
-          if (email.value != "") {
-              email_error.innerHTML = "";
-              email.style.border = "1px solid #110E0F";
-              return true;
-          }
-      }
-      function pwdVerify(){
-          if (pwd.value != "") {
-              pwd_error.innerHTML = "";
-              pwd.style.border = "1px solid #110E0F";
-              return true;
-          }
-      }
-
   </script>
 </head>
-
+<title>Feedback Portal</title>
 <body>
-<div class="main-center main-login">
-  <form action="javascript:getTasks();" name="fillform" onsubmit="javascript:Validate();">
-    <div class="container">
+<div class="container">
+  <img src="images/header.png" alt="home background"  style="width:100%" height="250" ;>
+  <div class="img-fluid">
+    <img src="images/clg_logo.jpg" alt="logo"  style="width:100%" height="200" ;>
+  </div>
+  <div class="text-block">
+    <h1>Nowrosjee Wadia College, Pune-01</h1>
+    <h3><b>Department Of Computer Science</b></h3>
+  </div>
+  <img src="images/menu.png" alt="menu"  style="width:100%" height="30" ;>
 
-      <div>
-        <label><center><b>ADMIN LOGIN</b></center></label><br>
-      </div>
-
-      <div class="col-sm-12">
-
-        <table class="table table-hover" >
-          <tr>
-            <td><b>User Name</b></td>
-          </tr>
-          <tr Class="info">
-            <td><input type="text"name="email" id="email" style="height: 50px;width: 320px">
-              <div id="email_error" class="val_error" style="color:red;"></div>
-            </td>
-          </tr>
-
-          <tr>
-            <td><b>Password</b></td>
-          </tr>
-          <tr Class="info">
-            <td><input type="password"name="pwd" id="pwd">
-              <div id="pwd_error" class="val_error" style="color:red;"></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div>
-
-        <p style="float: right"> <a href="">Forgot Password</a>.</p>
-      </div>
-      <div class="clearfix">
-        <div><button type="submit" class="signupbtn">Login</button></div>
-        <div><button type="reset"  class="cancelbtn">Reset</button></div>
-      </div>
+  <div class="row content">
+    <div class="col-sm-8 mainnav">
+      <h1>Welcome To Feedback Portal</h1>
+      <hr>
+      <p> The <b>FEEDBACK PORTAL</b> is a system designed by<br> <b>COMPUTER SCIENCE DEPARTMENT.</b> <br>This system helps to take the feedback from
+          Students for a particular<br> Teacher,Subject and Practical Sessions.<br> This system analysis the feedback and gives reports
+          in the form of<br> Graphs as well as Report.</p>
+      <hr>
     </div>
-  </form>
+
+    <div class="col-sm-4 sidenav">
+      <h4>Login</h4>
+      <hr>
+      <form action="javascript:getTasks();" name="fillform" >
+        <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="form-control" placeholder="username" id="uname" required>
+      <br>
+      <label>Password</label>
+      <input type="password" class="form-control" placeholder="password" id="pass" required>
+      <br>
+      <select name="role" class="form-control" id="role">
+        <option value="0">Select Role</option>
+        <option value="1">Student</option>
+        <option value="2">Teacher</option>
+        <option value="3">Co-Ordinator</option>
+        <option value="4">Admin</option>
+      </select>
+      <br>
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
+      <input class="btn btn-dark" type="reset" value="Reset">
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
+      <input class="btn btn-dark" type="submit" value="Login">
+        </div>
+    </form>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <a href="">new user?</a>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <a href="">Forget Password</a>
+    </div>
+
+    <div class="footer">
+
+    </div>
+  </div>
+  <img src="images/footer.png" alt="home background"  style="width:100%" height="50" ;>
+  <div class="text-blockfoot">
+    <h6>Design and Developed by Department Of Computer Science</h6>
+  </div>
+
 </div>
+<script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+<script src="scripts/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+
 </body>
 </html>
