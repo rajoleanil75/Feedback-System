@@ -15,12 +15,12 @@
     </servlet>
 
     <servlet>
-        <servlet-name>Example API</servlet-name>
+        <servlet-name>Admin API</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>example</param-value>
+            <param-value>Admin</param-value>
         </init-param>
 
         <init-param>
@@ -30,8 +30,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Example API</servlet-name>
-        <url-pattern>/ws/*</url-pattern>
+        <servlet-name>Admin API</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

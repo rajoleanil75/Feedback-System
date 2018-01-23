@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+        function addTeacher()
+        {
+            var tid = document.getElementById('tid')
+            var tname = document.getElementById('tname')
+                $.post("http://localhost:8080/Feedback_System_war_exploded/global/teacher_operation/add",
+                    {param1: tid.value, param2: tname.value},
+                    function (data) {
+                        if(data=='1')
+                        {
+                            alert("Teacher Added Successfully...!!!");
+                            window.location="http://localhost:8080/Feedback_System_war_exploded/add_teacher.html";
+                        }
+                        else
+                        {
+                            alert("Invalid Details...!!!");
+                        }
+                    });
+        }
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body>
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Add Teacher</label></h4>
+                    <form class="form-text text-left" action="javascript:addTeacher();">
+                        <div class="form-group">
+                            <label for="teacher">Teacher ID:</label>
+                            <input type="number" class="form-control" id="tid" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher">Teacher Name:</label>
+                            <input type="text" class="form-control" id="tname" required>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-danger">Submit</button>
+                    </form>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>

@@ -1,5 +1,7 @@
 package DB;
-import java.sql.Timestamp;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -9,9 +11,11 @@ public class User {
     private int uid;
     private String name;
     private String password;
-    private String role;
+    private int role;
     private int id;
-    private Date date;
+    private java.time.LocalDate date;
+    private java.time.LocalTime time;
+    private int lcount;
 
     public String getName() {
         return name;
@@ -29,14 +33,6 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public int getId() {
         return id;
     }
@@ -45,19 +41,43 @@ public class User {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public int getUid() {
         return uid;
     }
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public int getLcount() {
+        return lcount;
+    }
+
+    public void setLcount(int lcount) {
+        this.lcount = lcount;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }

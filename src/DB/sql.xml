@@ -10,8 +10,19 @@
             <generator class="native"/>
         </id>
         <property name="name">
-            <column name="name" sql-type="varchar(6)" not-null="true" length="6"/>
+            <column name="name" sql-type="varchar(20)" not-null="true" length="20"/>
         </property>
+    </class>
+
+    <class name="DB.Division" table="division">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(10)" not-null="true"/>
+        </property>
+        <many-to-one name="csClass" class="DB.CSClass" column="csclass_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Teacher" table="Teacher">
@@ -21,6 +32,12 @@
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(30)" not-null="true" length="30"/>
+        </property>
+        <property name="deptid">
+            <column name="deptid" sql-type="varchar(15)" not-null="true"/>
+        </property>
+        <property name="role">
+            <column name="role" sql-type="int"/>
         </property>
     </class>
 
@@ -44,7 +61,14 @@
         <property name="name">
             <column name="name" sql-type="varchar(10)" not-null="true" length="10"/>
         </property>
+        <property name="from">
+            <column name="sfrom" sql-type="int"/>
+        </property>
+        <property name="to">
+            <column name="sto" sql-type="int"/>
+        </property>
         <many-to-one name="CSClass" class="DB.CSClass" column="csclass_id" not-null="true" cascade="all"/>
+        <many-to-one name="division" class="DB.Division" column="division_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Teacher_LabBatch" table="teacher_labbatch">
@@ -68,50 +92,197 @@
             <column name="name" sql-type="varchar(40)" not-null="true" length="40"/>
         </property>
         <many-to-one name="CSClass" class="DB.CSClass" column="csclass_id" not-null="true" cascade="all"/>
+        <many-to-one name="division" class="DB.Division" column="division_id" not-null="true" cascade="all"/>
     </class>
 
-    <class name="DB.Student_Lab" table="student_lab">
+    <class name="DB.Squestion" table="Question">
         <id name="id">
             <column name="id" sql-type="int"/>
             <generator class="native"/>
         </id>
-        <many-to-one name="Student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
-        <many-to-one name="LabBatch" class="DB.LabBatch" column="labbatch_id" not-null="true" cascade="all"/>
+       <property name="qtype">
+           <column name="qtype" sql-type="int" not-null="true"/>
+       </property>
+        <property name="total">
+            <column name="total" sql-type="int" not-null="true"/>
+        </property>
+        <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
     </class>
 
-    <class name="DB.Question" table="Question">
+    <class name="DB.Smcq" table="smcq">
         <id name="id">
             <column name="id" sql-type="int"/>
             <generator class="native"/>
         </id>
         <property name="name">
-            <column name="name" sql-type="varchar(60)" not-null="true" length="60"/>
+            <column name="name" sql-type="varchar(200)" not-null="true"/>
         </property>
+        <property name="opt1">
+            <column name="opt1" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt2">
+            <column name="opt2" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt3">
+            <column name="opt3" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt4">
+            <column name="opt4" sql-type="varchar(100)"/>
+        </property>
+        <many-to-one name="squestion" class="DB.Squestion" column="squestion_id" not-null="true" cascade="all"/>
     </class>
 
-    <class name="DB.Subject_Feedback" table="subject_feedback">
+    <class name="DB.Srate" table="srate">
         <id name="id">
             <column name="id" sql-type="int"/>
             <generator class="native"/>
         </id>
-        <property name="points">
-            <column name="points" sql-type="int" not-null="true"/>
+        <property name="name">
+            <column name="name" sql-type="varchar(200)" not-null="true"/>
         </property>
-        <many-to-one name="question" class="DB.Question" column="question_id" not-null="true" cascade="all"/>
+        <many-to-one name="squestion" class="DB.Squestion" column="squestion_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.Scomment" table="scomment">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(200)"/>
+        </property>
+        <many-to-one name="squestion" class="DB.Squestion" column="squestion_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.SSmcq" table="ssmcq">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="ans">
+            <column name="ans" sql-type="varchar(100)" not-null="true"/>
+        </property>
+        <many-to-one name="smcq" class="DB.Smcq" column="smcq_id" not-null="true" cascade="all"/>
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
-        <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
     </class>
 
-    <class name="DB.Lab_Feedback" table="lab_feedback">
+    <class name="DB.SSrate" table="ssrate">
         <id name="id">
             <column name="id" sql-type="int"/>
             <generator class="native"/>
         </id>
-        <property name="points">
-            <column name="points" sql-type="int" not-null="true" length="10"/>
+        <property name="ans">
+            <column name="ans" sql-type="int" not-null="true"/>
         </property>
-        <many-to-one name="student" class="DB.Student" column="student_id"  not-null="true" cascade="all"/>
-        <many-to-one name="question" class="DB.Question" column="question_id" not-null="true" cascade="all"/>
+        <many-to-one name="srate" class="DB.Srate" column="srate_id" not-null="true" cascade="all"/>
+        <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.SScomment" table="sscomment">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="ans">
+            <column name="ans" sql-type="text" not-null="true"/>
+        </property>
+        <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
+        <many-to-one name="scomment" class="DB.Scomment" column="scomment_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.Lquestion" table="lquestion">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="qtype">
+            <column name="qtype" sql-type="int" not-null="true"/>
+        </property>
+        <property name="total">
+            <column name="total" sql-type="int" not-null="true"/>
+        </property>
+        <many-to-one name="labBatch" class="DB.LabBatch" column="labbatch_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.Lmcq" table="lmcq">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(200)" not-null="true"/>
+        </property>
+        <property name="opt1">
+            <column name="opt1" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt2">
+            <column name="opt2" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt3">
+            <column name="opt3" sql-type="varchar(100)"/>
+        </property>
+        <property name="opt4">
+            <column name="opt4" sql-type="varchar(100)"/>
+        </property>
+        <many-to-one name="lquestion" class="DB.Lquestion" column="lquestion_id" cascade="all" not-null="true"/>
+    </class>
+
+    <class name="DB.Lrate" table="lrate">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(200)" not-null="true"/>
+        </property>
+        <many-to-one name="lquestion" class="DB.Lquestion" column="lquestion_id" cascade="all" not-null="true"/>
+    </class>
+
+    <class name="DB.Lcomment" table="lcomment">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(200)"/>
+        </property>
+        <many-to-one name="lquestion" class="DB.Lquestion" column="lquestion_id" cascade="all" not-null="true"/>
+    </class>
+
+    <class name="DB.LSmcq" table="lsmcq">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="ans">
+            <column name="ans" sql-type="varchar(100)" not-null="true"/>
+        </property>
+        <many-to-one name="lmcq" class="DB.Lmcq" column="lmcq_id" not-null="true" cascade="all"/>
+        <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.LScomment" table="lscomment">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="ans">
+            <column name="ans" sql-type="text" not-null="true"/>
+        </property>
+        <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
+        <many-to-one name="lcomment" class="DB.Lcomment" column="lcomment_id" not-null="true" cascade="all"/>
+    </class>
+
+    <class name="DB.LSrate" table="lsrate">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="ans">
+            <column name="ans" sql-type="int" not-null="true"/>
+        </property>
+        <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
+        <many-to-one name="lrate" class="DB.Lrate" column="lrate_id" cascade="all" not-null="true"/>
     </class>
 
     <class name="DB.User" table="uuser">
@@ -123,28 +294,51 @@
             <column name="name" sql-type="varchar(30)" not-null="true" unique="true"/>
         </property>
         <property name="id">
-            <column name="id" sql-type="int" not-null="true" />
+            <column name="id" sql-type="int"/>
         </property>
         <property name="password">
             <column name="password" sql-type="varchar(16)" not-null="true" length="16"/>
         </property>
         <property name="role">
-            <column name="role" sql-type="varchar(10)" not-null="true" length="10"/>
+            <column name="role" sql-type="int" not-null="true"/>
         </property>
         <property name="date">
-            <column name="llogin" sql-type="timestamp"/>
+            <column name="llogindate" sql-type="date"/>
         </property>
+        <property name="time">
+            <column name="llogintime" sql-type="time"/>
+        </property>
+        <property name="lcount">
+            <column name="lcount" sql-type="int"/>
+        </property>
+    </class>
+
+    <class name="DB.Notification" table="notification">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="text"/>
+        </property>
+        <property name="date">
+            <column name="ndate" sql-type="date"/>
+        </property>
+        <property name="time">
+            <column name="ntime" sql-type="time"/>
+        </property>
+        <many-to-one name="user" class="DB.User" column="user_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Limit_date" table="limit_date">
         <id name="id">
             <column name="id" sql-type="int"/>
         </id>
-        <property name="date">
-            <column name="date" sql-type="date"/>
+        <property name="sdate">
+            <column name="sdate" sql-type="date"/>
         </property>
-        <property name="time">
-            <column name="time" sql-type="time"/>
+        <property name="edate">
+            <column name="edate" sql-type="date"/>
         </property>
     </class>
 

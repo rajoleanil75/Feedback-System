@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body>
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Add Lab</label></h4>
+                    <form class="form-text text-left" action="javascript:addTeacher();">
+                        <div class="form-group">
+                            <label for="subject">Name</label>
+                            <input type="text" class="form-control" id="sname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Instructor-1</label>
+                            <select name="role" class="form-control" id="tid">
+                                <option value="0">Select Instructor</option>
+                                <option value="1">ABC</option>
+                                <option value="2">PQR</option>
+                                <option value="3">XYZ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Instructor-2</label>
+                            <select name="role" class="form-control" id="tid">
+                                <option value="0">Select Instructor</option>
+                                <option value="1">ABC</option>
+                                <option value="2">PQR</option>
+                                <option value="3">XYZ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Class</label>
+                            <select name="role" class="form-control" id="sid">
+                                <option value="0">Select Class</option>
+                                <option value="1">FYBSc</option>
+                                <option value="2">SYBSc</option>
+                                <option value="3">TYBSc</option>
+                                <option value="4">MSc-1</option>
+                                <option value="5">MSc-2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Division</label>
+                            <select name="role" class="form-control" id="sid">
+                                <option value="0">Select Division</option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">From Roll No.</label>
+                            <input type="number" class="form-control" id="from" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">To Roll No.</label>
+                            <input type="number" class="form-control" id="to" required>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-danger">Submit</button>
+                    </form>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>

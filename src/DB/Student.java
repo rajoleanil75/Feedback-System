@@ -8,6 +8,7 @@ public class Student {
     private int roll;
     private int name;
     private DB.CSClass CSClass;
+    private DB.Division division;
 
     public DB.CSClass getCSClass() {
         return CSClass;
@@ -39,5 +40,13 @@ public class Student {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
     }
 }

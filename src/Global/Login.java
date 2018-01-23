@@ -26,14 +26,13 @@ public class Login {
         {
             Session session= DB.Global.getSession();
             Transaction t=session.beginTransaction();
-            java.util.List ulist=session.createQuery("select l.uid,l.date from User l where l.name='"+uname+"' and l.password='"+pass+"' and role='4' ").list();
+            java.util.List ulist=session.createQuery("select l.uid,l.date from User l where l.name='"+uname+"' and l.password='"+pass+"' and role="+role+" ").list();
             t.commit();
             int count=0;
             for (Iterator iterator = ulist.iterator(); iterator.hasNext();)
             {
-                Object o= iterator.next();  //class caste exception
-//                 DB.Global.uid= (int) o.uid;
-                DB.Global.role="admin";
+                Object o= iterator.next();
+//
                 //System.out.print(o);
                 count++;
             }

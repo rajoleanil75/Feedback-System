@@ -1,5 +1,6 @@
 package DB;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -8,8 +9,24 @@ import java.util.Date;
 public class Limit_date
 {
     private int id;
-    private Date date;
-    private Date time;
+    private LocalDate sdate;
+    private LocalDate edate;
+
+    public LocalDate getEdate() {
+        return edate;
+    }
+
+    public void setEdate(LocalDate edate) {
+        this.edate = edate;
+    }
+
+    public LocalDate getSdate() {
+        return sdate;
+    }
+
+    public void setSdate(LocalDate sdate) {
+        this.sdate = sdate;
+    }
 
     public int getId() {
         return id;
@@ -17,21 +34,5 @@ public class Limit_date
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 }

@@ -1,13 +1,12 @@
-package example;
-import Entities.Employee;
+package Admin;
+//import Entities.Employee;
 
-import javax.jws.WebMethod;
+
 import javax.jws.WebService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.xml.ws.Endpoint;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class HelloWorld {
   public String sayHelloWorldFrom() {
     return "<h1>Hi Anna</h1>";
   }
-
+/*
   @GET
   @Path("all")
   @Produces(MediaType.APPLICATION_JSON)
@@ -41,7 +40,7 @@ public class HelloWorld {
     result.add(new Employee(4,"Mahesh"));
     result.add(new Employee(5,"Samadhan"));
     return result;
-  }
+  }*/
   public static void main(String[] argv) {
     // Object implementor = new HelloWorld ();
     // String address = "http://localhost:9000/HelloWorld";

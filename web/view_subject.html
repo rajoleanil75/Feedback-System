@@ -14,9 +14,18 @@
             $( "#footer" ).load( "footer.html" );
         });
     </script>
+    <style>
+        .col-sm-8{
+            padding-left: 150px;
+            padding-right: 150px;
+        }
+    </style>
+    <script>
+
+    </script>
 </head>
 <title>Feedback Portal</title>
-<body onload="validate()">
+<body>
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -28,22 +37,15 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-8 text-center">
-                    <h4><label>Welcome To Feedback Portal</label></h4>
-                    <table class="table table-hover text-left">
+                    <h4><label>Subject Details</label></h4>
+                    <table class="table table-hover text-left" id="tbl">
                         <tbody>
-                        <tr><td>Total Feedback Form</td><td>0</td></tr>
-                        <tr><td>Remaining Feedback Form</td><td>0</td></tr>
-                        <tr><td>Blocked Login</td><td>0</td></tr>
-                        <tr><td>Total Student</td><td>0</td></tr>
-                        <tr><td>Total Teacher</td><td>0</td></tr>
-                        <tr><td>Total Subjects</td><td>0</td></tr>
-                        <tr><td>Total Lab Batches</td><td>0</td></tr>
-                        <tr><td>Last Login</td><td>-</td></tr>
+                        <tr><td>Name</td><td>Class</td><td>Teacher</td></tr>
+
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-2">
-
                 </div>
             </div>
         </div>

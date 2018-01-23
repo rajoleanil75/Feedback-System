@@ -14,9 +14,33 @@
             $( "#footer" ).load( "footer.html" );
         });
     </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+        function viewTeacher() {
+           $.get("http://localhost:8080/Feedback_System_war_exploded/global/teacher_operation/viewAll",
+                function (data) {
+
+                    var l=data.length;
+                    var tbl = document.getElementById('tbl')
+                    for(var i=1,j=0;j<l;i++,j++)
+                    {
+                        var x=tbl.insertRow(i);
+                        x.insertCell(0);
+                        x.insertCell(1);
+                        tbl.rows[i].cells[0].innerHTML=i;
+                        tbl.rows[i].cells[1].innerHTML=data[j];
+                    }
+                });
+        }
+    </script>
 </head>
 <title>Feedback Portal</title>
-<body onload="validate()">
+<body onload="viewTeacher()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -28,22 +52,15 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-8 text-center">
-                    <h4><label>Welcome To Feedback Portal</label></h4>
-                    <table class="table table-hover text-left">
+                    <h4><label>Teacher Details</label></h4>
+                    <table class="table table-hover text-left" id="tbl">
                         <tbody>
-                        <tr><td>Total Feedback Form</td><td>0</td></tr>
-                        <tr><td>Remaining Feedback Form</td><td>0</td></tr>
-                        <tr><td>Blocked Login</td><td>0</td></tr>
-                        <tr><td>Total Student</td><td>0</td></tr>
-                        <tr><td>Total Teacher</td><td>0</td></tr>
-                        <tr><td>Total Subjects</td><td>0</td></tr>
-                        <tr><td>Total Lab Batches</td><td>0</td></tr>
-                        <tr><td>Last Login</td><td>-</td></tr>
+                        <tr><td>Teacher ID</td><td>Name</td></tr>
+
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-2">
-
                 </div>
             </div>
         </div>

@@ -3,12 +3,10 @@ package DB;
 /**
  * Created by ANIL on 27/12/2017.
  */
-public class Teacher {
+public class Scomment {
     private int id;
-    private String deptid;
     private String name;
-    private int role;
-
+    private Squestion squestion;
 
     public int getId() {
         return id;
@@ -26,19 +24,11 @@ public class Teacher {
         this.name = name;
     }
 
-    public int getRole() {
-        return role;
+    public Squestion getSquestion() {
+        return squestion;
     }
 
-    public void setRole(int role) {
-        this.role = role;
-    }
-
-    public String getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(String deptid) {
-        this.deptid = deptid;
+    public void setSquestion(Squestion squestion) {
+        this.squestion = squestion;
     }
 }

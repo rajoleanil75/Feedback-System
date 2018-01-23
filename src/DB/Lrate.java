@@ -1,11 +1,21 @@
 package DB;
 
 /**
- * Created by ANIL on 27/12/2017.
+ * Created by Anil on 22/01/2018
  */
-public class Question {
+public class Lrate
+{
     private int id;
     private String name;
+    private Lquestion lquestion;
+
+    public Lquestion getLquestion() {
+        return lquestion;
+    }
+
+    public void setLquestion(Lquestion lquestion) {
+        this.lquestion = lquestion;
+    }
 
     public String getName() {
         return name;

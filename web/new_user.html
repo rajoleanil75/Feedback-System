@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .container {
+            position: relative;
+            font-family: Arial;
+        }
+        .text-block {
+            position: absolute;
+            top: 100px;
+            left: 300px;
+            color: #343a40;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .text-blockfoot {
+            text-align: center;
+            top: 5px;
+            color: #343a40;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .img-fluid{
+            position: absolute;
+            top: 45px;
+            left:50px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .row.content {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-right: 21px;
+            padding-left: 21px;
+            background: url("images/content_back.png");
+            background-size: 100%;
+            background-repeat: repeat-y;
+            /*background-size: 1010px ;*/
+
+
+            /*background-color: #f1f1f1;*/
+            height: auto;
+        }
+        .sidenav {
+            padding-top: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+            background-color: #9fcdff;
+            height: 100%;
+        }
+        .mainnav{
+            padding-left: 50px;
+            padding-top: 50px;
+            text-align: center;
+        }
+        .footer {
+
+            text-align: center;
+            padding: 10px;
+        }
+        .divnavbar{
+            margin-left: 0px;
+            margin-right: 0px;
+
+            padding-right: 21px;
+            padding-left: 21px;
+            background: url("images/menu.png");
+            background-size: 100%;
+        }
+        nav {
+            width: 100%;
+            height: 40px;
+
+            border-radius: 6px !important;
+            -moz-border-radius: 6px !important;
+        }
+        .font-color a{
+            color:#751671;
+        }
+        .font-color a:hover{
+            color: #11e0fc;
+        }
+        .navbar-nav .nav-item{
+            padding-left:40px;
+            padding-right:40px;
+        }
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+
+
+
+    </style>
+    <script>
+        function addTeacher() {
+            /*
+             sessionStorage.setItem("MyId", 123);    //set session using javascript
+             var value = sessionStorage.getItem("MyId");
+             //session setting
+             */
+            var tid = document.getElementById('tid')
+            var tname = document.getElementById('tname')
+            $.post("http://localhost:8080/Feedback_System_war_exploded/global/teacher_operation/add",
+                {param1: tid.value, param2: tname.value},
+                function (data) {
+                    if(data=='1')
+                    {
+                        alert("Teacher Added Successfully...!!!");
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/add_teacher.html";
+                    }
+                    else
+                    {
+                        alert("Invalid Details...!!!");
+                    }
+                });
+
+            /*  $.get("http://localhost:8080/Feedback_System_war_exploded/ws/Hello/all",
+             function(data){
+             var l=data.length;
+             alert("Data Loaded of size : " +uname.value+" "+pass.value);
+             /* for(i=1,j=0;j<l;i++,j++)
+             {
+             var x=tbl.insertRow(i);
+             x.insertCell(0);
+             x.insertCell(1);
+             tbl.rows[i].cells[0].innerHTML=data[j].id;
+             tbl.rows[i].cells[1].innerHTML=data[j].name;
+             }
+             });*/
+        }
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body>
+<div class="container">
+
+    <img src="images/header.png" alt="home background"  style="width:100%" height="250" ;>
+    <div class="img-fluid">
+        <img src="images/clg_logo.jpg" alt="logo"  style="width:100%" height="200" ;>
+    </div>
+    <div class="text-block">
+        <h1>Nowrosjee Wadia College, Pune-01</h1>
+        <h3><b>Department Of Computer Science</b></h3>
+    </div>
+
+    <div class="divnavbar">
+        <nav class="navbar navbar-expand-xl   ">
+
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/index.html">
+                        Home
+                    </a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>New User Registration</label></h4>
+                    <form class="form-text text-left" action="">
+                        <div class="form-group">
+                            <label for="rid">Registration ID</label>
+                            <input type="text" class="form-control" id="rid" placeholder="Enter Registration ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="uname">Enter Username</label>
+                            <input type="text" class="form-control" id="uname" placeholder="New Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" class="form-control" id="pass1" placeholder="Enter Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" class="form-control" id="pass2" placeholder="Confirm Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Select Role</label>
+                            <select name="role" class="form-control" id="role">
+                                <option value="0">Select Role</option>
+                                <option value="1">Teacher</option>
+                                <option value="2">HOD</option>
+                                <option value="3">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-danger">Submit</button>
+                    </form>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <img src="images/footer.png" alt="home background"  style="width:100%" height="50" ;>
+    <div class="text-blockfoot">
+        <h6>Design and Developed by Department Of Computer Science</h6>
+    </div>
+
+</div>
+<script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+<script src="scripts/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+
+</body>
+</html>
