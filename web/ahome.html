@@ -7,6 +7,7 @@
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
     <script type='text/javascript'>
         $(document).ready(function(){
             $( "#header" ).load( "header.html" );
@@ -14,9 +15,15 @@
             $( "#footer" ).load( "footer.html" );
         });
     </script>
+    <style>
+        .col-sm-8{
+            padding-left: 150px;
+            padding-right: 150px;
+        }
+    </style>
 </head>
 <title>Feedback Portal</title>
-<body onload="validate()">
+<body onload="validate_admin()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -31,14 +38,10 @@
                     <h4><label>Welcome To Feedback Portal</label></h4>
                     <table class="table table-hover text-left">
                         <tbody>
-                        <tr><td>Total Feedback Form</td><td>0</td></tr>
-                        <tr><td>Remaining Feedback Form</td><td>0</td></tr>
-                        <tr><td>Blocked Login</td><td>0</td></tr>
-                        <tr><td>Total Student</td><td>0</td></tr>
-                        <tr><td>Total Teacher</td><td>0</td></tr>
-                        <tr><td>Total Subjects</td><td>0</td></tr>
-                        <tr><td>Total Lab Batches</td><td>0</td></tr>
-                        <tr><td>Last Login</td><td>-</td></tr>
+                        <tr><td>Welcome <script>document.write(sessionStorage.getItem("uname"));</script></td></tr>
+                        <tr><td>Last Login: <script>document.write(sessionStorage.getItem("llogin"));</script></td></tr>
+                        <tr><td>Last Backup :</td></tr>
+                        <tr><td>Last Restore :</td></tr>
                         </tbody>
                     </table>
                 </div>

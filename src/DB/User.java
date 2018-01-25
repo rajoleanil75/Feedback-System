@@ -12,7 +12,7 @@ public class User {
     private String name;
     private String password;
     private int role;
-    private int id;
+    private String id;
     private java.time.LocalDate date;
     private java.time.LocalTime time;
     private int lcount;
@@ -31,14 +31,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUid() {
@@ -79,5 +71,13 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -4,19 +4,9 @@ package DB;
  * Created by ANIL on 27/12/2017.
  */
 public class Teacher {
-    private int id;
-    private String deptid;
+    private String id;
     private String name;
     private int role;
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -34,11 +24,11 @@ public class Teacher {
         this.role = role;
     }
 
-    public String getDeptid() {
-        return deptid;
+    public String getId() {
+        return id;
     }
 
-    public void setDeptid(String deptid) {
-        this.deptid = deptid;
+    public void setId(String id) {
+        this.id = id;
     }
 }

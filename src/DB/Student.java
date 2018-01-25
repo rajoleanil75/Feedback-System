@@ -4,7 +4,7 @@ package DB;
  * Created by ANIL on 27/12/2017.
  */
 public class Student {
-    private int id;
+    private String id;
     private int roll;
     private int name;
     private DB.CSClass CSClass;
@@ -34,19 +34,19 @@ public class Student {
         this.roll = roll;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Division getDivision() {
         return division;
     }
 
     public void setDivision(Division division) {
         this.division = division;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
