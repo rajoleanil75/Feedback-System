@@ -24,8 +24,8 @@
     <script>
         function addTeacher()
         {
-            var tid = document.getElementById('tid')
-            var tname = document.getElementById('tname')
+            var tid = document.getElementById('tid');
+            var tname = document.getElementById('tname');
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/add",
                     {param1: tid.value, param2: tname.value},
                     function (data) {

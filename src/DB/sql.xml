@@ -77,7 +77,8 @@
 
     <class name="DB.Student" table="student">
         <id name="id">
-            <column name="id" sql-type="varchar(15)" not-null="true" unique="true"/>
+            <column name="id" sql-type="int" not-null="true" unique="true"/>
+            <generator class="native"/>
         </id>
         <property name="roll">
             <column name="roll" sql-type="int" not-null="true" />

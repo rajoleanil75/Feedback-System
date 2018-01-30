@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
+    <script src="js/xlsx.core.min.js"></script>
+    <script src="js/xls.core.min.js"></script>
+
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+
+        function addStudent()
+        {
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;
+                if (regex.test($("#excelfile").val().toLowerCase()))
+                {
+                    var xlsxflag = false;
+                    if ($("#excelfile").val().toLowerCase().indexOf(".xlsx") > 0)
+                    {
+                        xlsxflag = true;
+                    }
+                    if (typeof (FileReader) != "undefined")
+                    {
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var data = e.target.result;
+                            if (xlsxflag)
+                            {
+                                var workbook = XLSX.read(data, { type: 'binary' });
+                            }
+                            else
+                            {
+                                var workbook = XLS.read(data, { type: 'binary' });
+                            }
+                            var sheet_name_list = workbook.SheetNames;
+                            var exceljson;
+                            sheet_name_list.forEach(function (y)
+                            {
+                                if (xlsxflag) {
+                                    exceljson = XLSX.utils.sheet_to_json(workbook.Sheets[y]);
+                                }
+                                else {
+                                    exceljson = XLS.utils.sheet_to_row_object_array(workbook.Sheets[y]);
+                                }
+
+                            });
+                            var slist=JSON.stringify(exceljson);
+                            var cl=document.getElementById("subcategory");
+                            var dv=document.getElementById("sub1category");
+                            // alert(cl.value);
+                            // alert(dv.value);
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/add",
+                                {param1: slist,param2:cl.value,param3:dv.value},
+                                function (data) {
+                                    if(data=='1')
+                                    {
+                                        alert("Student Added Successfully...!!!");
+                                        window.location="http://localhost:8080/Feedback_System_war_exploded/aadd_student.html";
+                                    }
+                                    else
+                                    {
+                                        alert("Invalid Details...!!!");
+                                    }
+                                });
+                        }
+                        if (xlsxflag)
+                        {
+                            reader.readAsArrayBuffer($("#excelfile")[0].files[0]);
+                        }
+                        else
+                        {
+                            reader.readAsBinaryString($("#excelfile")[0].files[0]);
+                        }
+                    }
+                    else {
+                        alert("Sorry! Your browser does not support HTML5!");
+                    }
+                }
+                else {
+                    alert("Please upload a valid Excel file!");
+                }
+        }
+        function dynamicdropdown1(listindex)
+        {
+            document.getElementById("sub1category").length = 0;
+            switch (listindex)
+            {
+                case "1" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","1");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","2");
+                    break;
+                case "2" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","3");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","4");
+                    break;
+                case "3" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","5");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","6");
+                    break;
+                case "4" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","7");
+                    break;
+                case "5" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","8");
+                    break;
+            }
+            return true;
+        }
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body>
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Add Student</label></h4><br>
+                        <div class="form-group text-left" >
+                            <label>Select Class : </label>
+                            <select name="subcategory" id="subcategory" onchange="dynamicdropdown1(this.options[this.selectedIndex].value);">
+                                <option value="0">Please select Class</option>
+                                <option value="1">FYBSc</option>
+                                <option value="2">SYBSc</option>
+                                <option value="3">TYBSc</option>
+                                <option value="4">MSc-1</option>
+                                <option value="5">MSc-2</option>
+                            </select>
+                        </div>
+                    <div class="form-group text-left" >
+                        <label>Select Division : </label>
+                        <script type="text/javascript" language="JavaScript">
+                            document.write('<select name="sub1category" id="sub1category"><option value="">Please select Division</option></select>')
+                        </script>
+                        <noscript>
+                            <select name="sub1category" id="sub1category" >
+                                <option value="">Please select Division</option>
+                            </select>
+                        </noscript>
+                    </div>
+
+                        <div class="form-group text-left">
+                            <label>Select Student excel sheet :</label>
+                            <input type="file" id="excelfile" name="excelfile" />
+                        </div>
+                        <button type="submit" class="btn btn-block btn-danger" onclick="addStudent()">Submit</button>
+
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>
