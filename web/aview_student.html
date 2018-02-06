@@ -17,26 +17,28 @@
     </script>
     <script>
         function fetch() {
+
             validate_admin();
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
-                function (data) {
-                    var tbl = document.getElementById('tbl')
-                    for(var i=1;i<(data.length+1);i++)
-                    {
-                        var x=tbl.insertRow(i);
-                        x.insertCell(0);
-                        x.insertCell(1);
-                        var y=x.insertCell(2);
-                        tbl.rows[i].cells[0].innerHTML=data[i-1]["id"];
-                        tbl.rows[i].cells[1].innerHTML=data[i-1]["name"];
-                        var checkbox = document.createElement('input');
-                        checkbox.type = "checkbox";
-                        checkbox.name = "chk";
-                        checkbox.value = data[i-1]["id"];;
-                        checkbox.id = "checkbox";
-                        y.appendChild(checkbox);
-                    }
-                });
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+            //     {param1: "1"},
+            //     function (data) {
+            //         var tbl = document.getElementById('tbl');
+            //         for(var i=1;i<(data.length+1);i++)
+            //         {
+            //             var x=tbl.insertRow(i);
+            //             x.insertCell(0);
+            //             x.insertCell(1);
+            //             var y=x.insertCell(2);
+            //             tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+            //             tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+            //             var checkbox = document.createElement('input');
+            //             checkbox.type = "checkbox";
+            //             checkbox.name = "chk";
+            //             checkbox.value = data[i-1]["0"];;
+            //             checkbox.id = "checkbox";
+            //             y.appendChild(checkbox);
+            //         }
+            //     });
         }
         function delete_teacher() {
             var q = document.querySelectorAll("input[type=checkbox][name=chk]"), l = q.length, i;
@@ -76,6 +78,240 @@
                     }
                 });
         }
+        function dynamicdropdown1(listindex)
+        {
+            document.getElementById("sub1category").length = 0;
+            switch (listindex)
+            {
+                case "1" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","1");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","2");
+                    break;
+                case "2" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","3");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","4");
+                    break;
+                case "3" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","5");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","6");
+                    break;
+                case "4" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","7");
+                    break;
+                case "5" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","8");
+                    break;
+            }
+            return true;
+        }
+
+
+        function dynamicdropdown2(listindex)
+        {
+            var s2 = document.getElementById("subcategory").value;
+            var tbl = document.getElementById('tbl');
+            while(tbl.rows.length > 1) {
+                tbl.deleteRow(1);
+            }
+
+            switch (s2) {
+                case "1" :
+                    switch (listindex) {
+                        case "1" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "1"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                        case "2" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "2"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                    }
+                    break;
+                case "2" :
+                    switch (listindex) {
+                        case "3" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "3"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                        case "4" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "4"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                    }
+                    break;
+                case "3" :
+                    switch (listindex) {
+                        case "5" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "5"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                        case "6" :
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                                {param1: "6"},
+                                function (data) {
+                                    var tbl = document.getElementById('tbl');
+                                    for(var i=1;i<(data.length+1);i++)
+                                    {
+                                        var x=tbl.insertRow(i);
+                                        x.insertCell(0);
+                                        x.insertCell(1);
+                                        var y=x.insertCell(2);
+                                        tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                        tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = "checkbox";
+                                        checkbox.name = "chk";
+                                        checkbox.value = data[i-1]["0"];;
+                                        checkbox.id = "checkbox";
+                                        y.appendChild(checkbox);
+                                    }
+                                });
+                            break;
+                    }
+                    break;
+                case "4" :
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                        {param1: "7"},
+                        function (data) {
+                            var tbl = document.getElementById('tbl');
+                            for(var i=1;i<(data.length+1);i++)
+                            {
+                                var x=tbl.insertRow(i);
+                                x.insertCell(0);
+                                x.insertCell(1);
+                                var y=x.insertCell(2);
+                                tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                var checkbox = document.createElement('input');
+                                checkbox.type = "checkbox";
+                                checkbox.name = "chk";
+                                checkbox.value = data[i-1]["0"];;
+                                checkbox.id = "checkbox";
+                                y.appendChild(checkbox);
+                            }
+                        });
+                    break;
+                case "5" :
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+                        {param1: "8"},
+                        function (data) {
+                            var tbl = document.getElementById('tbl');
+                            for(var i=1;i<(data.length+1);i++)
+                            {
+                                var x=tbl.insertRow(i);
+                                x.insertCell(0);
+                                x.insertCell(1);
+                                var y=x.insertCell(2);
+                                tbl.rows[i].cells[0].innerHTML=data[i-1]["2"];
+                                tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
+                                var checkbox = document.createElement('input');
+                                checkbox.type = "checkbox";
+                                checkbox.name = "chk";
+                                checkbox.value = data[i-1]["0"];;
+                                checkbox.id = "checkbox";
+                                y.appendChild(checkbox);
+                            }
+                        });
+                    break;
+
+            }
+            return true;
+        }
     </script>
     <style>
         .col-sm-8{
@@ -99,7 +335,7 @@
 
             <div class="row content1">
                 <div class="col-sm-8 text-center">
-                    <h4><label>Teacher Details</label></h4>
+                    <h4><label>Student Details</label></h4>
                     <table class="table table-hover text-left" id="tbl">
                         <tbody>
                         <tr><td>Roll No</td><td>Name</td><td><input type=Button name="delete" value="Delete" onclick="delete_teacher()"/></td></tr>
@@ -107,16 +343,42 @@
                     </table>
                 </div>
                 <div class="col-sm-4">
-                    <form class="form-text text-left" action="javascript:searchTeacher();">
+                    <form class="form-text text-left" action="#">
                         <table class="table text-left borderless" id="tbl1">
                             <tbody>
                             <tr><td><div class="form-group">
-                                <input type="text" class="form-control" id="tid" placeholder="Teacher ID" required>
+                                <input type="text" class="form-control" id="tid" placeholder="Student Name" required>
                             </div></td>
                                 <td><button type="submit" class="btn btn-block btn-danger">Search</button></td></tr>
                             </tbody>
                         </table>
                     </form>
+                    <div class="col-sm-12">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10">
+                            <select name="subcategory" class="form-control" id="subcategory" onchange="dynamicdropdown1(this.options[this.selectedIndex].value);">
+                                <option value="0">Please select Class</option>
+                                <option value="1">FYBSc</option>
+                                <option value="2">SYBSc</option>
+                                <option value="3">TYBSc</option>
+                                <option value="4">MSc-1</option>
+                                <option value="5">MSc-2</option>
+                            </select>
+                        <br>
+                            <script type="text/javascript" language="JavaScript">
+                                document.write('<select name="sub1category" class="form-control" id="sub1category" onchange="javascript: dynamicdropdown2(this.options[this.selectedIndex].value)";><option value="">Please select Division</option></select>')
+                            </script>
+                            <noscript>
+                                <select name="sub1category" class="form-control" id="sub1category" >
+                                    <option value="">Please select Division</option>
+                                </select>
+                            </noscript>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

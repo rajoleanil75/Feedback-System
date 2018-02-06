@@ -92,12 +92,12 @@
 
     <class name="DB.Squestion" table="Question">
         <id name="id">
-            <column name="id" sql-type="int"/>
+            <column name="id" sql-type="int" not-null="true" unique="true" />
             <generator class="native"/>
         </id>
-       <property name="qtype">
+        <property name="qtype">
            <column name="qtype" sql-type="int" not-null="true"/>
-       </property>
+        </property>
         <property name="total">
             <column name="total" sql-type="int" not-null="true"/>
         </property>

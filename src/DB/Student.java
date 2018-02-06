@@ -11,7 +11,7 @@ public class Student {
     private DB.Division division;
 
     public DB.CSClass getCSClass() {
-        return CSClass;
+        return this.CSClass;
     }
 
     public void setCSClass(DB.CSClass CSClass) {
@@ -27,7 +27,7 @@ public class Student {
     }
 
     public Division getDivision() {
-        return division;
+        return this.division;
     }
 
     public void setDivision(Division division) {

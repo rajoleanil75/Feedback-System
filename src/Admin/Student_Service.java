@@ -1,9 +1,6 @@
 package Admin;
 
-import DB.CSClass;
-import DB.Division;
-import DB.Global;
-import DB.Student;
+import DB.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.json.simple.JSONArray;
@@ -11,18 +8,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.jws.WebService;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Anil on 29/01/2018
  */
 @Path("/student_services")
 @WebService
-
 public class Student_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
@@ -65,5 +60,37 @@ public class Student_Service {
         {
             return ""+e+"";
         }
+    }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("viewDivisionWise")
+    public List viewDivisionWise(@FormParam("param1")int div)
+    {
+        try
+        {
+            Session session1= DB.Global.getSession();
+            Transaction t=session1.beginTransaction();
+            java.util.List<Student> slist=session1.createQuery("select s.id,s.name,s.roll,s.CSClass,s.division from Student s where s.division.id=:id").setParameter("id",div).list();
+            t.commit();
+            session1.close();
+            return slist;
+        }
+        catch (Exception e)
+        {
+            return Collections.singletonList("" + e + "");
+        }
+    }
+
+    @GET
+    @Path("viewAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List viewAll()
+    {
+        Session session= DB.Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<Student> slist=session.createQuery("select s.id,s.name,s.roll,s.CSClass,s.division from Student s").list();
+        t.commit();
+        session.close();
+        return slist;
     }
 }

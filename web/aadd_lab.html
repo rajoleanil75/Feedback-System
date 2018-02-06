@@ -8,25 +8,198 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
+
+    <!--<link href="dropdown/bootstrap.min.css" rel="stylesheet"/>-->
+    <!--<link href="dropdown/bootstrap-select.css" rel="stylesheet"/>-->
+    <!--<script type="text/javascript" src="dropdown/bootstrap.min.js"></script>-->
+    <!--<script type="text/javascript" src="dropdown/bootstrap-select.js"></script>-->
+    <!--<script type="text/javascript" src="dropdown/jquery.min.js"></script>-->
+
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>-->
+    <!--<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>-->
+
+
+
     <script type='text/javascript'>
         $(document).ready(function(){
+            // $("#example-getting-started").multiselect();
             $( "#header" ).load( "header.html" );
             $( "#amenu" ).load( "amenu.html" );
             $( "#footer" ).load( "footer.html" );
+            // $(".chosen-select").chosen({
+            //     no_results_text: "Oops, nothing found!"
+            // })
+
         });
     </script>
+
     <style>
+        .boot{
+            @import "/dropdown/bootstrap.min.css";
+            @import "/dropdown/bootstrap-select.css";
+            @import "";
+            /*@import "dropdown/bootstrap.min.js";*/
+            /*@import "dropdown/bootstrap-select.js";*/
+            /*@import "dropdown/jquery.min.js";*/
+        }
+        .container {
+            position: relative;
+            font-family: Arial;
+        }
+        .text-block {
+            position: absolute;
+            top: 100px;
+            left: 300px;
+            color: #343a40;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .text-blockfoot {
+            text-align: center;
+            top: 5px;
+            color: #343a40;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .img-fluid{
+            position: absolute;
+            top: 45px;
+            left:50px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .row.content {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-right: 21px;
+            padding-left: 21px;
+            background: url("images/content_back.png");
+            background-size: 100%;
+            background-repeat: repeat-y;
+            height: auto;
+        }
+        .sidenav {
+            padding-top: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+            background-color: #9fcdff;
+            height: 100%;
+        }
+        .mainnav{
+            padding-left: 50px;
+            padding-top: 50px;
+            text-align: center;
+        }
+        .footer {
+
+            text-align: center;
+            padding: 10px;
+        }
+        .divnavbar{
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding-right: 21px;
+            padding-left: 21px;
+            background: url("images/menu.png");
+
+            background-size: 100%;
+        }
+        nav {
+            width: 100%;
+            height: 40px;
+
+            border-radius: 6px !important;
+            -moz-border-radius: 6px !important;
+        }
+        .font-color a{
+            color:#751671;
+        }
+        .font-color a:hover{
+            color: #11e0fc;
+        }
+        .navbar-nav .nav-item{
+            padding-left:30px;
+            padding-right:30px;
+        }
+
+
         .col-sm-8{
             padding-left: 190px;
             padding-right: 190px;
         }
+
+
+
     </style>
     <script>
+        function fetch() {
+
+            document.getElementById("subcategory").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/viewAll",
+                function (data) {
+                    document.getElementById("subcategory").options[0]=new Option("Please select Class","0");
+                    for(var i=1;i<(data.length+1);i++)
+                    {
+                        document.getElementById("subcategory").options[i]=new Option(data[i-1]["name"],data[i-1]["id"]);
+                    }
+                });
+            document.getElementById("teachercategory").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
+                function (data) {
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("teachercategory").options[i]=new Option(data[i]["name"],data[i]["id"]);
+                    }
+                });
+
+
+        }
+
+        function addLab() {
+            alert("Add Lab");
+
+        }
+
+        function dynamicdropdown1(listindex)
+        {
+            document.getElementById("sub1category").length = 0;
+            switch (listindex)
+            {
+                case "1" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","1");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","2");
+                    break;
+                case "2" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","3");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","4");
+                    break;
+                case "3" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","5");
+                    document.getElementById("sub1category").options[2]=new Option("Div B","6");
+                    break;
+                case "4" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","7");
+                    break;
+                case "5" :
+                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+                    document.getElementById("sub1category").options[1]=new Option("Div A","8");
+                    break;
+            }
+            return true;
+        }
 
     </script>
 </head>
 <title>Feedback Portal</title>
-<body>
+<body onload="fetch()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -39,48 +212,77 @@
                 </div>
                 <div class="col-sm-8 text-center">
                     <h4><label>Add Lab</label></h4>
-                    <form class="form-text text-left" action="javascript:addTeacher();">
+                    <form class="form-text text-left" action="javascript:addLab();">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" id="sname" required>
+                            <input type="text" class="form-control" id="lname" required>
                         </div>
+
                         <div class="form-group">
-                            <label>Instructor-1</label>
-                            <select name="role" class="form-control" id="tid">
-                                <option value="0">Select Instructor</option>
-                                <option value="1">ABC</option>
-                                <option value="2">PQR</option>
-                                <option value="3">XYZ</option>
+                            <label>Instructor</label>
+                            <br>
+                            <!--<select aria-multiselectable="true" class="form-control" id="teachercategory1" >-->
+                                <!--<option>Mustard</option>-->
+                                <!--<option>Ketchup</option>-->
+                                <!--<option>Barbecue</option>-->
+                            <!--</select>-->
+                            <!---->
+
+                                <!--<select id="example-getting-started" multiple="multiple">-->
+                                    <!--<option value="1">inst 1</option>-->
+                                    <!--<option value="2">inst 2</option>-->
+                                    <!--<option value="3"> inst 3</option>-->
+                                    <!--<option value="4">4</option>-->
+                                    <!--<option value="5">5</option>-->
+                                    <!--<option value="6">6</option>-->
+                                <!--</select>-->
+
+                            <!--<select data-placeholder="Please select Instructor..." multiple class="form-control" name="test" >-->
+                                <!--<option value=""></option>-->
+                                <!--<option>Inst 1</option>-->
+                                <!--<option>Inst 2</option>-->
+                                <!--<option>Inst 3</option>-->
+                                <!--<option>Inst 4</option>-->
+                            <!--</select>-->
+                            <div class="boot">
+                            <select id="done" class="selectpicker" multiple data-done-button="true">
+                                <option>Apple</option>
+                                <option>Banana</option>
+                                <option>Orange</option>
+                                <option>Pineapple</option>
+                                <option>Apple2</option>
+                                <option>Banana2</option>
+                                <option>Orange2</option>
+                                <option>Pineapple2</option>
+                                <option>Apple2</option>
+                                <option>Banana2</option>
+                                <option>Orange2</option>
+                                <option>Pineapple2</option>
                             </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Instructor-2</label>
-                            <select name="role" class="form-control" id="tid">
-                                <option value="0">Select Instructor</option>
-                                <option value="1">ABC</option>
-                                <option value="2">PQR</option>
-                                <option value="3">XYZ</option>
-                            </select>
-                        </div>
+
+
+
                         <div class="form-group">
                             <label>Class</label>
-                            <select name="role" class="form-control" id="sid">
-                                <option value="0">Select Class</option>
-                                <option value="1">FYBSc</option>
-                                <option value="2">SYBSc</option>
-                                <option value="3">TYBSc</option>
-                                <option value="4">MSc-1</option>
-                                <option value="5">MSc-2</option>
+                            <select name="subcategory" class="form-control" id="subcategory" onchange="dynamicdropdown1(this.options[this.selectedIndex].value);">
+                                <option value="0">Please select Class</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label>Division</label>
-                            <select name="role" class="form-control" id="sid">
-                                <option value="0">Select Division</option>
-                                <option value="1">A</option>
-                                <option value="2">B</option>
-                            </select>
+                            <script type="text/javascript" language="JavaScript">
+                                document.write('<select name="sub1category" class="form-control" id="sub1category"><option value="">Please select Division</option></select>')
+                            </script>
+                            <noscript>
+                                <select name="sub1category" class="form-control" id="sub1category" >
+                                    <option value="">Please select Division</option>
+                                </select>
+                            </noscript>
                         </div>
+
                         <div class="form-group">
                             <label>From Roll No.</label>
                             <input type="number" class="form-control" id="from" required>
@@ -97,5 +299,26 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="dropdown/bootstrap.min.js"></script>
+    <script type="text/javascript" src="dropdown/bootstrap-select.js"></script>
+    <script type="text/javascript" src="dropdown/jquery.min.js"></script>
+    <!--<div id='footer'></div>-->
 
-    <div id='footer'></div>
+    <img src="images/footer.png" alt="home background"  style="width:100%" height="50" ;>
+    <div class="text-blockfoot">
+        <h6>Design and Developed by Department Of Computer Science</h6>
+    </div>
+</div>
+<!--<script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>-->
+<!--<script src="scripts/jquery.min.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<script src="js/bootstrap.js"></script>
+<!--<script src="js/bootstrap-dropdown.js"></script>-->
+
+<!--<script type="text/javascript" src="dropdown/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="dropdown/bootstrap-select.js"></script>
+<script type="text/javascript" src="dropdown/jquery.min.js"></script>
+
+
+</body>
+</html>

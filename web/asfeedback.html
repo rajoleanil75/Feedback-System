@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
+    <script src="js/xlsx.core.min.js"></script>
+    <script src="js/xls.core.min.js"></script>
+
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+        function fetch()
+        {
+            validate_admin();
+            document.getElementById("sid").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
+                function (data) {
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("sid").options[i]=new Option(data[i]["1"],data[i]["0"]);
+                    }
+                });
+        }
+        function addQues() {
+
+            var sid = document.getElementById('sid');
+            var mcq = document.getElementById('mcq');
+            var rate = document.getElementById('rate');
+            var comm = document.getElementById('comm');
+            // alert(sid.value);
+            // alert(mcq.value);
+            // alert(rate.value);
+            // alert(comm.value);
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/add",
+                {param1: sid.value, param2: mcq.value, param3: rate.value, param4: comm.value},
+                function (data) {
+                    if(data=='1')
+                    {
+                        alert("Question Type Added Successfully...!!!");
+                        sessionStorage.setItem("sid",sid.value);
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/asfeedbacktemplate.html";
+                    }
+                    else
+                    {
+                        alert("Please enter valid Data...!!!"+data);
+                    }
+                });
+        }
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Add Feedback Form</label></h4><br>
+                    <div class="form-group text-left" >
+                        <label>Select Subject : </label>
+                        <select name="sid" class="form-control" id="sid">
+                            <option value="0">Select Subject</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total MCQ</label>
+                        <input type="number" class="form-control" id="mcq" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Ratings</label>
+                        <input type="number" class="form-control" id="rate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Comments</label>
+                        <input type="number" class="form-control" id="comm" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-danger" onclick="addQues()">Submit</button>
+
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>

@@ -15,6 +15,48 @@
             $( "#footer" ).load( "footer.html" );
         });
     </script>
+    <script>
+        function fetch()
+        {
+            validate_admin();
+            document.getElementById("tid").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
+                function (data) {
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("tid").options[i]=new Option(data[i]["name"],data[i]["id"]);
+                    }
+            });
+            document.getElementById("cid").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/viewAll",
+                function (data) {
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("cid").options[i]=new Option(data[i]["name"],data[i]["id"]);
+                    }
+                });
+        }
+        function addSubject() {
+
+            var tid = document.getElementById('tid');
+            var cid = document.getElementById('cid');
+            var sname = document.getElementById('sname');
+            var scode = document.getElementById('scode');
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/add",
+                {param1: scode.value, param2: sname.value, param3: tid.value, param4: cid.value},
+                function (data) {
+                    if(data=='1')
+                    {
+                        alert("Subject Added Successfully...!!!");
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/aadd_subject.html";
+                    }
+                    else
+                    {
+                        alert("Please enter valid subject ID...!!!"+data);
+                    }
+                });
+        }
+    </script>
     <style>
     .col-sm-8{
             padding-left: 190px;
@@ -26,7 +68,7 @@
     </script>
 </head>
 <title>Feedback Portal</title>
-<body onload="validate_admin()">
+<body onload="fetch()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -39,29 +81,25 @@
                 </div>
                 <div class="col-sm-8 text-center">
                     <h4><label>Add Subject</label></h4>
-                    <form class="form-text text-left" action="javascript:addTeacher();">
+                    <form class="form-text text-left" action="javascript:addSubject();">
+                        <div class="form-group">
+                            <label>Subject Code</label>
+                            <input type="text" class="form-control" id="scode" required>
+                        </div>
                         <div class="form-group">
                             <label>Subject Name</label>
                             <input type="text" class="form-control" id="sname" required>
                         </div>
                         <div class="form-group">
                             <label>Teacher</label>
-                            <select name="role" class="form-control" id="tid">
+                            <select name="tid" class="form-control" id="tid">
                                 <option value="0">Select Teacher</option>
-                                <option value="1">ABC</option>
-                                <option value="2">PQR</option>
-                                <option value="3">XYZ</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Class</label>
-                            <select name="role" class="form-control" id="sid">
+                            <select name="cid" class="form-control" id="cid">
                                 <option value="0">Select Class</option>
-                                <option value="1">FYBSc</option>
-                                <option value="2">SYBSc</option>
-                                <option value="3">TYBSc</option>
-                                <option value="4">MSc-1</option>
-                                <option value="5">MSc-2</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-block btn-danger">Submit</button>

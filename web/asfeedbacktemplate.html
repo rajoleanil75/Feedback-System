@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
+    <script src="js/xlsx.core.min.js"></script>
+    <script src="js/xls.core.min.js"></script>
+
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            /*padding-left: 5px;*/
+            /*padding-right: 5px;*/
+        }
+    </style>
+    <script>
+        var mcq = [];
+        var rate = [];
+        var comm = [];
+        var tmcq;
+        var trate;
+        var tcomm;
+        function fetch()
+        {
+            validate_admin();
+            var sid=sessionStorage.getItem("sid");
+            // alert(sid);
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+                {param1: sid },
+                function (data) {
+                    if(data=="0"||data=="E")
+                        alert("Data Not Found...!!!");
+                    else{
+                        var dt=JSON.parse(data);
+                        tmcq=dt[1];
+                        trate=dt[2];
+                        tcomm=dt[3];
+
+
+
+                        // var mcq = document.getElementById('mcq');
+                        // for(i=0,j=-1;i<dt[1];i++) {
+                        //     var x = mcq.insertRow(++j);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     // var lbl='<label>Question</label>';
+                        //     var lbl = document.createElement('label');
+                        //     lbl.innerHTML = "Question";
+                        //     lbl.class = "form-control";
+                        //     y1.appendChild(lbl);
+                        //
+                        //     // var txt='<input type="text" class="form-control" id="tid" placeholder="Student Name" required>'
+                        //     var txt = document.createElement('TEXTAREA');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="m"+i+"0";
+                        //     // alert(temp);
+                        //     txt.id = temp;
+                        //     txt.rows = 3;
+                        //     txt.cols = 20;
+                        //     // txt.width="300";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        //
+                        //     var x = mcq.insertRow(++j);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     var txt = document.createElement('input');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="m"+i+"1";
+                        //     // alert(temp);
+                        //     txt.id = temp;
+                        //     txt.placeholder = "Option 1";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        //
+                        //     var x = mcq.insertRow(++j);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     var txt = document.createElement('input');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="m"+i+"2";
+                        //     // alert(temp);
+                        //     txt.id = temp;
+                        //     txt.placeholder = "Option 2";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        //
+                        //     var x = mcq.insertRow(++j);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     var txt = document.createElement('input');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="m"+i+"3";
+                        //     // alert(temp);
+                        //     txt.id = temp;
+                        //     txt.placeholder = "Option 3";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        //
+                        //     var x = mcq.insertRow(++j);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     var txt = document.createElement('input');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="m"+i+"4";
+                        //     txt.id = temp;
+                        //     txt.placeholder = "Option 4";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        // }
+                        //
+                        // var rate = document.getElementById('rate');
+                        // for(i=0;i<dt[2];i++) {
+                        //     var x = rate.insertRow(i);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     // var lbl='<label>Question</label>';
+                        //     var lbl = document.createElement('label');
+                        //     lbl.innerHTML = "Question";
+                        //     lbl.class = "form-control";
+                        //     y1.appendChild(lbl);
+                        //
+                        //     // var txt='<input type="text" class="form-control" id="tid" placeholder="Student Name" required>'
+                        //     var txt = document.createElement('TEXTAREA');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="r"+i;
+                        //     txt.id = temp;
+                        //     txt.rows = 3;
+                        //     txt.cols = 20;
+                        //     // txt.width="300";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        // }
+                        //
+                        // var comm = document.getElementById('comm');
+                        // for(i=0;i<dt[3];i++) {
+                        //     var x = comm.insertRow(i);
+                        //     y1 = x.insertCell(0);
+                        //     y2 = x.insertCell(1);
+                        //     // var lbl='<label>Question</label>';
+                        //     var lbl = document.createElement('label');
+                        //     lbl.innerHTML = "Question";
+                        //     lbl.class = "form-control";
+                        //     y1.appendChild(lbl);
+                        //
+                        //     // var txt='<input type="text" class="form-control" id="tid" placeholder="Student Name" required>'
+                        //     var txt = document.createElement('TEXTAREA');
+                        //     txt.type = "text";
+                        //     txt.name = "txt";
+                        //     var temp="c"+i;
+                        //     txt.id = temp;
+                        //     txt.rows = 3;
+                        //     txt.cols = 20;
+                        //     // txt.width="300";
+                        //     txt.class = "form-control";
+                        //     y2.appendChild(txt);
+                        // }
+
+                    }
+
+                });
+        }
+
+        function addQues() {
+            alert("add question");
+
+            // var sid = sessionStorage.getItem("sid");
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+            //     {param1: sid},
+            //     function (data) {
+            //         if (data == "0" || data == "E")
+            //             alert("Data Not Found...!!!");
+            //         else {
+            //             var dt = JSON.parse(data);
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getMSq",
+            //                 {param1: sid},
+            //                 function (data) {
+            //                     if (data == "0" || data == "E")
+            //                         alert("Data Not Found...!!!");
+            //                     else {
+            //                         alert(data);
+            //                         for (i = 0, j = -1; i < dt[1]; i++) {
+            //                             var q = "m" + i + "0";
+            //                             var o1 = "m" + i + "1";
+            //                             var o2 = "m" + i + "2";
+            //                             var o3 = "m" + i + "3";
+            //                             var o4 = "m" + i + "4";
+            //                             var e = document.getElementById(q);
+            //                             alert(e.value);
+            //                             var e = document.getElementById(o1);
+            //                             alert(e.value);
+            //                             var e = document.getElementById(o2);
+            //                             alert(e.value);
+            //                             var e = document.getElementById(o3);
+            //                             alert(e.value);
+            //                             var e = document.getElementById(o4);
+            //                             alert(e.value);
+            //                         }
+            //                     }
+            //                 });
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getRSq",
+            //                 {param1: sid},
+            //                 function (data) {
+            //                     if (data == "0" || data == "E")
+            //                         alert("Data Not Found...!!!");
+            //                     else {
+            //                         alert(data);
+            //                         for (i = 0; i < dt[2]; i++) {
+            //                             var r = "r" + i;
+            //                             var e = document.getElementById(r);
+            //                             alert(e.value);
+            //                         }
+            //                     }
+            //                 });
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getCSq",
+            //                 {param1: sid},
+            //                 function (data) {
+            //                     if (data == "0" || data == "E")
+            //                         alert("Data Not Found...!!!");
+            //                     else {
+            //                         alert(data);
+            //                         for (i = 0; i < dt[3]; i++) {
+            //                             var c = "c" + i;
+            //                             var e = document.getElementById(c);
+            //                             alert(e.value);
+            //
+            //                         }
+            //                     }
+            //                 });
+            //         }
+            //     });
+        }
+
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+
+                        <h4><label>Add Question</label></h4>
+                        <table class="table" id="ques">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+
+                    <button type="submit" class="btn btn-block btn-danger" onclick="addQues()">Submit</button>
+
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>
