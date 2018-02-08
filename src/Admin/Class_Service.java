@@ -26,7 +26,7 @@ public class Class_Service
     {
         Session session= DB.Global.getSession();
         Transaction t=session.beginTransaction();
-        java.util.List<CSClass> tlist=session.createQuery("from CSClass ").list();
+        java.util.List<CSClass> tlist=session.createQuery("select s.id,s.name,s.course from CSClass s ").list();
         t.commit();
         session.close();
         return tlist;

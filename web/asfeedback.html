@@ -30,11 +30,11 @@
         {
             validate_admin();
             document.getElementById("sid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     for(var i=0;i<(data.length);i++)
                     {
-                        document.getElementById("sid").options[i]=new Option(data[i]["1"],data[i]["0"]);
+                        document.getElementById("sid").options[i]=new Option(data[i]["name"],data[i]["id"]);
                     }
                 });
         }
@@ -80,10 +80,10 @@
                 </div>
                 <div class="col-sm-8 text-center">
                     <h4><label>Add Feedback Form</label></h4><br>
-                    <div class="form-group text-left" >
-                        <label>Select Subject : </label>
+                    <div class="form-group" >
+                        <label>Select Course</label>
                         <select name="sid" class="form-control" id="sid">
-                            <option value="0">Select Subject</option>
+                            <option value="0">Select Course</option>
                         </select>
                     </div>
                     <div class="form-group">

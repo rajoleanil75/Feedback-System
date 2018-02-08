@@ -8,7 +8,7 @@ public class Lquestion
     private int id;
     private int qtype;
     private int total;
-    private LabBatch labBatch;
+    private Course course;
 
     public int getId() {
         return id;
@@ -34,11 +34,11 @@ public class Lquestion
         this.total = total;
     }
 
-    public LabBatch getLabBatch() {
-        return labBatch;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setLabBatch(LabBatch labBatch) {
-        this.labBatch = labBatch;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

@@ -4,6 +4,16 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
+    <class name="DB.Course" table="course">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(30)" not-null="true" length="30"/>
+        </property>
+    </class>
+
     <class name="DB.CSClass" table="csclass">
         <id name="id">
             <column name="id" sql-type="int"/>
@@ -12,6 +22,7 @@
         <property name="name">
             <column name="name" sql-type="varchar(20)" not-null="true" length="20"/>
         </property>
+        <many-to-one name="course" class="DB.Course" column="course_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Division" table="division">
@@ -90,7 +101,7 @@
         <many-to-one name="division" class="DB.Division" column="division_id" not-null="true" cascade="all"/>
     </class>
 
-    <class name="DB.Squestion" table="Question">
+    <class name="DB.Squestion" table="squestion">
         <id name="id">
             <column name="id" sql-type="int" not-null="true" unique="true" />
             <generator class="native"/>
@@ -101,7 +112,7 @@
         <property name="total">
             <column name="total" sql-type="int" not-null="true"/>
         </property>
-        <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
+        <many-to-one name="course" class="DB.Course" column="course_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Smcq" table="smcq">
@@ -196,7 +207,7 @@
         <property name="total">
             <column name="total" sql-type="int" not-null="true"/>
         </property>
-        <many-to-one name="labBatch" class="DB.LabBatch" column="labbatch_id" not-null="true" cascade="all"/>
+        <many-to-one name="course" class="DB.Course" column="course_id" not-null="true" cascade="all"/>
     </class>
 
     <class name="DB.Lmcq" table="lmcq">

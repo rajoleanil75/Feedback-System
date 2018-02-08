@@ -7,7 +7,7 @@ public class Squestion {
     private int id;
     private int qtype;
     private int total;
-    private Subject subject;
+    private Course course;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Squestion {
         this.total = total;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
