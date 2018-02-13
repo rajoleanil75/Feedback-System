@@ -28,11 +28,25 @@
                     }
             });
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
+                    document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
                     {
-                        document.getElementById("cid").options[i]=new Option(data[i]["1"],data[i]["1"]);
+                        document.getElementById("cid").options[i+1]=new Option(data[i]["name"],data[i]["id"]);
+                    }
+                });
+        }
+        function cidchange() {
+            var cid=document.getElementById("cid");
+            document.getElementById("clid").length = 0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+                {param1: cid.value},
+                function (data) {
+                    document.getElementById("clid").options[0]=new Option("Select Class","-1");
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("clid").options[i+1]=new Option(data[i]["1"],data[i]["0"]);
                     }
                 });
         }
@@ -40,10 +54,11 @@
 
             var tid = document.getElementById('tid');
             var cid = document.getElementById('cid');
+            var clid = document.getElementById('clid');
             var sname = document.getElementById('sname');
             var scode = document.getElementById('scode');
             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/add",
-                {param1: scode.value, param2: sname.value, param3: tid.value, param4: cid.value},
+                {param1: scode.value, param2: sname.value, param3: tid.value, param4: clid.value},
                 function (data) {
                     if(data=='1')
                     {
@@ -52,7 +67,7 @@
                     }
                     else
                     {
-                        alert("Please enter valid subject ID...!!!"+data);
+                        alert("Please enter valid subject ID...!!!");
                     }
                 });
         }
@@ -96,10 +111,15 @@
                                 <option value="0">Select Teacher</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Class</label>
-                            <select name="cid" class="form-control" id="cid">
-                                <option value="0">Select Class</option>
+                        <div class="form-group text-left" >
+                            <label>Select Course : </label>
+                            <select name="cid" id="cid" class="form-control" onchange="cidchange()">
+                            </select>
+                        </div>
+                        <div class="form-group text-left" >
+                            <label>Select Class : </label>
+                            <select name="clid" id="clid" class="form-control">
+
                             </select>
                         </div>
                         <button type="submit" class="btn btn-block btn-danger">Submit</button>

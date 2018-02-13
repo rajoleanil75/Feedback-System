@@ -27,34 +27,77 @@
     </style>
     <script>
 
+        function fetch()
+        {
+            validate_admin();
+            document.getElementById("cid").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+                function (data) {
+                    document.getElementById("cid").options[0]=new Option("Select Course","-1");
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("cid").options[i+1]=new Option(data[i]["name"],data[i]["id"]);
+                    }
+                });
+        }
+        function cidchange() {
+            var cid=document.getElementById("cid");
+            document.getElementById("clid").length = 0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+                {param1: cid.value},
+                function (data) {
+                    document.getElementById("clid").options[0]=new Option("Select Class","-1");
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("clid").options[i+1]=new Option(data[i]["1"],data[i]["0"]);
+                    }
+                });
+        }
+        function clidchange() {
+            var cid=document.getElementById("clid");
+            document.getElementById("did").length = 0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/division_services/getClassWise",
+                {param1: cid.value},
+                function (data) {
+                    document.getElementById("did").options[0]=new Option("Select Division","-1");
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("did").options[i+1]=new Option(data[i]["1"],data[i]["0"]);
+                    }
+                });
+        }
         function addStudent()
         {
+            var cid=document.getElementById("cid");
+            var clid=document.getElementById("clid");
+            var did=document.getElementById("did");
+            if(cid.value=="-1")
+                alert("Please selec Course...!!!");
+            else if(clid.value=="-1")
+                alert("Please selec Class...!!!");
+            else if(did.value=="-1")
+                alert("Please selec Division...!!!");
+            else {
                 var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;
-                if (regex.test($("#excelfile").val().toLowerCase()))
-                {
+                if (regex.test($("#excelfile").val().toLowerCase())) {
                     var xlsxflag = false;
-                    if ($("#excelfile").val().toLowerCase().indexOf(".xlsx") > 0)
-                    {
+                    if ($("#excelfile").val().toLowerCase().indexOf(".xlsx") > 0) {
                         xlsxflag = true;
                     }
-                    if (typeof (FileReader) != "undefined")
-                    {
+                    if (typeof (FileReader) != "undefined") {
 
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             var data = e.target.result;
-                            if (xlsxflag)
-                            {
-                                var workbook = XLSX.read(data, { type: 'binary' });
+                            if (xlsxflag) {
+                                var workbook = XLSX.read(data, {type: 'binary'});
                             }
-                            else
-                            {
-                                var workbook = XLS.read(data, { type: 'binary' });
+                            else {
+                                var workbook = XLS.read(data, {type: 'binary'});
                             }
                             var sheet_name_list = workbook.SheetNames;
                             var exceljson;
-                            sheet_name_list.forEach(function (y)
-                            {
+                            sheet_name_list.forEach(function (y) {
                                 if (xlsxflag) {
                                     exceljson = XLSX.utils.sheet_to_json(workbook.Sheets[y]);
                                 }
@@ -63,31 +106,27 @@
                                 }
 
                             });
-                            var slist=JSON.stringify(exceljson);
-                            var cl=document.getElementById("subcategory");
-                            var dv=document.getElementById("sub1category");
+                            var slist = JSON.stringify(exceljson);
+                            var cl = document.getElementById("clid");
+                            var dv = document.getElementById("did");
                             // alert(cl.value);
                             // alert(dv.value);
                             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/add",
-                                {param1: slist,param2:cl.value,param3:dv.value},
+                                {param1: slist, param2: cl.value, param3: dv.value},
                                 function (data) {
-                                    if(data=='1')
-                                    {
+                                    if (data == '1') {
                                         alert("Student Added Successfully...!!!");
-                                        window.location="http://localhost:8080/Feedback_System_war_exploded/aadd_student.html";
+                                        window.location = "http://localhost:8080/Feedback_System_war_exploded/aadd_student.html";
                                     }
-                                    else
-                                    {
+                                    else {
                                         alert("Invalid Details...!!!");
                                     }
                                 });
                         }
-                        if (xlsxflag)
-                        {
+                        if (xlsxflag) {
                             reader.readAsArrayBuffer($("#excelfile")[0].files[0]);
                         }
-                        else
-                        {
+                        else {
                             reader.readAsBinaryString($("#excelfile")[0].files[0]);
                         }
                     }
@@ -98,43 +137,44 @@
                 else {
                     alert("Please upload a valid Excel file!");
                 }
-        }
-        function dynamicdropdown1(listindex)
-        {
-            document.getElementById("sub1category").length = 0;
-            switch (listindex)
-            {
-                case "1" :
-                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
-                    document.getElementById("sub1category").options[1]=new Option("Div A","1");
-                    document.getElementById("sub1category").options[2]=new Option("Div B","2");
-                    break;
-                case "2" :
-                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
-                    document.getElementById("sub1category").options[1]=new Option("Div A","3");
-                    document.getElementById("sub1category").options[2]=new Option("Div B","4");
-                    break;
-                case "3" :
-                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
-                    document.getElementById("sub1category").options[1]=new Option("Div A","5");
-                    document.getElementById("sub1category").options[2]=new Option("Div B","6");
-                    break;
-                case "4" :
-                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
-                    document.getElementById("sub1category").options[1]=new Option("Div A","7");
-                    break;
-                case "5" :
-                    document.getElementById("sub1category").options[0]=new Option("Please select Division","");
-                    document.getElementById("sub1category").options[1]=new Option("Div A","8");
-                    break;
             }
-            return true;
         }
+        // function dynamicdropdown1(listindex)
+        // {
+        //     document.getElementById("sub1category").length = 0;
+        //     switch (listindex)
+        //     {
+        //         case "1" :
+        //             document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+        //             document.getElementById("sub1category").options[1]=new Option("Div A","1");
+        //             document.getElementById("sub1category").options[2]=new Option("Div B","2");
+        //             break;
+        //         case "2" :
+        //             document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+        //             document.getElementById("sub1category").options[1]=new Option("Div A","3");
+        //             document.getElementById("sub1category").options[2]=new Option("Div B","4");
+        //             break;
+        //         case "3" :
+        //             document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+        //             document.getElementById("sub1category").options[1]=new Option("Div A","5");
+        //             document.getElementById("sub1category").options[2]=new Option("Div B","6");
+        //             break;
+        //         case "4" :
+        //             document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+        //             document.getElementById("sub1category").options[1]=new Option("Div A","7");
+        //             break;
+        //         case "5" :
+        //             document.getElementById("sub1category").options[0]=new Option("Please select Division","");
+        //             document.getElementById("sub1category").options[1]=new Option("Div A","8");
+        //             break;
+        //     }
+        //     return true;
+        // }
 
     </script>
 </head>
 <title>Feedback Portal</title>
-<body>
+<body onload="fetch()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>
@@ -147,32 +187,27 @@
                 </div>
                 <div class="col-sm-8 text-center">
                     <h4><label>Add Student</label></h4><br>
+                    <div class="form-group text-left" >
+                        <label>Select Course : </label>
+                        <select name="cid" id="cid" class="form-control" onchange="cidchange()">
+                        </select>
+                    </div>
                         <div class="form-group text-left" >
                             <label>Select Class : </label>
-                            <select name="subcategory" id="subcategory" onchange="dynamicdropdown1(this.options[this.selectedIndex].value);">
-                                <option value="0">Please select Class</option>
-                                <option value="1">FYBSc</option>
-                                <option value="2">SYBSc</option>
-                                <option value="3">TYBSc</option>
-                                <option value="4">MSc-1</option>
-                                <option value="5">MSc-2</option>
+                            <select name="clid" id="clid" class="form-control" onchange="clidchange()">
+
                             </select>
                         </div>
                     <div class="form-group text-left" >
                         <label>Select Division : </label>
-                        <script type="text/javascript" language="JavaScript">
-                            document.write('<select name="sub1category" id="sub1category"><option value="">Please select Division</option></select>')
-                        </script>
-                        <noscript>
-                            <select name="sub1category" id="sub1category" >
-                                <option value="">Please select Division</option>
-                            </select>
-                        </noscript>
+                        <select name="did" id="did" class="form-control">
+
+                        </select>
                     </div>
 
                         <div class="form-group text-left">
                             <label>Select Student excel sheet :</label>
-                            <input type="file" id="excelfile" name="excelfile" />
+                            <input type="file" id="excelfile" class="form-control" name="excelfile" />
                         </div>
                         <button type="submit" class="btn btn-block btn-danger" onclick="addStudent()">Submit</button>
 

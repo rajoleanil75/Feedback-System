@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
+    <script src="js/xlsx.core.min.js"></script>
+    <script src="js/xls.core.min.js"></script>
+
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "smenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+        function fetch()
+        {
+            document.getElementById("sid").length = 0;
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
+                function (data) {
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("sid").options[i]=new Option(data[i]["1"],data[i]["0"]);
+                    }
+                });
+        }
+        function addFeed() {
+            var sid = document.getElementById('sid');
+            // alert(sid.value);
+            sessionStorage.setItem("sid",sid.value);
+            window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemplate.html";
+        }
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Feedback Form</label></h4><br>
+                    <div class="form-group" >
+                        <label>Select Subject</label>
+                        <select name="sid" class="form-control" id="sid">
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-danger" onclick="addFeed()">Next</button>
+
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>

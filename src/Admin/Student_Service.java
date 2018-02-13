@@ -10,7 +10,9 @@ import org.json.simple.parser.JSONParser;
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,10 +72,20 @@ public class Student_Service {
         {
             Session session1= DB.Global.getSession();
             Transaction t=session1.beginTransaction();
-            java.util.List<Student> slist=session1.createQuery("select s.id,s.name,s.roll,s.CSClass,s.division from Student s where s.division.id=:id").setParameter("id",div).list();
+            java.util.List<Student> tlist=session1.createQuery("from Student s where s.division.id=:id").setParameter("id",div).list();
+            List list=new ArrayList();
+            for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+            {
+                Student student= (Student) iterator.next();
+                List list1=new ArrayList();
+                list1.add(student.getId());
+                list1.add(student.getName());
+                list1.add(student.getRoll());
+                list.add(list1);
+            }
             t.commit();
             session1.close();
-            return slist;
+            return list;
         }
         catch (Exception e)
         {
@@ -92,5 +104,76 @@ public class Student_Service {
         t.commit();
         session.close();
         return slist;
+    }
+    @POST
+    @Path("search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List  search(@FormParam("param1") String sname,@FormParam("param2")int div)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction=session.beginTransaction();
+            java.util.List<Student> tlist=session.createQuery("from Student s where s.division.id=:id1 and s.name like :id ").setParameter("id","%"+sname+"%").setParameter("id1",div).list();
+            List list=new ArrayList();
+            for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+            {
+                Student student= (Student) iterator.next();
+                List list1=new ArrayList();
+                list1.add(student.getId());
+                list1.add(student.getName());
+                list1.add(student.getRoll());
+                list.add(list1);
+            }
+            transaction.commit();
+            session.close();
+            return list;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+    }
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("delete")
+    public String delete(@FormParam("param1") int tid)
+    {
+        try
+        {
+            Session session= DB.Global.getSession();
+            Transaction t=session.beginTransaction();
+            Student student= session.load(Student.class,tid);
+            if (student==null) {
+
+                return "0";
+            }
+            else
+            {
+                session.delete(student);
+//                try {
+//                    String i=teacher.getId();
+//                    Object o = session.load(Teacher.class, i);
+//                    if (o != null)
+//                        session.delete(o);
+//                    else if (o==null) {
+//                        t.commit();
+//                        session.close();
+//                        return "0";
+//                    }
+//                }
+//                catch (Exception e)
+//                {
+//                    return String.valueOf(e)+"Innter";
+//                }
+            }
+            t.commit();
+            session.close();
+            return "1";
+        }
+        catch (Exception e)
+        {
+            return String.valueOf(e);
+        }
     }
 }

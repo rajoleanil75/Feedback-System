@@ -9,6 +9,14 @@ public class Subject {
     private DB.CSClass CSClass;
     private DB.Teacher Teacher;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -30,14 +38,6 @@ public class Subject {
     }
 
     public void setTeacher(DB.Teacher teacher) {
-        Teacher = teacher;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.Teacher = teacher;
     }
 }

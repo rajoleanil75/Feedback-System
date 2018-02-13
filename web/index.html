@@ -47,6 +47,8 @@
                           sessionStorage.setItem("llogin",user.llogin);
                           switch (role.value)
                           {
+                              case '1':window.location="http://localhost:8080/Feedback_System_war_exploded/shome.html";
+                                  break;
                               case '2':alert("Teacher Called");
                                       break;
                               case '3':alert("Co-ordinator Called");
@@ -102,6 +104,7 @@
       <br>
       <select name="role" class="form-control" id="role">
         <option value="0">Select Role</option>
+        <option value="1">Student</option>
         <option value="2">Teacher</option>
         <option value="3">Co-Ordinator</option>
         <option value="4">Admin</option>

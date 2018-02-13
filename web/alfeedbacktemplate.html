@@ -490,7 +490,7 @@
         function fetch() {
             validate_admin();
             var sid=sessionStorage.getItem("sid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/viewAll",
                 {param1: sid },
                 function (data) {
                     document.getElementById('edit').style.visibility = 'hidden';
@@ -633,7 +633,7 @@
 
             if (mcur < tmcq) {
                 for (; mcur < tmcq; mcur++) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/adds",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/adds",
                         {param1: sid, param2:mcq[mcur]['q'], param3:mcq[mcur]['o1'], param4:mcq[mcur]['o2'], param5:mcq[mcur]['o3'], param6:mcq[mcur]['o4']},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -643,7 +643,7 @@
             }
             if (rcur < trate) {
                 for (; rcur < trate; rcur++) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/adds",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/adds",
                         {param1: sid, param2:rate[rcur]['q']},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -653,7 +653,7 @@
             }
             if (ccur < tcomm) {
                 for (; ccur < tcomm; ccur++) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/adds",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/adds",
                         {param1: sid, param2:comm[ccur]['q']},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -662,7 +662,7 @@
                 }
             }
             alert("Feedback Form Created...!!!");
-            window.location="http://localhost:8080/Feedback_System_war_exploded/asfeedback.html";
+            window.location="http://localhost:8080/Feedback_System_war_exploded/alfeedback.html";
         }
 
     </script>
@@ -681,18 +681,18 @@
                 </div>
                 <div class="col-sm-8 text-center">
 
-                        <h4><label id="lbl">Add Question</label></h4>
-                        <table class="table borderless text-left" id="ques">
-                            <tbody>
+                    <h4><label id="lbl">Add Question</label></h4>
+                    <table class="table borderless text-left" id="ques">
+                        <tbody>
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
 
                     <table class="table borderless" id="btn">
                         <tbody>
                         <tr>
                             <th></th>
-                        <th><button type="submit" id="addnext" class="btn btn-block btn-danger" onclick="addNext()">Next</button></th>
+                            <th><button type="submit" id="addnext" class="btn btn-block btn-danger" onclick="addNext()">Next</button></th>
                             <th></th>
                         </tr>
                         <tr>

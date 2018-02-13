@@ -38,7 +38,7 @@
 
     <class name="DB.Teacher" table="Teacher">
         <id name="id">
-            <column name="id" sql-type="varchar(15)" not-null="true" unique="true"/>
+            <column name="id" sql-type="varchar(15)"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(30)" not-null="true" length="30"/>
@@ -50,7 +50,7 @@
 
     <class name="DB.Subject" table="Subject">
         <id name="id">
-            <column name="id" sql-type="varchar(15)" unique="true" not-null="true"/>
+            <column name="id" sql-type="varchar(15)"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(20)" not-null="true" length="20"/>

@@ -45,17 +45,17 @@
             var rate = document.getElementById('rate');
             var comm = document.getElementById('comm');
 
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getMSq",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getMSq",
                 {param1: sid.value},
                 function (data) {
                     if(data=='0')
                     {
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getRSq",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getRSq",
                             {param1: sid.value},
                             function (data) {
                                 if(data=='0')
                                 {
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getCSq",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getCSq",
                                         {param1: sid.value},
                                         function (data) {
                                             if(data=='0')
@@ -66,14 +66,14 @@
                                                 }
                                                 else
                                                 {
-                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/add",
+                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/add",
                                                         {param1: sid.value, param2: mcq.value, param3: rate.value, param4: comm.value},
                                                         function (data) {
                                                             if(data=='1')
                                                             {
                                                                 alert("Question Type Added Successfully...!!!");
                                                                 sessionStorage.setItem("sid",sid.value);
-                                                                window.location="http://localhost:8080/Feedback_System_war_exploded/asfeedbacktemplate.html";
+                                                                window.location="http://localhost:8080/Feedback_System_war_exploded/alfeedbacktemplate.html";
                                                             }
                                                             else
                                                             {

@@ -15,7 +15,7 @@
     <script type='text/javascript'>
         $(document).ready(function(){
             $( "#header" ).load( "header.html" );
-            $( "#amenu" ).load( "amenu.html" );
+            $( "#amenu" ).load( "smenu.html" );
             $( "#footer" ).load( "footer.html" );
         });
     </script>
@@ -280,7 +280,7 @@
         }
 
         function preview() {
-            document.getElementById('edit').style.visibility = 'visible';
+            document.getElementById('edit').style.visibility = 'hidden';
             document.getElementById('save').style.visibility = 'visible';
             document.getElementById('addnext').style.visibility = 'hidden';
             var prv = document.getElementById('ques');
@@ -494,8 +494,8 @@
                 {param1: sid },
                 function (data) {
                     document.getElementById('edit').style.visibility = 'hidden';
-                    document.getElementById('save').style.visibility = 'hidden';
-                    document.getElementById('addnext').style.visibility = 'visible';
+                    document.getElementById('save').style.visibility = 'visible';
+                    document.getElementById('addnext').style.visibility = 'hidden';
                     if(data=="0"||data=="E")
                         alert("Data Not Found...!!!");
                     else{
@@ -506,29 +506,29 @@
                         mcur=-1;
                         rcur=-1;
                         ccur=-1;
-                        if(tmcq>0)
-                        {
-                            mcur=0;
-                            qcur=1;
-                            addMCQ(mcur);
-                            addVMCQ(mcur);
-                        }
-                        else if(trate>0)
-                        {
-                            rcur=0;
-                            qcur=2;
-                            addRATE(rcur);
-                            addVRATE(rcur);
-                        }
-                        else if (tcomm>0)
-                        {
-                            ccur=0;
-                            qcur=3;
-                            addCOMM(ccur);
-                            addVCOMM(ccur);
-                        }
-                        else
-                            alert("Please enter atleast one question...!!!");
+                        // if(tmcq>0)
+                        // {
+                        //     mcur=0;
+                        //     qcur=1;
+                        //     addMCQ(mcur);
+                        //     addVMCQ(mcur);
+                        // }
+                        // else if(trate>0)
+                        // {
+                        //     rcur=0;
+                        //     qcur=2;
+                        //     addRATE(rcur);
+                        //     addVRATE(rcur);
+                        // }
+                        // else if (tcomm>0)
+                        // {
+                        //     ccur=0;
+                        //     qcur=3;
+                        //     addCOMM(ccur);
+                        //     addVCOMM(ccur);
+                        // }
+                        // else
+                        //     alert("Please enter atleast one question...!!!");
 
                     }
                 });
@@ -681,25 +681,15 @@
                 </div>
                 <div class="col-sm-8 text-center">
 
-                        <h4><label id="lbl">Add Question</label></h4>
-                        <table class="table borderless text-left" id="ques">
-                            <tbody>
+                    <h4><label id="lbl">Feedback Form</label></h4>
+                    <table class="table borderless text-left" id="ques">
+                        <tbody>
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
 
                     <table class="table borderless" id="btn">
                         <tbody>
-                        <tr>
-                            <th></th>
-                        <th><button type="submit" id="addnext" class="btn btn-block btn-danger" onclick="addNext()">Next</button></th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th><button type="submit" id="edit" class="btn btn-block btn-danger" onclick="fetch()">Edit</button></th>
-                            <th></th>
-                        </tr>
                         <tr>
                             <th></th>
                             <th><button type="submit" id="save" class="btn btn-block btn-danger" onclick="validate()">Save</button></th>
