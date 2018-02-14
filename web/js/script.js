@@ -3,3 +3,8 @@ function validate_admin() {
     if(aid!=4)
         window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
 }
+function validate_stud() {
+    var sid=sessionStorage.getItem("role");
+    if(sid!=1)
+        window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
+}

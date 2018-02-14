@@ -47,7 +47,23 @@
                           sessionStorage.setItem("llogin",user.llogin);
                           switch (role.value)
                           {
-                              case '1':window.location="http://localhost:8080/Feedback_System_war_exploded/shome.html";
+                              case '1':
+                                  $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/searchById",
+                                  {param1: user.id },
+                                  function (data) {
+                                      // alert(data);
+                                      if (data == "E")
+                                          alert("Invalid Details...!!!");
+                                      else {
+                                          var dt = JSON.parse(data);
+                                          sessionStorage.setItem("studid",dt[1]);
+                                          sessionStorage.setItem("sname",dt[2]);
+                                          sessionStorage.setItem("roll",dt[3]);
+                                          sessionStorage.setItem("sclass",dt[4]);
+                                          sessionStorage.setItem("sdiv",dt[5]);
+                                          window.location="http://localhost:8080/Feedback_System_war_exploded/shome.html";
+                                      }
+                                  });
                                   break;
                               case '2':alert("Teacher Called");
                                       break;
@@ -117,7 +133,7 @@
         </div>
     </form>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <a href="">new user?</a>
+      <a href="http://localhost:8080/Feedback_System_war_exploded/new_user.html">new user?</a>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <a href="">Forget Password</a>
     </div>

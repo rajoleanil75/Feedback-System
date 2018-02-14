@@ -73,6 +73,9 @@ public class Question_service {
         jsonObject.put("1",m.getTotal());
         jsonObject.put("2",r.getTotal());
         jsonObject.put("3",c.getTotal());
+        jsonObject.put("4",m.getId());
+        jsonObject.put("5",r.getId());
+        jsonObject.put("6",c.getId());
 //        return tlist;
 //        return String.valueOf(squestion.getTotal());
         return String.valueOf(jsonObject);

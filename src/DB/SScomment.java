@@ -8,6 +8,7 @@ public class SScomment
     private int id;
     private String ans;
     private Student student;
+    private Subject subject;
     private Scomment scomment;
 
     public int getId() {
@@ -40,5 +41,13 @@ public class SScomment
 
     public void setScomment(Scomment scomment) {
         this.scomment = scomment;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

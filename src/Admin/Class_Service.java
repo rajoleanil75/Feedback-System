@@ -51,4 +51,19 @@ public class Class_Service
         session.close();
         return list;
     }
+    @POST
+    @Path("getClassCourse")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getClassCourse(@FormParam("param1") int sid)
+    {
+        Session session1= DB.Global.getSession();
+        Transaction t1=session1.beginTransaction();
+        CSClass csClass= (CSClass) session1.createQuery("from CSClass s where s.id=:sid").setParameter("sid",sid).uniqueResult();
+        int i=csClass.getCourse().getId();
+        t1.commit();
+        session1.close();
+        if(csClass==null)
+            return "0";
+        return ""+i+"";
+    }
 }

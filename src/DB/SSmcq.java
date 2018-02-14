@@ -7,6 +7,7 @@ public class SSmcq {
     private int id;
     private String ans;
     private Student student;
+    private Subject subject;
     private Smcq smcq;
 
     public int getId() {
@@ -39,5 +40,13 @@ public class SSmcq {
 
     public void setSmcq(Smcq smcq) {
         this.smcq = smcq;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

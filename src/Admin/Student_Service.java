@@ -132,7 +132,30 @@ public class Student_Service {
         {
             return null;
         }
-
+    }
+    @POST
+    @Path("searchById")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String searchById(@FormParam("param1") int sid)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction=session.beginTransaction();
+            Student student= (Student) session.createQuery("from Student s where s.id=:sid").setParameter("sid",sid).uniqueResult();
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("1",student.getId());
+            jsonObject.put("2",student.getName());
+            jsonObject.put("3",student.getRoll());
+            jsonObject.put("4",student.getCSClass().getId());
+            jsonObject.put("5",student.getDivision().getId());
+            transaction.commit();
+            session.close();
+            return String.valueOf(jsonObject);
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
     }
     @POST
     @Produces(MediaType.TEXT_PLAIN)

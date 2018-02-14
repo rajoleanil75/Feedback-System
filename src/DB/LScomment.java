@@ -9,6 +9,7 @@ public class LScomment
     private String ans;
     private Student student;
     private Lcomment lcomment;
+    private Teacher_LabBatch teacher_labBatch;
 
     public Lcomment getLcomment() {
         return lcomment;
@@ -40,5 +41,14 @@ public class LScomment
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public Teacher_LabBatch getTeacher_labBatch() {
+        return teacher_labBatch;
+    }
+
+    public void setTeacher_labBatch(Teacher_LabBatch teacher_labBatch) {
+        this.teacher_labBatch = teacher_labBatch;
     }
 }

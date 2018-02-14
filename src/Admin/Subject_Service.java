@@ -60,6 +60,7 @@ public class Subject_Service
             list1.add(subject.getId());
             list1.add(subject.getName());
             list1.add(subject.getCSClass().getCourse().getId());
+            list1.add(subject.getCSClass().getId());
             list.add(list1);
         }
         t.commit();
@@ -94,21 +95,26 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List getClassWise(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
-        Transaction t=session.beginTransaction();
-        java.util.List<Subject> tlist=session.createQuery("from Subject s where s.CSClass.id=:id").setParameter("id",cid).list();
-        List list=new ArrayList();
-        for(Iterator iterator=tlist.iterator();iterator.hasNext();)
-        {
-            Subject subject= (Subject) iterator.next();
-            List list1=new ArrayList();
-            list1.add(subject.getId());
-            list1.add(subject.getName());
-            list.add(list1);
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            java.util.List<Subject> tlist = session.createQuery("from Subject s where s.CSClass.id=:id").setParameter("id", cid).list();
+            List list = new ArrayList();
+            for (Iterator iterator = tlist.iterator(); iterator.hasNext(); ) {
+                Subject subject = (Subject) iterator.next();
+                List list1 = new ArrayList();
+                list1.add(subject.getId());
+                list1.add(subject.getName());
+                list.add(list1);
+            }
+            t.commit();
+            session.close();
+            return list;
         }
-        t.commit();
-        session.close();
-        return list;
+        catch (Exception e)
+        {
+            return (List) e;
+        }
     }
 
     @POST
@@ -131,6 +137,25 @@ public class Subject_Service
         t.commit();
         session.close();
         return list;
+    }
+    @POST
+    @Path("getsname")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getSName(@FormParam("param1") String cid)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            Subject subject = session.load(Subject.class, cid);
+            String s=subject.getName();
+            t.commit();
+            session.close();
+            return s;
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
     }
     @POST
     @Produces(MediaType.TEXT_PLAIN)

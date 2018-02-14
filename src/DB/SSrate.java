@@ -8,6 +8,7 @@ public class SSrate
     private int id;
     private int ans;
     private Student student;
+    private Subject subject;
     private Srate srate;
 
     public int getId() {
@@ -40,5 +41,13 @@ public class SSrate
 
     public void setSrate(Srate srate) {
         this.srate = srate;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

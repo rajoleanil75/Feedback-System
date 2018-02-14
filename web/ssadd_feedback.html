@@ -9,8 +9,7 @@
     <script type="text/javascript" src="js/script.js"></script>
 
     <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
-    <script src="js/xlsx.core.min.js"></script>
-    <script src="js/xls.core.min.js"></script>
+
 
     <script type='text/javascript'>
         $(document).ready(function(){
@@ -28,20 +27,60 @@
     <script>
         function fetch()
         {
+            validate_stud();
+            var cid=sessionStorage.getItem("sclass");
             document.getElementById("sid").length = 0;
             $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
                 function (data) {
-                    for(var i=0;i<(data.length);i++)
+                    for(var i=0,j=0;i<(data.length);i++)
                     {
-                        document.getElementById("sid").options[i]=new Option(data[i]["1"],data[i]["0"]);
+                        if(data[i]["3"]==cid)
+                            document.getElementById("sid").options[j++]=new Option(data[i]["1"],data[i]["0"]);
                     }
                 });
         }
         function addFeed() {
+            cnt=0;
+            fcnt=0;
             var sid = document.getElementById('sid');
             // alert(sid.value);
-            sessionStorage.setItem("sid",sid.value);
-            window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemplate.html";
+
+            var stud=sessionStorage.getItem("studid");
+            // // alert(stud);
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/subcheck",
+            //     {param1:stud, param2:sid.value},
+            //     function (data) {
+            //         alert(data);
+            //         if (data == "0"){
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/subcheck",
+            //                 {param1:stud, param2:sid.value},
+            //                 function (data) {
+            //                 alert(data);
+            //                     if (data == "0"){
+            //                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/subcheck",
+            //                             {param1:stud, param2:sid.value},
+            //                             function (data) {
+            //                             alert(data);
+            //                                 if (data == "0"){
+            //                                     sessionStorage.setItem("subid",sid.value);
+            //                                     window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
+            //                                 }
+            //                                 else {
+            //                                     alert("Feedback already given...!!!")
+            //                                 }
+            //                             });
+            //                     }
+            //                     else {
+            //                         alert("Feedback already given...!!!")
+            //                     }
+            //                 });
+            //         }
+            //         else {
+            //             alert("Feedback already given...!!!")
+            //         }
+            //     });
+            sessionStorage.setItem("subid",sid.value);
+            window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
         }
 
     </script>
