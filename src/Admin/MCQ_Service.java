@@ -1,10 +1,12 @@
 package Admin;
 
 import DB.*;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.jws.WebService;
+import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -71,10 +73,31 @@ public class MCQ_Service {
             return "0";
         }
     }
+
+    @POST
+    @Path("searchssmcq")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String searchSSmcq(@FormParam("param1") int stud, @FormParam("param2") String sub, @FormParam("param3") int sm)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            SSmcq sSmcq= (SSmcq) session.createQuery("from SSmcq s where s.subject.id=:id and s.student.id=:id1 and s.smcq.id=:id2").setParameter("id",sub).setParameter("id1",stud).setParameter("id2",sm).uniqueResult();
+            String i=sSmcq.getAns();
+            transaction.commit();
+            session.close();
+            return i;
+        }
+        catch (Exception e)
+        {
+            return "0";
+        }
+    }
+
     @POST
     @Path("subcheck")
     @Produces(MediaType.TEXT_PLAIN)
-    public String subcheck(@FormParam("param1") int stud, @FormParam("param1") String sub)
+    public String subcheck(@FormParam("param1") int stud, @FormParam("param2") String sub)
     {
         try {
             Session session = Global.getSession();
@@ -90,9 +113,49 @@ public class MCQ_Service {
                 return "1";
             }
         }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (NonUniqueResultException e)
+        {
+            return "1";
+        }
         catch (Exception e)
         {
-            return String.valueOf(e);
+            return "1";
+        }
+    }
+    @POST
+    @Path("subcheck1")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String subcheck1(@FormParam("param1") String sub)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            SSmcq sSmcq= (SSmcq) session.createQuery("from SSmcq s where s.subject.id=:id1").setParameter("id1",sub).getSingleResult();
+            if (sSmcq==null) {
+                transaction.commit();
+                session.close();
+                return "0";
+            }
+            else {
+
+                return "1";
+            }
+        }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (NonUniqueResultException e)
+        {
+            return "1";
+        }
+        catch (Exception e)
+        {
+            return "1";
         }
     }
 

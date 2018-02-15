@@ -1,11 +1,13 @@
 package Admin;
 
 import DB.*;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.boot.model.process.internal.ScanningCoordinator;
 
 import javax.jws.WebService;
+import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -69,12 +71,12 @@ public class Comment_Service {
     @POST
     @Path("subcheck")
     @Produces(MediaType.TEXT_PLAIN)
-    public String subcheck(@FormParam("param1") int stud, @FormParam("param1") String sub)
+    public String subcheck(@FormParam("param1") int stud, @FormParam("param2") String sub)
     {
         try {
             Session session = Global.getSession();
             Transaction transaction = session.beginTransaction();
-            SScomment sSmcq= (SScomment) session.createQuery("from SScomment s where s.student.id=:id and s.subject.id=:id1").setParameter("id",stud).setParameter("id1",sub).setMaxResults(1);
+            SScomment sSmcq= (SScomment) session.createQuery("from SScomment s where s.student.id=:id and s.subject.id=:id1").setParameter("id",stud).setParameter("id1",sub).getSingleResult();
             if (sSmcq==null) {
                 transaction.commit();
                 session.close();
@@ -86,9 +88,36 @@ public class Comment_Service {
                 return "1";
             }
         }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (NonUniqueResultException e)
+        {
+            return "1";
+        }
         catch (Exception e)
         {
-            return String.valueOf(e);
+            return "1";
+        }
+    }
+    @POST
+    @Path("searchsscomm")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String searchSScomm(@FormParam("param1") int stud, @FormParam("param2") String sub, @FormParam("param3") int sm)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            SScomment sScomment= (SScomment) session.createQuery("from SScomment s where s.subject.id=:id and s.student.id=:id1 and s.scomment.id=:id2").setParameter("id",sub).setParameter("id1",stud).setParameter("id2",sm).uniqueResult();
+            String i=sScomment.getAns();
+            transaction.commit();
+            session.close();
+            return i;
+        }
+        catch (Exception e)
+        {
+            return "0";
         }
     }
     @POST

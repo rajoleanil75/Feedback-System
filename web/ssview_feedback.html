@@ -54,32 +54,33 @@
                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/subcheck",
                             {param1:stud, param2:sid.value},
                             function (data) {
-                            // alert(data);
+                                // alert(data);
                                 if (data == "0"){
                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/subcheck",
                                         {param1:stud, param2:sid.value},
                                         function (data) {
-                                        // alert(data);
+                                            // alert(data);
                                             if (data == "0"){
-                                                sessionStorage.setItem("subid",sid.value);
-                                                window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
+                                                alert("Feedback not given...!!!")
                                             }
                                             else {
-                                                alert("Feedback already given...!!!")
+                                                sessionStorage.setItem("subid",sid.value);
+                                                window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
                                             }
                                         });
                                 }
                                 else {
-                                    alert("Feedback already given...!!!")
+                                    sessionStorage.setItem("subid",sid.value);
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
                                 }
                             });
                     }
                     else {
-                        alert("Feedback already given...!!!")
+                        sessionStorage.setItem("subid",sid.value);
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
                     }
                 });
-            // sessionStorage.setItem("subid",sid.value);
-            // window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
+
         }
 
     </script>

@@ -32,15 +32,16 @@
         function fetch() {
             validate_stud();
             var lbl0 = document.getElementById('lbl');
-            var sid=sessionStorage.getItem("subid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getsname",
-                {param1: sid },
+            lid=sessionStorage.getItem("lid");
+            labid=sessionStorage.getItem("labid");
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getlname",
+                {param1: labid },
                 function (data) {
                     // alert(data);
                     if (data == "E")
                         alert("Invalid Details...!!!");
                     else {
-                        lbl0.innerText="Subject("+data+") Feedback Form";
+                        lbl0.innerText=""+data+" Feedback Form";
                     }
                 });
             var cls=sessionStorage.getItem("sclass");
@@ -53,7 +54,7 @@
                     else {
                         c=data;
                         sessionStorage.setItem("scourse",c);
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/viewAll",
                             {param1: c },
                             function (data) {
                                 if(data=="0"||data=="E")
@@ -69,7 +70,7 @@
                                     var prv = document.getElementById('ques');
                                     var j=0;
                                     var qn=1;
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/viewAll",
                                         {param1: mcqid},
                                         function (data) {
                                             for(var i=0;i<(data.length);i++)
@@ -139,7 +140,7 @@
 
                                                 var x = prv.insertRow(j++);
                                                 y1 = x.insertCell(0);
-                                                if(data[i]["2"]!="")
+                                                if(data[i]["2"]=="")
                                                 {
                                                     var rad = document.createElement('input');
                                                     rad.type = "radio";
@@ -151,7 +152,7 @@
                                                     y1.appendChild(rad);
                                                     y1.appendChild(lbl5);
                                                 }
-                                                if(data[i]["3"]!="")
+                                                if(data[i]["3"]=="")
                                                 {
                                                     var rad = document.createElement('input');
                                                     rad.type = "radio";
@@ -163,7 +164,7 @@
                                                     y1.appendChild(rad);
                                                     y1.appendChild(lbl5);
                                                 }
-                                                if(data[i]["4"]!="")
+                                                if(data[i]["4"]=="")
                                                 {
                                                     var rad = document.createElement('input');
                                                     rad.type = "radio";
@@ -175,7 +176,7 @@
                                                     y1.appendChild(rad);
                                                     y1.appendChild(lbl5);
                                                 }
-                                                if(data[i]["5"]!="")
+                                                if(data[i]["5"]=="")
                                                 {
                                                     var rad = document.createElement('input');
                                                     rad.type = "radio";
@@ -188,8 +189,8 @@
                                                     y1.appendChild(lbl5);
                                                 }
                                             }
-                                    });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
+                                        });
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/viewAll",
                                         {param1: rateid},
                                         function (data) {
                                             for (var i = 0; i < (data.length); i++) {
@@ -255,8 +256,8 @@
                                                 y1.appendChild(lbl5);
 
                                             }
-                                    });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
+                                        });
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/viewAll",
                                         {param1: commid},
                                         function (data) {
                                             for (var i = 0; i < (data.length); i++) {
@@ -277,7 +278,7 @@
                                                 rad.id="c"+i+"";
                                                 y1.appendChild(rad);
                                             }
-                                    });
+                                        });
 
 
                                 }
@@ -291,16 +292,20 @@
             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
                 {param1: cls },
                 function (data) {
-                    if (data == "0")
+                    if (data == "0") {
                         alert("Invalid Details...!!!");
+                        return false;
+                    }
                     else {
                         c=data;
                         sessionStorage.setItem("scourse",c);
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/viewAll",
                             {param1: c },
                             function (data) {
-                                if(data=="0"||data=="E")
+                                if(data=="0"||data=="E") {
                                     alert("Data Not Found...!!!");
+                                    return false;
+                                }
                                 else {
                                     var dt = JSON.parse(data);
                                     tmcq = dt[1];
@@ -312,7 +317,7 @@
                                     var prv = document.getElementById('ques');
                                     var j=0;
                                     var qn=1;
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/viewAll",
                                         {param1: mcqid},
                                         function (data) {
                                             for(var i=0;i<(data.length);i++)
@@ -331,11 +336,14 @@
                                                     // if(temp1[3].checked==true)
                                                     //     alert("4m");
                                                 }
-                                                else
+                                                else {
                                                     alert("Plese answer all the question...!!!");
+                                                    return false;
+                                                    break;
+                                                }
                                             }
                                         });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/viewAll",
                                         {param1: rateid},
                                         function (data) {
                                             for (var i = 0; i < (data.length); i++) {
@@ -344,19 +352,25 @@
                                                 // alert(temp1+" Rate");
                                                 if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true||temp1[4].checked==true)
                                                     continue;
-                                                else
+                                                else {
                                                     alert("Plese answer all the question...!!!");
+                                                    return false;
+                                                    break;
+                                                }
                                             }
                                         });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/viewAll",
                                         {param1: commid},
                                         function (data) {
                                             for (var i = 0; i < (data.length); i++) {
                                                 var temp = "c"+i+"";
                                                 var temp1=document.getElementById(temp);
                                                 // alert(temp1.value+" comm");
-                                                if(temp1.value=="")
+                                                if(temp1.value=="") {
                                                     alert("Plese answer all the question...!!!");
+                                                    return false;
+                                                    break;
+                                                }
                                             }
                                         });
 
@@ -367,134 +381,162 @@
                 });
         }
         function addFeed() {
-            validate();
-            var cls=sessionStorage.getItem("sclass");
-            var sub=sessionStorage.getItem("subid");
-            var stud=sessionStorage.getItem("studid");
-            c=0;
-            var dbcnt=0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
-                {param1: cls },
-                function (data) {
-                    if (data == "0")
-                        alert("Invalid Details...!!!");
-                    else {
-                        c=data;
-                        sessionStorage.setItem("scourse",c);
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
-                            {param1: c },
-                            function (data) {
-                                if(data=="0"||data=="E")
-                                    alert("Data Not Found...!!!");
-                                else {
-                                    var dt = JSON.parse(data);
-                                    tmcq = dt[1];
-                                    trate = dt[2];
-                                    tcomm = dt[3];
-                                    mcqid = dt[4];
-                                    rateid = dt[5];
-                                    commid = dt[6];
-                                    var prv = document.getElementById('ques');
-                                    var j=0;
-                                    var qn=1;
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
-                                        {param1: mcqid},
-                                        function (data) {
-                                            for(var i=0;i<(data.length);i++)
-                                            {
-                                                var temp = "m" + i + "";
-                                                var temp1=document.getElementsByName(temp);
-                                                // alert(temp1.value+" MCQ");
-                                                var r=0;
-                                                if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true) {
-                                                    // continue;
-                                                    if(temp1[0].checked==true)
-                                                        r=1;
-                                                    if(temp1[1].checked==true)
-                                                        r=2;
-                                                    if(temp1[2].checked==true)
-                                                        r=3;
-                                                    if(temp1[3].checked==true)
-                                                        r=4;
+            var q=validate();
+            if(q==false)
+                return false;
+            else {
+                var cls = sessionStorage.getItem("sclass");
+                var sub = sessionStorage.getItem("subid");
+                var stud = sessionStorage.getItem("studid");
+                var lid = sessionStorage.getItem("lid");
+                var labid = sessionStorage.getItem("labid");
+                c = 0;
+                var dbcnt = 0;
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
+                    {param1: cls},
+                    function (data) {
+                        if (data == "0") {
+                            alert("Invalid Details...!!!");
+                            return;
+                        }
+                        else {
+                            c = data;
+                            sessionStorage.setItem("scourse", c);
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/viewAll",
+                                {param1: c},
+                                function (data) {
+                                    if (data == "0" || data == "E") {
+                                        alert("Data Not Found...!!!");
+                                        return;
+                                    }
+                                    else {
+                                        var dt = JSON.parse(data);
+                                        tmcq = dt[1];
+                                        trate = dt[2];
+                                        tcomm = dt[3];
+                                        mcqid = dt[4];
+                                        rateid = dt[5];
+                                        commid = dt[6];
+                                        var prv = document.getElementById('ques');
+                                        var j = 0;
+                                        var qn = 1;
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/viewAll",
+                                            {param1: mcqid},
+                                            function (data) {
+                                                for (var i = 0; i < (data.length); i++) {
+                                                    var temp = "m" + i + "";
+                                                    var temp1 = document.getElementsByName(temp);
+                                                    // alert(temp1.value+" MCQ");
+                                                    var r = 0;
+                                                    if (temp1[0].checked == true || temp1[1].checked == true || temp1[2].checked == true || temp1[3].checked == true) {
+                                                        // continue;
+                                                        if (temp1[0].checked == true)
+                                                            r = 1;
+                                                        if (temp1[1].checked == true)
+                                                            r = 2;
+                                                        if (temp1[2].checked == true)
+                                                            r = 3;
+                                                        if (temp1[3].checked == true)
+                                                            r = 4;
 
-                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/add",
-                                                        {param1: r, param2:stud, param3:sub, param4:data[i]["0"]},
-                                                        function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
-                                                                dbcnt++;
-                                                        });
+                                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/add",
+                                                            {
+                                                                param1: r,
+                                                                param2: stud,
+                                                                param3: lid,
+                                                                param4: data[i]["0"]
+                                                            },
+                                                            function (data) {
+                                                                if (data == "0" || data == "E")
+                                                                    alert("Something went wrong...!!!");
+                                                                else
+                                                                    dbcnt++;
+                                                            });
+                                                    }
+                                                    else {
+                                                        alert("Plese answer all the question...!!!");
+                                                        return;
+                                                    }
                                                 }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
-                                            }
-                                        });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
-                                        {param1: rateid},
-                                        function (data) {
-                                            for (var i = 0; i < (data.length); i++) {
-                                                var temp = "r"+i+"";
-                                                var temp1=document.getElementsByName(temp);
-                                                // alert(temp1+" Rate");
-                                                var r=0;
-                                                if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true||temp1[4].checked==true)
-                                                {
-                                                    if(temp1[0].checked==true)
-                                                        r=1;
-                                                    if(temp1[1].checked==true)
-                                                        r=2;
-                                                    if(temp1[2].checked==true)
-                                                        r=3;
-                                                    if(temp1[3].checked==true)
-                                                        r=4;
-                                                    if(temp1[4].checked==true)
-                                                        r=5;
+                                            });
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/viewAll",
+                                            {param1: rateid},
+                                            function (data) {
+                                                for (var i = 0; i < (data.length); i++) {
+                                                    var temp = "r" + i + "";
+                                                    var temp1 = document.getElementsByName(temp);
+                                                    // alert(temp1+" Rate");
+                                                    var r = 0;
+                                                    if (temp1[0].checked == true || temp1[1].checked == true || temp1[2].checked == true || temp1[3].checked == true || temp1[4].checked == true) {
+                                                        if (temp1[0].checked == true)
+                                                            r = 1;
+                                                        if (temp1[1].checked == true)
+                                                            r = 2;
+                                                        if (temp1[2].checked == true)
+                                                            r = 3;
+                                                        if (temp1[3].checked == true)
+                                                            r = 4;
+                                                        if (temp1[4].checked == true)
+                                                            r = 5;
 
-                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/add",
-                                                        {param1: r, param2:stud, param3:sub, param4:data[i]["0"]},
-                                                        function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
-                                                                dbcnt++;
-                                                        });
+                                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/add",
+                                                            {
+                                                                param1: r,
+                                                                param2: stud,
+                                                                param3: lid,
+                                                                param4: data[i]["0"]
+                                                            },
+                                                            function (data) {
+                                                                if (data == "0" || data == "E")
+                                                                    alert("Something went wrong...!!!");
+                                                                else
+                                                                    dbcnt++;
+                                                            });
+                                                    }
+                                                    else {
+                                                        alert("Plese answer all the question...!!!");
+                                                        return;
+                                                    }
                                                 }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
-                                            }
-                                        });
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
-                                        {param1: commid},
-                                        function (data) {
-                                            for (var i = 0; i < (data.length); i++) {
-                                                var temp = "c"+i+"";
-                                                var temp1=document.getElementById(temp);
-                                                // alert(temp1.value+" comm");
-                                                if(temp1.value=="")
-                                                    alert("Plese answer all the question...!!!");
-                                                else
-                                                {
-                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/add",
-                                                        {param1: temp1.value, param2:stud, param3:sub, param4:data[i]["0"]},
-                                                        function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
-                                                                dbcnt++;
-                                                        });
+                                            });
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/viewAll",
+                                            {param1: commid},
+                                            function (data) {
+                                                for (var i = 0; i < (data.length); i++) {
+                                                    var temp = "c" + i + "";
+                                                    var temp1 = document.getElementById(temp);
+                                                    // alert(temp1.value+" comm");
+                                                    if (temp1.value == "") {
+                                                        alert("Plese answer all the question...!!!");
+                                                        return;
+                                                    }
+                                                    else {
+                                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/add",
+                                                            {
+                                                                param1: temp1.value,
+                                                                param2: stud,
+                                                                param3: lid,
+                                                                param4: data[i]["0"]
+                                                            },
+                                                            function (data) {
+                                                                if (data == "0" || data == "E")
+                                                                    alert("Something went wrong...!!!");
+                                                                else
+                                                                    dbcnt++;
+                                                            });
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
 
-                                }
-                            });
-                    }
-                });
+                                    }
+                                });
+                        }
+                    });
 
                 alert("Feedback added Successfully...!!!");
-                window.location="http://localhost:8080/Feedback_System_war_exploded/ssadd_feedback.html";
+                window.location = "http://localhost:8080/Feedback_System_war_exploded/sladd_feedback.html";
+            }
         }
     </script>
 </head>

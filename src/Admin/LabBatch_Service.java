@@ -48,6 +48,25 @@ public class LabBatch_Service {
         }
     }
     @POST
+    @Path("getlname")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getLName(@FormParam("param1") int cid)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            LabBatch subject = session.load(LabBatch.class, cid);
+            String s=subject.getName();
+            t.commit();
+            session.close();
+            return s;
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
+    }
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("addteacherlab")
     public String add(@FormParam("param1") String tname, @FormParam("param2") int lab)
@@ -93,6 +112,29 @@ public class LabBatch_Service {
         session.close();
         return list;
     }
+
+    @POST
+    @Path("getteacher")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List getTeacher(@FormParam("param1") int lid)
+    {
+        Session session= DB.Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.labBatch.id=:id").setParameter("id",lid).list();
+        List list=new ArrayList();
+        for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+        {
+            Teacher_LabBatch teacher_labBatch= (Teacher_LabBatch) iterator.next();
+            List list1=new ArrayList();
+            list1.add(teacher_labBatch.getId());
+            list1.add(teacher_labBatch.getTeacher().getName());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+
     @POST
     @Path("getTeacherWise")
     @Produces(MediaType.APPLICATION_JSON)

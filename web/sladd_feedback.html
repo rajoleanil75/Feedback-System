@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script src="scripts/jquery-3.2.1.js" type="text/javascript"></script>
+
+
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "smenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+        function fetch()
+        {
+            validate_stud();
+            var cid=sessionStorage.getItem("sclass");
+            var roll=sessionStorage.getItem("roll");
+            document.getElementById("sid").length = 0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getClassWise",
+                {param1:cid},
+                function (data) {
+                    document.getElementById("sid").options[0]=new Option("Select Lab Batch","-1");
+                    for(var i=0,j=1;i<(data.length);i++)
+                    {
+                        if(data[i]["2"]<=roll && roll<=data[i]["3"])
+                            document.getElementById("sid").options[j++]=new Option(data[i]["1"],data[i]["0"]);
+                    }
+                });
+        }
+        function change() {
+            sid=document.getElementById("sid");
+            if(sid.value!="-1")
+            {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getteacher",
+                    {param1:sid.value},
+                    function (data) {
+                        document.getElementById("tid").options[0]=new Option("Select Instructor","-1");
+                        for(var i=0,j=1;i<(data.length);i++)
+                        {
+                            document.getElementById("tid").options[j++]=new Option(data[i]["1"],data[i]["0"]);
+                        }
+                    });
+            }
+            else
+                alert("Please select Lab Batch...!!!");
+        }
+        function addFeed() {
+
+            cnt=0;
+            fcnt=0;
+            var sid = document.getElementById('sid');
+            var tid = document.getElementById('tid');
+            var stud=sessionStorage.getItem("studid");
+            // alert(sid.value);
+            // alert(stud);
+            if(tid.value!="-1" && sid.value!="-1") {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/subcheck",
+                    {param1: stud, param2: tid.value},
+                    function (data) {
+                        // alert(data);
+                        if (data == "0") {
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/subcheck",
+                                {param1: stud, param2: tid.value},
+                                function (data) {
+                                    // alert(data);
+                                    if (data == "0") {
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/subcheck",
+                                            {param1: stud, param2: tid.value},
+                                            function (data) {
+                                                // alert(data);
+                                                if (data == "0") {
+                                                    sessionStorage.setItem("lid", tid.value);
+                                                    sessionStorage.setItem("labid", sid.value);
+                                                    window.location = "http://localhost:8080/Feedback_System_war_exploded/slfeedbacktemp.html";
+                                                }
+                                                else {
+                                                    alert("Feedback already given...!!!")
+                                                }
+                                            });
+                                    }
+                                    else {
+                                        alert("Feedback already given...!!!")
+                                    }
+                                });
+                        }
+                        else {
+                            alert("Feedback already given...!!!")
+                        }
+                    });
+            }
+            else
+            {
+                alert("Please select Instructor...!!!");
+            }
+            // sessionStorage.setItem("subid",sid.value);
+            // window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
+        }
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Feedback Form</label></h4><br>
+                    <div class="form-group text-left" >
+                        <label>Select Lab Batch</label>
+                        <select name="sid" class="form-control" id="sid" onchange="change()">
+
+                        </select>
+                    </div>
+                    <div class="form-group text-left" >
+                        <label>Select Instructor</label>
+                        <select name="tid" class="form-control" id="tid" >
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-danger" onclick="addFeed()">Next</button>
+
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>
