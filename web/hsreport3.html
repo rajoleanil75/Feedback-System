@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "hmenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+    </style>
+    <script>
+        function fetch()
+        {
+            validate_hod();
+            var sid=sessionStorage.getItem("subid");
+            var cls=sessionStorage.getItem("sclass");
+            c=0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
+                {param1: cls },
+                function (data) {
+                    if (data == "0")
+                        alert("Invalid Details...!!!");
+                    else {
+                        c = data;
+                        sessionStorage.setItem("scourse", c);
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+                            {param1: c},
+                            function (data) {
+                                if (data == "0" || data == "E")
+                                    alert("Data Not Found...!!!");
+                                else {
+                                    var dt = JSON.parse(data);
+                                    tmcq = dt[1];
+                                    trate = dt[2];
+                                    tcomm = dt[3];
+                                    mcqid = dt[4];
+                                    rateid = dt[5];
+                                    commid = dt[6];
+                                    var prv = document.getElementById('ques');
+                                    var j = 0;
+                                    var qn = 1;
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
+                                        {param1: commid},
+                                        function (data) {
+                                        // alert(data);
+                                            document.getElementById("cid").options[0]=new Option("Select Question","-1");
+                                            for(var i=0;i<(data.length);i++)
+                                            {
+                                                document.getElementById("cid").options[i+1]=new Option(data[i]["1"],data[i]["0"]);
+                                            }
+                                        });
+                                }
+                            });
+                    }
+                });
+        }
+
+        function addSubject() {
+            var tid=document.setElementById("cid");
+            if(tid.value!=-1)
+            {
+                sessionStorage.setItem("scommentid",tid.value);
+                window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport31.html";
+            }
+        }
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Subject Report</label></h4>
+                    <form class="form-text text-left" action="javascript:addSubject();">
+                        <div class="form-group text-left" >
+                            <label>Select Comment Question</label>
+                            <select name="cid" id="cid" class="form-control">
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-danger">Next</button>
+                    </form>
+
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>

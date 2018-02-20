@@ -102,6 +102,38 @@ public class Comment_Service {
         }
     }
     @POST
+    @Path("subcheck1")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String subcheck1(@FormParam("param1") String sub)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            SScomment sSmcq= (SScomment) session.createQuery("from SScomment s where s.subject.id=:id1").setParameter("id1",sub).getSingleResult();
+            if (sSmcq==null) {
+                transaction.commit();
+                session.close();
+                return "0";
+            }
+            else {
+
+                return "1";
+            }
+        }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (NonUniqueResultException e)
+        {
+            return "1";
+        }
+        catch (Exception e)
+        {
+            return "1";
+        }
+    }
+    @POST
     @Path("searchsscomm")
     @Produces(MediaType.TEXT_PLAIN)
     public String searchSScomm(@FormParam("param1") int stud, @FormParam("param2") String sub, @FormParam("param3") int sm)
@@ -141,4 +173,5 @@ public class Comment_Service {
         session.close();
         return list;
     }
+
 }

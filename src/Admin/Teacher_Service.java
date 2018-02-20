@@ -1,9 +1,6 @@
 package Admin;
 
-import DB.CSClass;
-import DB.Global;
-import DB.Teacher;
-import DB.User;
+import DB.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
@@ -11,6 +8,7 @@ import org.json.simple.JSONObject;
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -46,43 +44,48 @@ public class Teacher_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("delete")
-    public String delete(@FormParam("param1") String tid)
-    {
-        try
-        {
-            Session session= DB.Global.getSession();
-            Transaction t=session.beginTransaction();
-            Teacher teacher= session.load(Teacher.class,tid);
-            if (teacher==null) {
-
-                return "0";
-            }
-            else
-            {
-                session.delete(teacher);
-//                try {
-//                    String i=teacher.getId();
-//                    Object o = session.load(Teacher.class, i);
-//                    if (o != null)
-//                        session.delete(o);
-//                    else if (o==null) {
-//                        t.commit();
-//                        session.close();
-//                        return "0";
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    return String.valueOf(e)+"Innter";
-//                }
-            }
+    public String delete(@FormParam("param1") String tid) {
+        try {
+        Session session = DB.Global.getSession();
+        Transaction t = session.beginTransaction();
+//        Teacher teacher = session.load(Teacher.class, tid);
+//      session.delete(teacher);
+        Serializable id = tid;
+//      String i=teacher.getId();
+        Object o = session.load(Teacher.class, id);
+        if (o != null)
+            session.delete(o);
+        else if (o == null) {
             t.commit();
             session.close();
-            return "1";
+            return "0";
+        }
+        t.commit();
+        session.close();
+        return "1";
+    }
+    catch (Exception e)
+        {
+            return String.valueOf(e);
+        }
+    }
+    @POST
+    @Path("gettname")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getTName(@FormParam("param1") String cid)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            Teacher teacher = session.load(Teacher.class, cid);
+            String s=teacher.getName();
+            t.commit();
+            session.close();
+            return s;
         }
         catch (Exception e)
         {
-            return String.valueOf(e);
+            return "E";
         }
     }
     @GET

@@ -39,19 +39,21 @@
                 });
         }
         function delete_teacher() {
-            var q = document.querySelectorAll("input[type=checkbox][name=chk]"), l = q.length, i;
-            for (i = 0; i < l; i++) {
+            var q = document.querySelectorAll("input[type=checkbox][name=chk]");
+            l = q.length;
+            i=0;
+            for (; i < l; i++) {
                 if (q[i].checked == true) {
                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/delete",
                         {param1: q[i].value},
                         function (data) {
                             if(data=="0")
-                                alert(q[i].value+" Teacher Not Deleted...!!!");
+                                alert(" Teacher Not Deleted...!!!");
                             else if(data=="1") {
-                                alert(q[i].value+" Teacher Deleted...!!!");
+                                alert(" Teacher Deleted...!!!");
                             }
                             else
-                                alert("Something went wrong...!!!");
+                                alert("Something went wrong...!!!"+data);
                             });
                 }
             }

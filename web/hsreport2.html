@@ -40,7 +40,7 @@
                     if (data == "E")
                         alert("Invalid Details...!!!");
                     else {
-                        lbl0.innerText="Subject("+data+") MCQ Feedback Report";
+                        lbl0.innerText="Subject("+data+") Rating Feedback Report";
                     }
                 });
             var cls=sessionStorage.getItem("sclass");
@@ -71,8 +71,8 @@
                                     var prv = document.getElementById('ques');
                                     var j=0;
                                     var qn=1;
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
-                                        {param1: mcqid},
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
+                                        {param1: rateid},
                                         function (data) {
                                             for(var i=0;i<(data.length);i++)
                                             {
@@ -84,6 +84,7 @@
                                                 y3 = x.insertCell(3);
                                                 y4 = x.insertCell(4);
                                                 y5 = x.insertCell(5);
+                                                y6 = x.insertCell(6);
 
                                                 var lbl2 = document.createElement('label');
                                                 lbl2.innerHTML="Q."+qn;
@@ -97,12 +98,9 @@
                                                 lbl1.class = "form-control";
                                                 y1.appendChild(lbl1);
 
-                                                tmp1=data[i]["2"];
-                                                tmp2=data[i]["3"];
-                                                tmp3=data[i]["4"];
-                                                tmp4=data[i]["5"];
 
-                                                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/searchrsmcq",
+
+                                                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/searchrsrate",
                                                     {  param1:sid, param2:data[i]["0"]},
                                                     function (data1) {
                                                         // alert(data1);
@@ -110,34 +108,37 @@
                                                             alert("Something went wrong...!!!");
                                                         else {
                                                             var dt1 = JSON.parse(data1);
-                                                            if (tmp1 != "") {
+
                                                                 var lbl2 = document.createElement('label');
-                                                                lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp1 +" ("+dt1["0"]+")";
+                                                                lbl2.innerHTML = dt1["0"];
                                                                 y2.appendChild(lbl2);
-                                                            }
-                                                            if (tmp2 != "") {
+
+
                                                                 var lbl2 = document.createElement('label');
-                                                                lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp2 +" ("+dt1["1"]+")";
+                                                                lbl2.innerHTML = dt1["1"];
                                                                 y3.appendChild(lbl2);
-                                                            }
-                                                            if (tmp3 != "") {
+
+
                                                                 var lbl2 = document.createElement('label');
-                                                                lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp3 +" ("+dt1["2"]+")";
+                                                                lbl2.innerHTML = dt1["2"];
                                                                 y4.appendChild(lbl2);
-                                                            }
-                                                            if (tmp4 != "") {
+
+
                                                                 var lbl2 = document.createElement('label');
-                                                                lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp4+" ("+dt1["3"]+")";
+                                                                lbl2.innerHTML =dt1["3"];
                                                                 y5.appendChild(lbl2);
-                                                            }
-                                                    }
-                                }).then();
+
+                                                            var lbl2 = document.createElement('label');
+                                                            lbl2.innerHTML =dt1["4"];
+                                                            y6.appendChild(lbl2);
+                                                        }
+                                                    }).then();
+                                            }
+                                        }).then();
+                                }
+                            });
                     }
-                }).then();
-        }
-        });
-        }
-        });
+                });
 
         }
 
@@ -163,10 +164,12 @@
                         <tr>
                             <th>Sr.No.</th>
                             <th>Question &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                            <th>Option 1</th>
-                            <th>Option 2</th>
-                            <th>Option 3</th>
-                            <th>Option 4</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>Result</th>
                         </tr>
 
                         </tbody>

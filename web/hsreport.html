@@ -74,36 +74,49 @@
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/subcheck1",
                     {param1: tid.value},
                     function (data) {
-                        alert(data);
+                        // alert(data);
                         if (data != "0"){
                             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/subcheck1",
                                 {param1:tid.value},
                                 function (data) {
-                                    alert(data);
+                                    // alert(data);
                                     if (data != "0"){
                                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/subcheck1",
                                             {param1:tid.value},
                                             function (data) {
-                                                alert(data);
+                                                // alert(data);
                                                 if (data != "0"){
-                                                    alert(tid.value);
+                                                    // alert(tid.value);
+                                                    var clid=document.getElementById("clid");
+                                                    var qid=document.getElementById("qid");
+                                                    // alert(qid.value);
+                                                    sessionStorage.setItem("sclass",clid.value);
                                                     sessionStorage.setItem("subid",tid.value);
-                                                    window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport1.html";
+                                                    switch (qid.value)
+                                                    {
+                                                        case "1":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport1.html";
+                                                            break;
+                                                        case "2":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport2.html";
+                                                            break;
+                                                        case "3":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport3.html";
+                                                            break;
+                                                        default:break;
+                                                    }
                                                 }
                                                 else {
                                                     alert("Feedback not given...!!!")
                                                 }
-                                            });
+                                            }).then();
                                     }
                                     else {
                                         alert("Feedback not given...!!!")
                                     }
-                                });
+                                }).then();
                         }
                         else {
                             alert("Feedback not given...!!!")
                         }
-                    });
+                    }).then();
             }
         }
     </script>
@@ -129,7 +142,7 @@
                             </select>
                         </div>
                         <div class="form-group text-left" >
-                            <label>Clas</label>
+                            <label>Class</label>
                             <select name="clid" id="clid" class="form-control" onchange="clidchange()">
 
                             </select>
@@ -138,6 +151,14 @@
                             <label>Subject</label>
                             <select name="tid" id="tid" class="form-control">
 
+                            </select>
+                        </div>
+                        <div class="form-group text-left" >
+                            <label>Select Question Type</label>
+                            <select name="tid" id="qid" class="form-control">
+                                <option value="1">MCQ Report</option>
+                                <option value="2">Rating Report</option>
+                                <option value="3">Comment Report</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-block btn-danger">Submit</button>

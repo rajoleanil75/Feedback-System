@@ -4,6 +4,8 @@ import DB.*;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.json.simple.JSONObject;
 
 import javax.jws.WebService;
 import javax.persistence.NoResultException;
@@ -93,6 +95,37 @@ public class MCQ_Service {
             return "0";
         }
     }
+    @POST
+    @Path("searchrsmcq")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String searchRSmcq( @FormParam("param1") String sub, @FormParam("param2") int sm)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            Query query1 = session.createQuery("select count (s.ans) from SSmcq s where s.subject.id=:id and s.smcq.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", "1");
+            Long cnt1 = (Long) query1.uniqueResult();
+            Query query2 = session.createQuery("select count (s.ans) from SSmcq s where s.subject.id=:id and s.smcq.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", "2");
+            Long cnt2 = (Long) query2.uniqueResult();
+            Query query3 = session.createQuery("select count (s.ans) from SSmcq s where s.subject.id=:id and s.smcq.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", "3");
+            Long cnt3 = (Long) query3.uniqueResult();
+            Query query4 = session.createQuery("select count (s.ans) from SSmcq s where s.subject.id=:id and s.smcq.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", "4");
+            Long cnt4 = (Long) query4.uniqueResult();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("0", cnt1);
+            jsonObject.put("1", cnt2);
+            jsonObject.put("2", cnt3);
+            jsonObject.put("3", cnt4);
+            transaction.commit();
+            session.close();
+            return String.valueOf(jsonObject);
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
+
+    }
 
     @POST
     @Path("subcheck")
@@ -156,6 +189,35 @@ public class MCQ_Service {
         catch (Exception e)
         {
             return "1";
+        }
+    }
+    @POST
+    @Path("mcqcheck")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String mcqcheck(@FormParam("param1") int sub)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            Smcq sSmcq= (Smcq) session.createQuery("from Smcq s where s.id=:id1").setParameter("id1",sub).getSingleResult();
+            if (sSmcq==null) {
+                transaction.commit();
+                session.close();
+                return "0";
+            }
+            else {
+                transaction.commit();
+                session.close();
+                return "1";
+            }
+        }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (Exception e)
+        {
+            return "0";
         }
     }
 

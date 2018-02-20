@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="chartjs/Chart.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "hmenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .col-sm-12{
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .tbl{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+        .borderless td, .borderless th {
+            border: none;
+        }
+        @media print {
+            canvas.bar-chart {
+                min-height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                height: auto!important;
+                width: auto!important;
+            }
+        }
+    </style>
+    <script>
+        window.onbeforeprint = function() {
+            // var canvas = document.getElementById('bar-chart');
+            // var dataURL = canvas.toDataURL();
+            // canvas=dataURL;
+            // console.log(dataURL);
+            // console.log('This will be called before the user prints.');
+        };
+        window.onafterprint = function() {
+            // console.log('This will be called after the user prints');
+        };
+        function fetch() {
+            validate_hod();
+            var lbl0 = document.getElementById('lbl');
+
+            var vtssid=sessionStorage.getItem("vtssid");
+            var teach=sessionStorage.getItem("vtsid");
+            var cou=sessionStorage.getItem("vtcid");
+            var vtssoneid=sessionStorage.getItem("vtssoneid");
+            if(vtssid==-13)
+            {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                    {param1: teach },
+                    function (data) {
+                        if (data == "E")
+                            alert("Invalid Details...!!!");
+                        else {
+                            temp=data;
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
+                                {param1: cou },
+                                function (data) {
+                                    if (data == "E")
+                                        alert("Invalid Details...!!!");
+                                    else {
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Subject Report";
+                                    }
+                                });
+                        }
+                    });
+                var ques1 = document.getElementById('ques1');
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getOneRateReport",
+                    {param1: cou, param2: teach, param3: vtssoneid},
+                    function (data) {
+                        j=0;
+                        // alert(data);
+                        for (var i = 0; i < (data.length); i++) {
+                            var x = ques1.insertRow(++j);
+
+                            y1 = x.insertCell(0);
+                            y1.innerText=data[i][0];
+                            y2 = x.insertCell(1);
+                            y2.innerText=data[i][1];
+                            y3 = x.insertCell(2);
+                            y3.innerText=data[i][2];
+                            y4 = x.insertCell(3);
+                            y4.innerText=data[i][3];
+                            y5 = x.insertCell(4);
+                            y5.innerText=data[i][4];
+                            y6 = x.insertCell(5);
+                            y6.innerText=data[i][5];
+                            y6 = x.insertCell(6);
+                            y6.innerText=data[i][6];
+                            y6 = x.insertCell(7);
+                            y6.innerText=data[i][7];
+
+                        }
+                        new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                                labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                                datasets: [
+                                    {
+                                        label: "Ratings",
+                                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                                        data:[data[1][1],data[1][2],data[1][3],data[1][4],data[1][5]]
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Ratings'
+                                }
+                            }
+                        });
+                    });
+
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getOneRateGraph",
+                //     {param1: cou, param2: teach, param3: vtssoneid},
+                //     function (data) {
+                //         alert(data);
+                //         new Chart(document.getElementById("bar-chart"), {
+                //             type: 'bar',
+                //             data: {
+                //                 labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                //                 datasets: [
+                //                     {
+                //                         label: "Ratings",
+                //                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                //                         data:data
+                //                     }
+                //                 ]
+                //             },
+                //             options: {
+                //                 legend: { display: false },
+                //                 title: {
+                //                     display: true,
+                //                     text: 'Rating for all Questions'
+                //                 }
+                //             }
+                //         });
+                //         chart.render();
+                //         chart.print();
+                //     });
+            }
+
+
+            // var lbl0 = document.getElementById('lbl');
+            // var sid=sessionStorage.getItem("subid");
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getsname",
+            //     {param1: sid },
+            //     function (data) {
+            //         // alert(data);
+            //         if (data == "E")
+            //             alert("Invalid Details...!!!");
+            //         else {
+            //             lbl0.innerText="Subject("+data+") MCQ Feedback Report";
+            //         }
+            //     });
+            // var cls=sessionStorage.getItem("sclass");
+            //
+            //
+            // c=0;
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
+            //     {param1: cls },
+            //     function (data) {
+            //         if (data == "0")
+            //             alert("Invalid Details...!!!");
+            //         else {
+            //             c=data;
+            //             sessionStorage.setItem("scourse",c);
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+            //                 {param1: c },
+            //                 function (data) {
+            //                     if(data=="0"||data=="E")
+            //                         alert("Data Not Found...!!!");
+            //                     else {
+            //                         var dt = JSON.parse(data);
+            //                         tmcq = dt[1];
+            //                         trate = dt[2];
+            //                         tcomm = dt[3];
+            //                         mcqid = dt[4];
+            //                         rateid = dt[5];
+            //                         commid = dt[6];
+            //                         var prv = document.getElementById('ques');
+            //                         var j=0;
+            //                         var qn=1;
+            //                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
+            //                             {param1: mcqid},
+            //                             function (data) {
+            //                                 for(var i=0;i<(data.length);i++)
+            //                                 {
+            //                                     var x = prv.insertRow(++j);
+            //
+            //                                     y0 = x.insertCell(0);
+            //                                     y1 = x.insertCell(1);
+            //                                     y2 = x.insertCell(2);
+            //                                     y3 = x.insertCell(3);
+            //                                     y4 = x.insertCell(4);
+            //                                     y5 = x.insertCell(5);
+            //
+            //                                     var lbl2 = document.createElement('label');
+            //                                     lbl2.innerHTML="Q."+qn;
+            //                                     qn++;
+            //                                     lbl2.class = "form-control";
+            //                                     y0.appendChild(lbl2);
+            //
+            //                                     var lbl1 = document.createElement('label');
+            //                                     lbl1.innerHTML = data[i]["1"];
+            //
+            //                                     lbl1.class = "form-control";
+            //                                     y1.appendChild(lbl1);
+            //
+            //                                     tmp1=data[i]["2"];
+            //                                     tmp2=data[i]["3"];
+            //                                     tmp3=data[i]["4"];
+            //                                     tmp4=data[i]["5"];
+            //
+            //                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/searchrsmcq",
+            //                                         {  param1:sid, param2:data[i]["0"]},
+            //                                         function (data1) {
+            //                                             // alert(data1);
+            //                                             if (data1 == "0" || data1 == "E")
+            //                                                 alert("Something went wrong...!!!");
+            //                                             else {
+            //                                                 var dt1 = JSON.parse(data1);
+            //                                                 if (tmp1 != "") {
+            //                                                     var lbl2 = document.createElement('label');
+            //                                                     lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp1 +" ("+dt1["0"]+")";
+            //                                                     y2.appendChild(lbl2);
+            //                                                 }
+            //                                                 if (tmp2 != "") {
+            //                                                     var lbl2 = document.createElement('label');
+            //                                                     lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp2 +" ("+dt1["1"]+")";
+            //                                                     y3.appendChild(lbl2);
+            //                                                 }
+            //                                                 if (tmp3 != "") {
+            //                                                     var lbl2 = document.createElement('label');
+            //                                                     lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp3 +" ("+dt1["2"]+")";
+            //                                                     y4.appendChild(lbl2);
+            //                                                 }
+            //                                                 if (tmp4 != "") {
+            //                                                     var lbl2 = document.createElement('label');
+            //                                                     lbl2.innerHTML = "&nbsp&nbsp&nbsp&nbsp" + tmp4+" ("+dt1["3"]+")";
+            //                                                     y5.appendChild(lbl2);
+            //                                                 }
+            //                                             }
+            //                                         }).then();
+            //                                 }
+            //                             }).then();
+            //                     }
+            //                 });
+            //         }
+            //     });
+
+        }
+        function myfun()
+        {
+            var a=document.getElementById("prt");
+            newWin=window.open("");
+            newWin.document.write(a.outerHTML);
+            newWin.print();
+            newWin.close();
+
+        }
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+
+                <div class="col-sm-12 text-center" id="prt">
+
+                    <h4><label id="lbl"></label></h4>
+                    <table class="table text-left table-bordered" id="ques1">
+                        <tbody>
+                        <tr class="text-center"><th colspan="8">Rating Report</th></tr>
+
+                        </tbody>
+                    </table>
+                    <br>
+                    <table class="table text-left table-bordered" id="ques3">
+                        <tbody>
+                        <tr class="text-center"><th>Graph Report</th></tr>
+                        <tr>
+                            <td>   <canvas id="bar-chart" width="800" height="450"></canvas>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+                <div class="tbl">
+                    <button type="submit" id="save" class="btn btn-block btn-danger" onclick="printDiv('prt')" >Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>
