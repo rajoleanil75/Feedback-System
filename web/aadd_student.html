@@ -115,6 +115,11 @@
                                 {param1: slist, param2: cl.value, param3: dv.value},
                                 function (data) {
                                     if (data == '1') {
+                                        var uid=sessionStorage.getItem("uid");
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                                            {param1: "Student added", param2: uid},
+                                            function (data) {
+                                            });
                                         alert("Student Added Successfully...!!!");
                                         window.location = "http://localhost:8080/Feedback_System_war_exploded/aadd_student.html";
                                     }

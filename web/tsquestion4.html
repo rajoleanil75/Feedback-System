@@ -86,7 +86,7 @@
 
 
                         }
-                        new Chart(document.getElementById("bar-chart"), {
+                        var myLine=new Chart(document.getElementById("bar-chart"), {
                             type: 'bar',
                             data: {
                                 labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
@@ -103,6 +103,12 @@
                                 title: {
                                     display: true,
                                     text: 'Ratings'
+                                },
+                                animation:{
+                                    onComplete: function done(){
+                                        var url=myLine.toBase64Image();
+                                        document.getElementById("url").src=url;
+                                    }
                                 }
                             }
                         });
@@ -144,7 +150,10 @@
                         <tbody>
                         <tr class="text-center"><th>Graph Report</th></tr>
                         <tr>
-                            <td>   <canvas id="bar-chart" width="800" height="450"></canvas>
+                            <td>
+                                <!--<canvas id="bar-chart" width="800" height="450"></canvas>-->
+                                <canvas id="bar-chart" width="750" height="450" hidden></canvas>
+                                <img id="url" />
                             </td>
                         </tr>
                         </tbody>

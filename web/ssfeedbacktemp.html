@@ -367,7 +367,7 @@
                 });
         }
         function addFeed() {
-            validate();
+            // validate();
             var cls=sessionStorage.getItem("sclass");
             var sub=sessionStorage.getItem("subid");
             var stud=sessionStorage.getItem("studid");
@@ -426,8 +426,8 @@
                                                                 dbcnt++;
                                                         });
                                                 }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
+                                                // else
+                                                //     alert("Plese answer all the question...!!!");
                                             }
                                         });
                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
@@ -460,8 +460,8 @@
                                                                 dbcnt++;
                                                         });
                                                 }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
+                                                // else
+                                                //     alert("Plese answer all the question...!!!");
                                             }
                                         });
                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
@@ -472,7 +472,9 @@
                                                 var temp1=document.getElementById(temp);
                                                 // alert(temp1.value+" comm");
                                                 if(temp1.value=="")
-                                                    alert("Plese answer all the question...!!!");
+                                                {
+                                                    // alert("Plese answer all the question...!!!");
+                                                }
                                                 else
                                                 {
                                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/add",

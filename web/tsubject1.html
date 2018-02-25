@@ -104,17 +104,7 @@
                             y2 = x.insertCell(2);
                             y2.innerText=data[i][1];
                         }
-
-                    });
-                alert(ll);
-                alert(lbl);
-                // console.warn(lbl);
-                // console.warn(ll);
-                // alert("Feedback Report Generated Successfully...!!!")
-                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraphT",
-                //     {param1: ftid, param2: fsid},
-                //     function (data) {
-                        new Chart(document.getElementById("bar-chart"), {
+                        var myLine= new Chart(document.getElementById("bar-chart"), {
                             type: 'bar',
                             data: {
                                 labels:lbl,
@@ -133,11 +123,24 @@
                                     text: 'Rating for all Questions'
                                 },
                                 animation:{
-                                    duration:0
+                                    onComplete: function done(){
+                                        var url=myLine.toBase64Image();
+                                        document.getElementById("url").src=url;
+                                    }
                                 }
                             }
                         });
-                    // });
+
+                    });
+                // alert(ll);
+                // alert(lbl);
+                // console.warn(lbl);
+                // console.warn(ll);
+                // alert("Feedback Report Generated Successfully...!!!")
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraphT",
+                //     {param1: ftid, param2: fsid},
+                //     function (data) {
+                                           // });
             }
         }
         function printDiv(divName) {
@@ -184,7 +187,10 @@
                         <tbody>
                         <tr class="text-center"><th>Graph Report</th></tr>
                         <tr>
-                            <td>   <canvas id="bar-chart" width="800" height="450"></canvas>
+                            <td>
+                                <!--<canvas id="bar-chart" width="800" height="450"></canvas>-->
+                                <canvas id="bar-chart" width="750" height="450" hidden></canvas>
+                                <img id="url" />
                             </td>
                         </tr>
                         </tbody>

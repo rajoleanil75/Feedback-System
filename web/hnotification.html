@@ -11,7 +11,7 @@
     <script type='text/javascript'>
         $(document).ready(function(){
             $( "#header" ).load( "header.html" );
-            $( "#amenu" ).load( "amenu.html" );
+            $( "#amenu" ).load( "hmenu.html" );
             $( "#footer" ).load( "footer.html" );
         });
     </script>
@@ -23,14 +23,14 @@
     </style>
     <script>
         function fetch() {
-            validate_admin();
+            validate_hod();
             var ques1 = document.getElementById('ques1');
             var uid=sessionStorage.getItem("uid");
 
             $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/viewAll",
                 {param1: uid},
                 function (data) {
-                // alert(data);
+                    // alert(data);
                     j = 1;
                     for (var i = 0; i < (data.length); i++) {
                         var x = ques1.insertRow(++j);

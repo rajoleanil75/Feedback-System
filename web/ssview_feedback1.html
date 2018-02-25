@@ -387,7 +387,7 @@
                 });
         }
         function addFeed() {
-            validate();
+            // validate();
             var cls=sessionStorage.getItem("sclass");
             var sub=sessionStorage.getItem("subid");
             var stud=sessionStorage.getItem("studid");
@@ -426,7 +426,7 @@
                                                 var temp1=document.getElementsByName(temp);
                                                 // alert(temp1.value+" MCQ");
                                                 var r=0;
-                                                if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true) {
+                                                //if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true) {
                                                     // continue;
                                                     if(temp1[0].checked==true)
                                                         r=1;
@@ -440,14 +440,14 @@
                                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/add",
                                                         {param1: r, param2:stud, param3:sub, param4:data[i]["0"]},
                                                         function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
+                                                            // if (data == "0" || data == "E")
+                                                            //     alert("Something went wrong...!!!");
+                                                            // else
                                                                 dbcnt++;
                                                         });
-                                                }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
+                                                // }
+                                                // else
+                                                //     alert("Plese answer all the question...!!!");
                                             }
                                         });
                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
@@ -458,8 +458,8 @@
                                                 var temp1=document.getElementsByName(temp);
                                                 // alert(temp1+" Rate");
                                                 var r=0;
-                                                if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true||temp1[4].checked==true)
-                                                {
+                                                // if(temp1[0].checked==true||temp1[1].checked==true||temp1[2].checked==true||temp1[3].checked==true||temp1[4].checked==true)
+                                                // {
                                                     if(temp1[0].checked==true)
                                                         r=1;
                                                     if(temp1[1].checked==true)
@@ -474,14 +474,14 @@
                                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/add",
                                                         {param1: r, param2:stud, param3:sub, param4:data[i]["0"]},
                                                         function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
+                                                            // if (data == "0" || data == "E")
+                                                            //     alert("Something went wrong...!!!");
+                                                            // else
                                                                 dbcnt++;
                                                         });
-                                                }
-                                                else
-                                                    alert("Plese answer all the question...!!!");
+                                                // }
+                                                // else
+                                                //     alert("Plese answer all the question...!!!");
                                             }
                                         });
                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
@@ -491,16 +491,17 @@
                                                 var temp = "c"+i+"";
                                                 var temp1=document.getElementById(temp);
                                                 // alert(temp1.value+" comm");
-                                                if(temp1.value=="")
-                                                    alert("Plese answer all the question...!!!");
+                                                if(temp1.value=="") {
+                                                    // alert("Plese answer all the question...!!!");
+                                                }
                                                 else
                                                 {
                                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/add",
                                                         {param1: temp1.value, param2:stud, param3:sub, param4:data[i]["0"]},
                                                         function (data) {
-                                                            if (data == "0" || data == "E")
-                                                                alert("Something went wrong...!!!");
-                                                            else
+                                                            // if (data == "0" || data == "E")
+                                                            //     alert("Something went wrong...!!!");
+                                                            // else
                                                                 dbcnt++;
                                                         });
                                                 }

@@ -110,7 +110,13 @@
                                         }
                                     });
                             }
+                            var uid=sessionStorage.getItem("uid");
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                                {param1: "Lab Batch added, Name: "+lname.value, param2: uid},
+                                function (data) {
+                                });
                             alert("Lab batch Added Successfully...!!!");
+
                             window.location = "http://localhost:8080/Feedback_System_war_exploded/aadd_lab.html";
                         }
                     });

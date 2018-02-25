@@ -11,7 +11,7 @@
     <script type='text/javascript'>
         $(document).ready(function(){
             $( "#header" ).load( "header.html" );
-            $( "#amenu" ).load( "amenu.html" );
+            $( "#amenu" ).load( "hmenu.html" );
             $( "#footer" ).load( "footer.html" );
         });
     </script>
@@ -42,7 +42,7 @@
                                     function (data) {
                                     });
                                 alert("Password Updated Successfully...!!!");
-                                window.location="http://localhost:8080/Feedback_System_war_exploded/ahome.html";
+                                window.location="http://localhost:8080/Feedback_System_war_exploded/hhome.html";
                             }
                             else if(data=='0')
                                 alert("Invalid Password...!!!");
@@ -59,7 +59,7 @@
     </script>
 </head>
 <title>Feedback Portal</title>
-<body onload="validate_admin()">
+<body onload="validate_hod()">
 <div class="container">
     <div id='header'></div>
     <div id='amenu'></div>

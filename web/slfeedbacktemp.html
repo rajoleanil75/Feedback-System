@@ -381,10 +381,10 @@
                 });
         }
         function addFeed() {
-            var q=validate();
-            if(q==false)
-                return false;
-            else {
+            // var q=validate();
+            // if(q==false)
+            //     return false;
+            // else {
                 var cls = sessionStorage.getItem("sclass");
                 var sub = sessionStorage.getItem("subid");
                 var stud = sessionStorage.getItem("studid");
@@ -453,10 +453,10 @@
                                                                     dbcnt++;
                                                             });
                                                     }
-                                                    else {
-                                                        alert("Plese answer all the question...!!!");
-                                                        return;
-                                                    }
+                                                    // else {
+                                                    //     alert("Plese answer all the question...!!!");
+                                                    //     return;
+                                                    // }
                                                 }
                                             });
                                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/viewAll",
@@ -493,10 +493,10 @@
                                                                     dbcnt++;
                                                             });
                                                     }
-                                                    else {
-                                                        alert("Plese answer all the question...!!!");
-                                                        return;
-                                                    }
+                                                    // else {
+                                                    //     alert("Plese answer all the question...!!!");
+                                                    //     return;
+                                                    // }
                                                 }
                                             });
                                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/viewAll",
@@ -507,8 +507,8 @@
                                                     var temp1 = document.getElementById(temp);
                                                     // alert(temp1.value+" comm");
                                                     if (temp1.value == "") {
-                                                        alert("Plese answer all the question...!!!");
-                                                        return;
+                                                        // alert("Plese answer all the question...!!!");
+                                                        // return;
                                                     }
                                                     else {
                                                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/add",
@@ -536,7 +536,7 @@
 
                 alert("Feedback added Successfully...!!!");
                 window.location = "http://localhost:8080/Feedback_System_war_exploded/sladd_feedback.html";
-            }
+            // }
         }
     </script>
 </head>

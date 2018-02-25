@@ -62,6 +62,11 @@
                 function (data) {
                     if(data=='1')
                     {
+                        var uid=sessionStorage.getItem("uid");
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                            {param1: "Subject added, Name: "+sname.value, param2: uid},
+                            function (data) {
+                            });
                         alert("Subject Added Successfully...!!!");
                         window.location="http://localhost:8080/Feedback_System_war_exploded/aadd_subject.html";
                     }

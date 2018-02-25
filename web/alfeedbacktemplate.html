@@ -59,14 +59,14 @@
                             flag=false;
                     }
                 }
-                if(ccur < tcomm)
-                {
-                    for(;ccur<tcomm;ccur++)
-                    {
-                        if (comm[ccur]['q'] == "")
-                            flag=false;
-                    }
-                }
+                // if(ccur < tcomm)
+                // {
+                //     for(;ccur<tcomm;ccur++)
+                //     {
+                //         if (comm[ccur]['q'] == "")
+                //             flag=false;
+                //     }
+                // }
             }
             else if (rcur < trate) {
                 for(;rcur<trate;rcur++)
@@ -83,13 +83,13 @@
                     }
                 }
             }
-            else if (ccur < tcomm) {
-                for(;ccur<tcomm;ccur++)
-                {
-                    if (comm[ccur]['q'] == "")
-                        flag = false;
-                }
-            }
+            // else if (ccur < tcomm) {
+            //     for(;ccur<tcomm;ccur++)
+            //     {
+            //         if (comm[ccur]['q'] == "")
+            //             flag = false;
+            //     }
+            // }
             else {
                 flag = false;
                 alert("Something went wrong...!!!");
@@ -417,12 +417,12 @@
                 y1.appendChild(lbl5);
 
             }
-            for(i=0;i<comm.length;i++)
-            {
+            // for(i=0;i<comm.length;i++)
+            // {
                 var x = prv.insertRow(j++);
                 y1 = x.insertCell(0);
                 var lbl1 = document.createElement('label');
-                lbl1.innerHTML = "Q."+qn+": "+comm[i]['q'];
+                lbl1.innerHTML = "Q."+qn+": Comment";
                 qn++;
                 lbl1.class = "form-control";
                 y1.appendChild(lbl1);
@@ -431,9 +431,9 @@
                 y1 = x.insertCell(0);
                 var rad = document.createElement('TEXTAREA');
                 rad.type = "txt";
-                rad.name = "c"+i+"";
+                rad.name = "c"+0+"";
                 y1.appendChild(rad);
-            }
+            // }
 
 
         }
@@ -472,11 +472,11 @@
                     break;
 
                 case 3:
-                    var q="c"+ccur;
-                    q=document.getElementById(q);
-                    var cobj={};
-                    cobj['q']=q.value;
-                    comm[ccur]=cobj;
+                    // var q="c"+ccur;
+                    // q=document.getElementById(q);
+                    // var cobj={};
+                    // cobj['q']=q.value;
+                    // comm[ccur]=cobj;
 
                     break;
 
@@ -520,13 +520,6 @@
                             addRATE(rcur);
                             addVRATE(rcur);
                         }
-                        else if (tcomm>0)
-                        {
-                            ccur=0;
-                            qcur=3;
-                            addCOMM(ccur);
-                            addVCOMM(ccur);
-                        }
                         else
                             alert("Please enter atleast one question...!!!");
 
@@ -536,7 +529,7 @@
 
         function addNext() {
             addCur();
-            if (mcur==(tmcq-1) && rcur==(trate-1) && ccur==(tcomm-1))
+            if (mcur==(tmcq-1) && rcur==(trate-1))
                 preview();
             else
             {
@@ -556,21 +549,21 @@
                                 addRATE(++rcur);
                                 addVRATE(rcur);
                             }
-                            else if(rcur==(trate-1))
-                            {
-                                if(ccur>=-1 && ccur<(tcomm-1))
-                                {
-                                    qcur=3;
-                                    addCOMM(++ccur);
-                                    addCOMM(ccur);
-                                }
-                                else if(ccur==(tcomm-1))
-                                {
-                                    preview();
-                                }
-                                else
-                                    alert("Something went wrong...!!!");
-                            }
+                            // else if(rcur==(trate-1))
+                            // {
+                            //     if(ccur>=-1 && ccur<(tcomm-1))
+                            //     {
+                            //         qcur=3;
+                            //         addCOMM(++ccur);
+                            //         addCOMM(ccur);
+                            //     }
+                            //     else if(ccur==(tcomm-1))
+                            //     {
+                            //         preview();
+                            //     }
+                            //     else
+                            //         alert("Something went wrong...!!!");
+                            // }
                             else
                                 alert("Something went wrong...!!!");
                         }
@@ -583,37 +576,37 @@
                             addRATE(++rcur);
                             addVRATE(rcur);
                         }
-                        else if(rcur==(trate-1))
-                        {
-                            qcur=3;
-                            if(ccur>=-1 && ccur<(tcomm-1))
-                            {
-                                addCOMM(++ccur);
-                                addVCOMM(ccur);
-                            }
-                            else if(ccur==(tcomm-1))
-                            {
-                                preview();
-                            }
-                            else
-                                alert("Something went wrong...!!!");
-                        }
+                        // else if(rcur==(trate-1))
+                        // {
+                        //     qcur=3;
+                        //     if(ccur>=-1 && ccur<(tcomm-1))
+                        //     {
+                        //         addCOMM(++ccur);
+                        //         addVCOMM(ccur);
+                        //     }
+                        //     else if(ccur==(tcomm-1))
+                        //     {
+                        //         preview();
+                        //     }
+                        //     else
+                        //         alert("Something went wrong...!!!");
+                        // }
                         else
                             alert("Something went wrong...!!!");
                         break;
 
                     case 3:
-                        if(ccur>-1 && ccur<(tcomm-1))
-                        {
-                            addCOMM(++ccur);
-                            addVCOMM(ccur);
-                        }
-                        else if(ccur==(tcomm-1))
-                        {
+                        // if(ccur>-1 && ccur<(tcomm-1))
+                        // {
+                        //     addCOMM(++ccur);
+                        //     addVCOMM(ccur);
+                        // }
+                        // else if(ccur==(tcomm-1))
+                        // {
                             preview();
-                        }
-                        else
-                            alert("Something went wrong...!!!");
+                        // }
+                        // else
+                        //     alert("Something went wrong...!!!");
                         break;
                     default:
                         alert("Something went wrong...!!!");
@@ -651,16 +644,16 @@
                         });
                 }
             }
-            if (ccur < tcomm) {
-                for (; ccur < tcomm; ccur++) {
+            // if (ccur < tcomm) {
+            //     for (; ccur < tcomm; ccur++) {
                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/adds",
-                        {param1: sid, param2:comm[ccur]['q']},
+                        {param1: sid, param2:"Comment"},
                         function (data) {
-                            if (data == "0" || data == "E")
-                                alert("Something went wrong...!!!");
+                            // if (data == "0" || data == "E")
+                            //     alert("Something went wrong...!!!");
                         });
-                }
-            }
+                // }
+            // }
             alert("Feedback Form Created...!!!");
             window.location="http://localhost:8080/Feedback_System_war_exploded/alfeedback.html";
         }
