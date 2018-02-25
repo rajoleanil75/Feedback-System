@@ -179,6 +179,25 @@ public class Subject_Service
         }
     }
     @POST
+    @Path("getcousname")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getCouSName(@FormParam("param1") String cid)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            Subject subject = session.load(Subject.class, cid);
+            String s=subject.getCSClass().getCourse().getName()+", Class: "+subject.getCSClass().getName()+", Subject: "+  subject.getName();
+            t.commit();
+            session.close();
+            return s;
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
+    }
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("delete")
     public String delete(@FormParam("param1") String tid)

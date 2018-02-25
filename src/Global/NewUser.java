@@ -63,4 +63,30 @@ public class NewUser {
             return "E";
         }
     }
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("add1")
+    public String add1(@FormParam("param1")String name, @FormParam("param2") String pass, @FormParam("param3")int role)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            User user = new User();
+            user.setName(name);
+            user.setPassword(pass);
+            user.setId(name);
+            user.setRole(role);
+            user.setLcount(0);
+            user.setDate(LocalDate.now());
+            user.setTime(LocalTime.now());
+            session.persist(user);
+            t.commit();
+            session.close();
+            return "1";
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
+    }
 }

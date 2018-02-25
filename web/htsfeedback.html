@@ -124,11 +124,39 @@
                                 else {
                                     window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback.html";
                                 }
-
                             });
+                    }
+                }
+                else {
+                    sessionStorage.setItem("vtsid",ttid.value);
+                    sessionStorage.setItem("vtcid",cid.value);
+                    sessionStorage.setItem("subjid",tid.value);
+                    if(clid.value==-1)
+                    {
 
-
-
+                        sessionStorage.setItem("vtssid",-110);
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htsallfeedback.html";
+                    }
+                    else if(clid.value==-2)
+                    {
+                        sessionStorage.setItem("vtssid",-120);
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htscommfeedback.html";
+                    }
+                    else
+                    {
+                        sessionStorage.setItem("vtssid",-130);
+                        sessionStorage.setItem("vtssoneid",clid.value);
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/mcqcheck",
+                            {param1: clid.value},
+                            function (data) {
+                                // alert(data);
+                                if (data=="0") {
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback1.html";
+                                }
+                                else {
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback.html";
+                                }
+                            });
                     }
                 }
 

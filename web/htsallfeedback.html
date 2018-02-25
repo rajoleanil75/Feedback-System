@@ -9,6 +9,8 @@
     <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="chartjs/Chart.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
+    <!--<script type="text/javascript" src="jsPDF/jspdf.debug.js"></script>-->
+    <!--<script type="text/javascript" src="jsPDF/jspdf.min.js"></script>-->
     <script type='text/javascript'>
         $(document).ready(function(){
             $( "#header" ).load( "header.html" );
@@ -39,6 +41,35 @@
         }
     </style>
     <script>
+        // var doc = new jsPDF();
+        //
+        // // We'll make our own renderer to skip this editor
+        // var specialElementHandlers = {
+        //     '#editor': function(element, renderer){
+        //         return true;
+        //     },
+        //     '.controls': function(element, renderer){
+        //         return true;
+        //     }
+        // };
+        // function jsprint() {
+        //     // doc.fromHTML($('#prt').html(), 15, 15);
+        //     // doc.fromHTML($('#prt').html());
+        //     //
+        //     // doc.save('sample-file.pdf');
+        //     doc.fromHTML($('body').get(0), 15, 15, {
+        //         'width': 170,
+        //         'elementHandlers': specialElementHandlers
+        //     });
+        // }
+
+        // $('#cmd').click(function () {
+        //     doc.fromHTML($('#prt').html(), 15, 15, {
+        //         'width': 170,
+        //         'elementHandlers': specialElementHandlers
+        //     });
+        //     doc.save('sample-file.pdf');
+        // });
         window.onbeforeprint = function() {
             // var canvas = document.getElementById('bar-chart');
             // var dataURL = canvas.toDataURL();
@@ -56,6 +87,7 @@
             var vtssid=sessionStorage.getItem("vtssid");
             var teach=sessionStorage.getItem("vtsid");
             var cou=sessionStorage.getItem("vtcid");
+            var subjid=sessionStorage.getItem("subjid");
             if(vtssid==-11)
             {
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
@@ -77,61 +109,100 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
+                j=1;
+                ll=[];
+                lbl=[];
+                clr=[];
+                // var bchart=new Chart(document.getElementById("bar-chart"), {
+                //     type: 'bar',
+                //     data: {
+                //         // labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                //         datasets: [
+                //             {
+                //                 label: "Ratings",
+                //                 // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                //                 data:[]
+                //             }
+                //         ]
+                //     },
+                //     options: {
+                //         legend: { display: false },
+                //         title: {
+                //             display: true,
+                //             text: 'Rating for all Questions'
+                //         }
+                //     }
+                // });
+
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllMcqReport",
                     {param1: cou, param2: teach},
                     function (data) {
-                        j=1;
+
                         // alert(data);
                         for (var i = 0; i < (data.length); i++) {
+                            ll[j-1]=data[i][1];
+                            lbl[j-1]="Q."+(j);
+                            clr[j-1]= 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
                             var x = ques1.insertRow(++j);
                             y0 = x.insertCell(0);
-                            y0.innerText=i+1;
+                            y0.innerText=""+(j-1);
                             y1 = x.insertCell(1);
                             y1.innerText=data[i][0];
                             y2 = x.insertCell(2);
                             y2.innerText=data[i][1];
-                            y3 = x.insertCell(3);
-                            y3.innerText=data[i][2];
-                            y4 = x.insertCell(4);
-                            y4.innerText=data[i][3];
-                            y5 = x.insertCell(5);
-                            y5.innerText=data[i][4];
-                            y6 = x.insertCell(6);
-                            y6.innerText=data[i][5];
+                            // bchart.data.datasets.push({
+                            //     label: data[i][0],
+                            //     data:5
+                            // });
+                            // bchart.update();
+                            // y3 = x.insertCell(3);
+                            // y3.innerText=data[i][2];
+                            // y4 = x.insertCell(4);
+                            // y4.innerText=data[i][3];
+                            // y5 = x.insertCell(5);
+                            // y5.innerText=data[i][4];
+                            // y6 = x.insertCell(6);
+                            // y6.innerText=data[i][5];
 
                         }
                     });
-                var ques2 = document.getElementById('ques2');
-                ll=[];
+                // var ques2 = document.getElementById('ques2');
+
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateReport",
                     {param1: cou, param2: teach},
                     function (data) {
-                        j=1;
+                        // j=1;
                         // alert(data);
                         for (var i = 0; i < (data.length); i++) {
-                            var x = ques2.insertRow(++j);
+                            ll[j-1]=data[i][1];
+                            lbl[j-1]="Q."+(j);
+                            clr[j-1]= 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+                            var x = ques1.insertRow(++j);
                             y0 = x.insertCell(0);
-                            y0.innerText=i+1;
+                            y0.innerText=""+(j-1);
                             y1 = x.insertCell(1);
                             y1.innerText=data[i][0];
                             y2 = x.insertCell(2);
                             y2.innerText=data[i][1];
-                            y3 = x.insertCell(3);
-                            y3.innerText=data[i][2];
-                            y4 = x.insertCell(4);
-                            y4.innerText=data[i][3];
-                            y5 = x.insertCell(5);
-                            y5.innerText=data[i][4];
-                            y6 = x.insertCell(6);
-                            y6.innerText=data[i][5];
-                            y7 = x.insertCell(7);
-                            y7.innerText=data[i][6];
-                            y8 = x.insertCell(8);
-                            y8.innerText=data[i][7];
-                            ll[i]=[data[i][1],data[i][2],data[i][3],data[i][4],data[i][5]];
+
+                            // y3 = x.insertCell(3);
+                            // y3.innerText=data[i][2];
+                            // y4 = x.insertCell(4);
+                            // y4.innerText=data[i][3];
+                            // y5 = x.insertCell(5);
+                            // y5.innerText=data[i][4];
+                            // y6 = x.insertCell(6);
+                            // y6.innerText=data[i][5];
+                            // y7 = x.insertCell(7);
+                            // y7.innerText=data[i][6];
+                            // y8 = x.insertCell(8);
+                            // y8.innerText=data[i][7];
+                            // ll[i]=[data[i][1],data[i][2],data[i][3],data[i][4],data[i][5]];
                         }
 
                     });
+                // alert(ll);
+                // alert(lbl);
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph",
                     {param1: cou, param2: teach},
                     function (data) {
@@ -139,12 +210,13 @@
                         new Chart(document.getElementById("bar-chart"), {
                             type: 'bar',
                             data: {
-                                labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                                labels:lbl,
                                 datasets: [
                                     {
                                         label: "Ratings",
-                                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                                        data:data
+                                        backgroundColor: clr,
+                                        // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                                        data:ll
                                     }
                                 ]
                             },
@@ -152,15 +224,194 @@
                                 legend: { display: false },
                                 title: {
                                     display: true,
-                                    text: 'Rating for all Questions'
+                                    text: 'Rating for all Questions',
+                                },
+                                animation:{
+                                    duration:0
                                 }
                             }
                         });
-                        chart.render();
-                        chart.print();
+                        // chart.render();
+                        // chart.print();
                     });
             }
+            else if(vtssid==-110) {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                    {param1: teach },
+                    function (data) {
+                        if (data == "E")
+                            alert("Invalid Details...!!!");
+                        else {
+                            temp=data;
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
+                                {param1: subjid },
+                                function (data) {
+                                    if (data == "E")
+                                        alert("Invalid Details...!!!");
+                                    else {
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data;
+                                    }
+                                });
+                        }
+                    });
+                var ques1 = document.getElementById('ques1');
+                j=1;
+                ll=[];
+                lbl=[];
+                clr=[];
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllMcqReport1",
+                    {param1: cou, param2: teach,param3:subjid},
+                    function (data) {
+                        // j=1;
+                        // alert(data);
+                        for (var i = 0; i < (data.length); i++) {
+                            ll[j-1]=data[i][1];
+                            lbl[j-1]="Q."+(j);
+                            clr[j-1]= 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+                            var x = ques1.insertRow(++j);
+                            y0 = x.insertCell(0);
+                            y0.innerText=""+(j-1);
+                            y1 = x.insertCell(1);
+                            y1.innerText=data[i][0];
+                            y2 = x.insertCell(2);
+                            y2.innerText=data[i][1];
+                            // y3 = x.insertCell(3);
+                            // y3.innerText=data[i][2];
+                            // y4 = x.insertCell(4);
+                            // y4.innerText=data[i][3];
+                            // y5 = x.insertCell(5);
+                            // y5.innerText=data[i][4];
+                            // y6 = x.insertCell(6);
+                            // y6.innerText=data[i][5];
 
+                        }
+                    });
+                var ques2 = document.getElementById('ques2');
+                // ll=[];
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateReport1",
+                    {param1: cou, param2: teach,param3:subjid},
+                    function (data) {
+                        for (var i = 0; i < (data.length); i++) {
+                            ll[j - 1] = data[i][1];
+                            lbl[j - 1] = "Q." + (j);
+                            clr[j - 1] = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+                            var x = ques1.insertRow(++j);
+                            y0 = x.insertCell(0);
+                            y0.innerText = "" + (j - 1);
+                            y1 = x.insertCell(1);
+                            y1.innerText = data[i][0];
+                            y2 = x.insertCell(2);
+                            y2.innerText = data[i][1];
+                        }
+                        // j=1;
+                        // alert(data);
+                        // c1=0,c2=0,c3=0,c4=0,c5=0;
+                        // for (var i = 0; i < (data.length); i++) {
+                        //     var x = ques2.insertRow(++j);
+                        //     y0 = x.insertCell(0);
+                        //     y0.innerText=i+1;
+                        //     y1 = x.insertCell(1);
+                        //     y1.innerText=data[i][0];
+                        //     y2 = x.insertCell(2);
+                        //     y2.innerText=data[i][1];
+                        //     y3 = x.insertCell(3);
+                        //     y3.innerText=data[i][2];
+                        //     y4 = x.insertCell(4);
+                        //     y4.innerText=data[i][3];
+                        //     y5 = x.insertCell(5);
+                        //     y5.innerText=data[i][4];
+                        //     y6 = x.insertCell(6);
+                        //     y6.innerText=data[i][5];
+                        //     y7 = x.insertCell(7);
+                        //     y7.innerText=data[i][6];
+                        //     y8 = x.insertCell(8);
+                        //     y8.innerText=data[i][7];
+                        //     c1+=data[i][1];
+                        //     c2+=data[i][2];
+                        //     c3+=data[i][3];
+                        //     c4+=data[i][4];
+                        //     c5+=data[i][5];
+                        //     ll[i]=[data[i][1],data[i][2],data[i][3],data[i][4],data[i][5]];
+                        // }
+                        // new Chart(document.getElementById("bar-chart"), {
+                        //     type: 'bar',
+                        //     data: {
+                        //         labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                        //         datasets: [
+                        //             {
+                        //                 label: "Ratings",
+                        //                 backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        //                 data:[c1,c2,c3,c4,c5]
+                        //             }
+                        //         ]
+                        //     },
+                        //     options: {
+                        //         legend: { display: false },
+                        //         title: {
+                        //             display: true,
+                        //             text: 'Rating for all Questions'
+                        //         }
+                        //     }
+                        // });
+
+                    });
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph",
+                    {param1: cou, param2: teach},
+                    function (data) {
+                        // alert(data);
+                        new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                                labels:lbl,
+                                datasets: [
+                                    {
+                                        label: "Ratings",
+                                        backgroundColor: clr,
+                                        // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                                        data:ll
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Rating for all Questions',
+                                },
+                                animation:{
+                                    duration:0
+                                }
+                            }
+                        });
+                        // chart.render();
+                        // chart.print();
+                    });
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph1",
+                //     {param1: cou, param2: teach,param3:subjid},
+                //     function (data) {
+                //         // alert(data);
+                //         new Chart(document.getElementById("bar-chart"), {
+                //             type: 'bar',
+                //             data: {
+                //                 labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                //                 datasets: [
+                //                     {
+                //                         label: "Ratings",
+                //                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                //                         data:data
+                //                     }
+                //                 ]
+                //             },
+                //             options: {
+                //                 legend: { display: false },
+                //                 title: {
+                //                     display: true,
+                //                     text: 'Rating for all Questions'
+                //                 }
+                //             }
+                //         });
+                //     });
+            }
 
             // var lbl0 = document.getElementById('lbl');
             // var sid=sessionStorage.getItem("subid");
@@ -283,10 +534,19 @@
         function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML;
             var originalContents = document.body.innerHTML;
-
             document.body.innerHTML = printContents;
 
+            // var divContents = $("#prt").html();
+            // var printWindow = window.open('', '', 'height=400,width=800');
+            // printWindow.document.write('<html><head><title>DIV Contents</title>');
+            // printWindow.document.write('</head><body >');
+            // printWindow.document.write(divContents);
+            // printWindow.document.write('</body></html>');
+            // printWindow.document.close();
+            // printWindow.print();
+
             window.print();
+            // window.saveAs(printContents,"a.pdf");
 
             document.body.innerHTML = originalContents;
         }
@@ -311,37 +571,18 @@
                     <h4><label id="lbl"></label></h4>
                     <table class="table text-left table-bordered" id="ques1">
                         <tbody>
-                        <tr class="text-center"><th colspan="7">MCQ Report</th></tr>
+                        <tr class="text-center"><th colspan="3">Feedback Report</th></tr>
                         <tr class="text-center">
                             <th>Sr.No.</th>
                             <th>Question &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                            <th>Option 1</th>
-                            <th>Option 2</th>
-                            <th>Option 3</th>
-                            <th>Option 4</th>
-                            <th>Performance</th>
+                            <th>Average Rating (5)</th>
+
                         </tr>
 
                         </tbody>
                     </table>
                     <br>
-                    <table class="table text-left table-bordered" id="ques2">
-                        <tbody>
-                        <tr class="text-center"><th colspan="9">Rating Report</th></tr>
-                        <tr class="text-center">
-                            <th>Sr.No.</th>
-                            <th>Question &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                            <th>Rating 1</th>
-                            <th>Rating 2</th>
-                            <th>Rating 3</th>
-                            <th>Rating 4</th>
-                            <th>Rating 5</th>
-                            <th>Average</th>
-                            <th>Performance</th>
-                        </tr>
 
-                        </tbody>
-                    </table>
                     <table class="table text-left table-bordered" id="ques3">
                         <tbody>
                         <tr class="text-center"><th>Graph Report</th></tr>
@@ -357,6 +598,8 @@
 
                 </div>
                 <div class="tbl">
+                    <!--<div id="editor"></div>-->
+                    <!--<button id="cmd" onclick="jsprint()">generate PDF</button>-->
                     <button type="submit" id="save" class="btn btn-block btn-danger" onclick="printDiv('prt')" >Print</button>
                 </div>
             </div>

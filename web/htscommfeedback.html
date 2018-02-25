@@ -56,6 +56,7 @@
             var vtssid=sessionStorage.getItem("vtssid");
             var teach=sessionStorage.getItem("vtsid");
             var cou=sessionStorage.getItem("vtcid");
+            var subjid=sessionStorage.getItem("subjid");
             if(vtssid==-12)
             {
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
@@ -79,6 +80,42 @@
                 var ques1 = document.getElementById('ques1');
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllCommReport",
                     {param1: cou, param2: teach},
+                    function (data) {
+                        j=1;
+                        // alert(data);
+                        for (var i = 0; i < (data.length); i++) {
+                            var x = ques1.insertRow(++j);
+                            y0 = x.insertCell(0);
+                            y0.innerText=i+1;
+                            y1 = x.insertCell(1);
+                            y1.innerText=data[i][0];
+                        }
+                    });
+
+            }
+            else if(vtssid==-120)
+            {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                    {param1: teach },
+                    function (data) {
+                        if (data == "E")
+                            alert("Invalid Details...!!!");
+                        else {
+                            temp=data;
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
+                                {param1: subjid },
+                                function (data) {
+                                    if (data == "E")
+                                        alert("Invalid Details...!!!");
+                                    else {
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data;
+                                    }
+                                });
+                        }
+                    });
+                var ques1 = document.getElementById('ques1');
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllCommReport1",
+                    {param1: cou, param2: teach,param3:subjid},
                     function (data) {
                         j=1;
                         // alert(data);

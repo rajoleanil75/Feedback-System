@@ -13,3 +13,8 @@ function validate_hod() {
     if(sid!=3)
         window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
 }
+function validate_teacher() {
+    var sid=sessionStorage.getItem("role");
+    if(sid!=2)
+        window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
+}

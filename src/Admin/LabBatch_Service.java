@@ -67,6 +67,25 @@ public class LabBatch_Service {
         }
     }
     @POST
+    @Path("getcoulname")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getCouLName(@FormParam("param1") int lid)
+    {
+        try {
+            Session session = DB.Global.getSession();
+            Transaction t = session.beginTransaction();
+            LabBatch subject = session.load(LabBatch.class, lid);
+            String s=subject.getCSClass().getCourse().getName()+", Class: "+subject.getCSClass().getName()+", Lab Name: "+subject.getName();
+            t.commit();
+            session.close();
+            return s;
+        }
+        catch (Exception e)
+        {
+            return "E";
+        }
+    }
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("addteacherlab")
     public String add(@FormParam("param1") String tname, @FormParam("param2") int lab)
@@ -106,6 +125,27 @@ public class LabBatch_Service {
             list1.add(labBatch.getName());
             list1.add(labBatch.getFrom());
             list1.add(labBatch.getTo());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+    @POST
+    @Path("getteacherlab")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List getTeacherLab(@FormParam("param1") int cid,@FormParam("param2")String tid)
+    {
+        Session session= DB.Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.labBatch.CSClass.course.id=:id and s.teacher.id=:id1").setParameter("id1",tid).setParameter("id",cid).list();
+        List list=new ArrayList();
+        for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+        {
+            Teacher_LabBatch teacher_labBatch= (Teacher_LabBatch) iterator.next();
+            List list1=new ArrayList();
+            list1.add(teacher_labBatch.getLabBatch().getId());
+            list1.add(teacher_labBatch.getLabBatch().getName());
             list.add(list1);
         }
         t.commit();

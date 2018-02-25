@@ -57,6 +57,7 @@
             var teach=sessionStorage.getItem("vtsid");
             var cou=sessionStorage.getItem("vtcid");
             var vtssoneid=sessionStorage.getItem("vtssoneid");
+            var subjid=sessionStorage.getItem("subjid");
             if(vtssid==-13)
             {
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
@@ -100,8 +101,7 @@
                             y6.innerText=data[i][5];
                             y6 = x.insertCell(6);
                             y6.innerText=data[i][6];
-                            y6 = x.insertCell(7);
-                            y6.innerText=data[i][7];
+
 
                         }
                         new Chart(document.getElementById("bar-chart"), {
@@ -153,6 +153,74 @@
                 //         chart.render();
                 //         chart.print();
                 //     });
+            }
+            else  if(vtssid==-130)
+            {
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                    {param1: teach },
+                    function (data) {
+                        if (data == "E")
+                            alert("Invalid Details...!!!");
+                        else {
+                            temp=data;
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
+                                {param1: subjid },
+                                function (data) {
+                                    if (data == "E")
+                                        alert("Invalid Details...!!!");
+                                    else {
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data;
+                                    }
+                                });
+                        }
+                    });
+                var ques1 = document.getElementById('ques1');
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getOneRateReport1",
+                    {param1: cou, param2: teach, param3: vtssoneid,param4:subjid},
+                    function (data) {
+                        j=0;
+                        // alert(data);
+                        for (var i = 0; i < (data.length); i++) {
+                            var x = ques1.insertRow(++j);
+
+                            y1 = x.insertCell(0);
+                            y1.innerText=data[i][0];
+                            y2 = x.insertCell(1);
+                            y2.innerText=data[i][1];
+                            y3 = x.insertCell(2);
+                            y3.innerText=data[i][2];
+                            y4 = x.insertCell(3);
+                            y4.innerText=data[i][3];
+                            y5 = x.insertCell(4);
+                            y5.innerText=data[i][4];
+                            y6 = x.insertCell(5);
+                            y6.innerText=data[i][5];
+                            y6 = x.insertCell(6);
+                            y6.innerText=data[i][6];
+
+
+                        }
+                        new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                                labels: ["Rating 1", "Rating 2", "Rating 3", "Rating 4", "Rating 5"],
+                                datasets: [
+                                    {
+                                        label: "Ratings",
+                                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                                        data:[data[1][1],data[1][2],data[1][3],data[1][4],data[1][5]]
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Ratings'
+                                }
+                            }
+                        });
+                    });
             }
 
 
@@ -305,7 +373,7 @@
                     <h4><label id="lbl"></label></h4>
                     <table class="table text-left table-bordered" id="ques1">
                         <tbody>
-                        <tr class="text-center"><th colspan="8">Rating Report</th></tr>
+                        <tr class="text-center"><th colspan="7">Rating Report</th></tr>
 
                         </tbody>
                     </table>

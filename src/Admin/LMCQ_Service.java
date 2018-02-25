@@ -132,4 +132,33 @@ public class LMCQ_Service {
             return "1";
         }
     }
+    @POST
+    @Path("mcqcheck")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String mcqcheck(@FormParam("param1") int sub)
+    {
+        try {
+            Session session = Global.getSession();
+            Transaction transaction = session.beginTransaction();
+            Lmcq sSmcq= (Lmcq) session.createQuery("from Lmcq s where s.id=:id1").setParameter("id1",sub).getSingleResult();
+            if (sSmcq==null) {
+                transaction.commit();
+                session.close();
+                return "0";
+            }
+            else {
+                transaction.commit();
+                session.close();
+                return "1";
+            }
+        }
+        catch (NoResultException e)
+        {
+            return "0";
+        }
+        catch (Exception e)
+        {
+            return "0";
+        }
+    }
 }
