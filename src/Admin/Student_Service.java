@@ -3,6 +3,7 @@ package Admin;
 import DB.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -162,41 +163,50 @@ public class Student_Service {
     @Path("delete")
     public String delete(@FormParam("param1") int tid)
     {
-        try
-        {
+//        try
+//        {
             Session session= DB.Global.getSession();
             Transaction t=session.beginTransaction();
-            Student student= session.load(Student.class,tid);
+            Student student= session.get(Student.class,tid);
             if (student==null) {
 
                 return "0";
             }
             else
             {
-                session.delete(student);
-//                try {
-//                    String i=teacher.getId();
-//                    Object o = session.load(Teacher.class, i);
-//                    if (o != null)
-//                        session.delete(o);
-//                    else if (o==null) {
-//                        t.commit();
-//                        session.close();
-//                        return "0";
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    return String.valueOf(e)+"Innter";
-//                }
+                Query query=session.createQuery("delete from LSmcq s where s.student.id=:id").setParameter("id",tid);
+                query.executeUpdate();
+                Query query1=session.createQuery("delete from LSrate s where s.student.id=:id").setParameter("id",tid);
+                query1.executeUpdate();
+                Query query2=session.createQuery("delete from LScomment s where s.student.id=:id").setParameter("id",tid);
+                query2.executeUpdate();
+
+                Query query3=session.createQuery("delete from SSmcq s where s.student.id=:id").setParameter("id",tid);
+                query3.executeUpdate();
+                Query query4=session.createQuery("delete from SSrate s where s.student.id=:id").setParameter("id",tid);
+                query4.executeUpdate();
+                Query query5=session.createQuery("delete from SScomment s where s.student.id=:id").setParameter("id",tid);
+                query5.executeUpdate();
+
+                User user= (User) session.createQuery("from User s where s.id=:id").setParameter("id",""+student.getId()).uniqueResult();
+                if(user!=null) {
+                    Query query6 = session.createQuery("delete from Notification s where s.user.uid=:id").setParameter("id", user.getUid());
+                    query6.executeUpdate();
+                    Query query7=session.createQuery("delete from User s where s.uid=:id").setParameter("id",user.getUid());
+                    query7.executeUpdate();
+//                    session.delete(user);
+                }
+                Query query8=session.createQuery("delete from Student s where s.id=:id").setParameter("id",student.getId());
+                query8.executeUpdate();
+//                session.delete(student);
             }
             t.commit();
             session.close();
             return "1";
-        }
-        catch (Exception e)
-        {
-            return String.valueOf(e);
-        }
+//        }
+//        catch (Exception e)
+//        {
+//            return String.valueOf(e);
+//        }
     }
 }

@@ -45,29 +45,30 @@ public class Teacher_Service {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("delete")
     public String delete(@FormParam("param1") String tid) {
-        try {
+//        try {
         Session session = DB.Global.getSession();
         Transaction t = session.beginTransaction();
-//        Teacher teacher = session.load(Teacher.class, tid);
+        Teacher teacher = session.load(Teacher.class, tid);
 //      session.delete(teacher);
-        Serializable id = tid;
+//        Serializable id = tid;
 //      String i=teacher.getId();
-        Object o = session.load(Teacher.class, id);
-        if (o != null)
-            session.delete(o);
-        else if (o == null) {
-            t.commit();
-            session.close();
+//        Object o = session.load(Teacher.class, id);
+        if (teacher== null)
             return "0";
+        else {
+
+
+
+
         }
         t.commit();
         session.close();
         return "1";
-    }
-    catch (Exception e)
-        {
-            return String.valueOf(e);
-        }
+//    }
+//    catch (Exception e)
+//        {
+//            return String.valueOf(e);
+//        }
     }
     @POST
     @Path("gettname")

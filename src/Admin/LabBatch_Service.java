@@ -3,6 +3,7 @@ package Admin;
 import DB.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.jws.WebService;
 import javax.ws.rs.FormParam;
@@ -201,20 +202,29 @@ public class LabBatch_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("delete")
-    public String delete(@FormParam("param1") String tid)
+    public String delete(@FormParam("param1") int tid)
     {
         try
         {
             Session session= DB.Global.getSession();
             Transaction t=session.beginTransaction();
-            LabBatch labBatch= session.load(LabBatch.class,tid);
-            if (labBatch==null) {
+//            LabBatch labBatch= session.get(LabBatch.class,tid);
+//            if (labBatch==null) {
+//
+//                return "0";
+//            }
+//            else
+//            {
 
-                return "0";
-            }
-            else
-            {
-                session.delete(labBatch);
+                Query query=session.createQuery("delete from LSmcq s where s.teacher_labBatch.id=:id").setParameter("id",tid);
+                query.executeUpdate();
+                Query query4=session.createQuery("delete from LSrate s where s.teacher_labBatch.id=:id").setParameter("id",tid);
+                query4.executeUpdate();
+                Query query5=session.createQuery("delete from LScomment s where s.teacher_labBatch.id=:id").setParameter("id",tid);
+                query5.executeUpdate();
+                Query query8=session.createQuery("delete from LabBatch s where s.id=:id").setParameter("id",tid);
+                query8.executeUpdate();
+//                session.delete(labBatch);
 //                try {
 //                    String i=teacher.getId();
 //                    Object o = session.load(Teacher.class, i);
@@ -230,7 +240,7 @@ public class LabBatch_Service {
 //                {
 //                    return String.valueOf(e)+"Innter";
 //                }
-            }
+//            }
             t.commit();
             session.close();
             return "1";

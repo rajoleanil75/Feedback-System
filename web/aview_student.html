@@ -90,6 +90,7 @@
                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/delete",
                         {param1: q[i].value},
                         function (data) {
+                        // alert(data);
                             if(data=="0")
                                 alert("Student Not Deleted...!!!");
                             else if(data=="1") {

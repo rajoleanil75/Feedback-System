@@ -6,6 +6,8 @@ import DB.Subject;
 import DB.Teacher;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -202,18 +204,28 @@ public class Subject_Service
     @Path("delete")
     public String delete(@FormParam("param1") String tid)
     {
-        try
-        {
+//        try
+//        {
             Session session= DB.Global.getSession();
             Transaction t=session.beginTransaction();
-            Subject subject= session.load(Subject.class,tid);
+            Subject subject= session.get(Subject.class,tid);
             if (subject==null) {
 
                 return "0";
             }
             else
             {
-                session.delete(subject);
+                Query query=session.createQuery("delete from SSmcq s where s.subject.id=:id").setParameter("id",tid);
+                query.executeUpdate();
+                Query query4=session.createQuery("delete from SSrate s where s.subject.id=:id").setParameter("id",tid);
+                query4.executeUpdate();
+                Query query5=session.createQuery("delete from SScomment s where s.subject.id=:id").setParameter("id",tid);
+                query5.executeUpdate();
+                Query query8=session.createQuery("delete from Subject s where s.id=:id").setParameter("id",subject.getId());
+                query8.executeUpdate();
+
+
+//                session.delete(subject);
 //                try {
 //                    String i=teacher.getId();
 //                    Object o = session.load(Teacher.class, i);
@@ -233,10 +245,10 @@ public class Subject_Service
             t.commit();
             session.close();
             return "1";
-        }
-        catch (Exception e)
-        {
-            return String.valueOf(e);
-        }
+//        }
+//        catch (Exception e)
+//        {
+//            return String.valueOf(e);
+//        }
     }
 }

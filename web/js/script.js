@@ -6,7 +6,7 @@ function validate_admin() {
 function validate_stud() {
     var sid=sessionStorage.getItem("role");
     if(sid!=1)
-        window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
+        window.location="http://localhost:8080/Feedback_System_war_exploded/student.html";
 }
 function validate_hod() {
     var sid=sessionStorage.getItem("role");
@@ -17,4 +17,12 @@ function validate_teacher() {
     var sid=sessionStorage.getItem("role");
     if(sid!=2)
         window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
+}
+function logout() {
+    sessionStorage.setItem("role","0");
+    window.location="http://localhost:8080/Feedback_System_war_exploded/index.html";
+}
+function logout_stud() {
+    sessionStorage.setItem("role","0");
+    window.location="http://localhost:8080/Feedback_System_war_exploded/student.html";
 }

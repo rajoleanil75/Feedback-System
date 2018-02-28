@@ -172,9 +172,11 @@
             var q = document.querySelectorAll("input[type=checkbox][name=chk]"), l = q.length, i;
             for (i = 0; i < l; i++) {
                 if (q[i].checked == true) {
+                    // alert(q[i].value);
                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/delete",
                         {param1: q[i].value},
                         function (data) {
+                        // alert(data);
                             if(data=="0")
                                 alert("Lab Batch Not Deleted...!!!");
                             else if(data=="1") {
