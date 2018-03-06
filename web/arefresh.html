@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#amenu" ).load( "amenu.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <script>
+        function fetch()
+        {
+            validate_admin();
+            // document.getElementById("tid").length = 0;
+            // $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
+            //     function (data) {
+            //         for(var i=0;i<(data.length);i++)
+            //         {
+            //             document.getElementById("tid").options[i]=new Option(data[i]["name"],data[i]["id"]);
+            //         }
+            //     });
+            // document.getElementById("cid").length = 0;
+            // $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            //     function (data) {
+            //         document.getElementById("cid").options[0]=new Option("Select Course","-1");
+            //         for(var i=0;i<(data.length);i++)
+            //         {
+            //             document.getElementById("cid").options[i+1]=new Option(data[i]["name"],data[i]["id"]);
+            //         }
+            //     });
+        }
+        // function cidchange() {
+        //     var cid=document.getElementById("cid");
+        //     document.getElementById("clid").length = 0;
+        //     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+        //         {param1: cid.value},
+        //         function (data) {
+        //             document.getElementById("clid").options[0]=new Option("Select Class","-1");
+        //             for(var i=0;i<(data.length);i++)
+        //             {
+        //                 document.getElementById("clid").options[i+1]=new Option(data[i]["1"],data[i]["0"]);
+        //             }
+        //         });
+        // }
+        function add() {
+
+            var bname = document.getElementById('bname');
+            // var dname = document.getElementById('dname');
+
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/backup_services/add",
+                {param1: bname.value},
+                function (data) {
+                    if(data=='1')
+                    {
+                        alert("Database refresh Successfully, Please Relogin to update changes...!!!");
+                        window.location = "http://localhost:8080/Feedback_System_war_exploded/abackup.html";
+                    }
+                    else
+                    {
+                        alert("Please try again...!!!");
+                    }
+                });
+        }
+    </script>
+    <style>
+        .col-sm-8{
+            padding-left: 190px;
+            padding-right: 190px;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<title>Feedback Portal</title>
+<body onload="fetch()">
+<div class="container">
+    <div id='header'></div>
+    <div id='amenu'></div>
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h4><label>Refresh Database</label></h4>
+                    <form class="form-text text-left" action="javascript:add();">
+                        <div class="form-group">
+                            <label>Name :</label>
+                            <input type="text" class="form-control" id="bname" placeholder="Specify semester name with year" required>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label>Database Name :</label>-->
+                            <!--<input type="text" class="form-control" id="dname" placeholder="Database Name" required>-->
+                            <!--<label size="10">Note: Please create database in Postgresql and then specify name in above field</label>-->
+                        <!--</div>-->
+
+                        <button type="submit" class="btn btn-block btn-danger">Submit</button>
+                    </form>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id='footer'></div>

@@ -4,7 +4,7 @@ package DB;
  * Created by ANIL on 27/12/2017.
  */
 public class Teacher {
-    private String id;
+    private int id;
     private String name;
     private int role;
 
@@ -24,11 +24,11 @@ public class Teacher {
         this.role = role;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

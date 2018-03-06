@@ -6,6 +6,7 @@ package DB;
 public class CSClass {
     private int id;
     private String name;
+    private String sf;
     private Course course;
 
     public int getId() {
@@ -30,5 +31,13 @@ public class CSClass {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getSf() {
+        return sf;
+    }
+
+    public void setSf(String sf) {
+        this.sf = sf;
     }
 }

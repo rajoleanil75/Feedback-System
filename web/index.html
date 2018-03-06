@@ -25,6 +25,7 @@
               $.post("http://localhost:8080/Feedback_System_war_exploded/global/Login/login_check",
                   {param1: uname.value, param2: pass.value, param3: role.value},
                   function (data) {
+                  // alert(data);
                       if(data=='0')
                           alert("Invalid Username or Password...!!!");
                       else if (data=='E')
@@ -32,11 +33,11 @@
                       else if(data=='B')
                           alert("You are Blocked, Please Contact System Administrator...!!!");
                       else if(data=="-1")
-                          alert("Remaing chances : 2");
+                          alert("Invalid Password, Remaing chances : 2");
                       else if(data=="-2")
-                          alert("Remaing chances : 1");
+                          alert("Invalid Password, Remaing chances : 1");
                       else if(data=="-3")
-                          alert("Remaing chances : 0");
+                          alert("Invalid Password, Remaing chances : 0");
                       else
                       {
                           var user=JSON.parse(data);

@@ -22,15 +22,16 @@ public class Teacher_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("add")
-    public String add(@FormParam("param1") String tid, @FormParam("param2")String tname)
+    public String add(@FormParam("param1") int tid, @FormParam("param2")String tname)
     {
         try
         {
             Session session= DB.Global.getSession();
             Transaction t=session.beginTransaction();
             DB.Teacher teacher=new DB.Teacher();
-            teacher.setId(tid);
+//            teacher.setId(tid);
             teacher.setName(tname);
+            teacher.setRole(tid);
             session.save(teacher);
             t.commit();
             session.close();
@@ -44,7 +45,7 @@ public class Teacher_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("delete")
-    public String delete(@FormParam("param1") String tid) {
+    public String delete(@FormParam("param1") int tid) {
 //        try {
         Session session = DB.Global.getSession();
         Transaction t = session.beginTransaction();
