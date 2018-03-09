@@ -89,7 +89,7 @@ public class LabBatch_Service {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("addteacherlab")
-    public String add(@FormParam("param1") String tname, @FormParam("param2") int lab)
+    public String add(@FormParam("param1") int tname, @FormParam("param2") int lab)
     {
         try {
             Session session = DB.Global.getSession();
@@ -135,7 +135,7 @@ public class LabBatch_Service {
     @POST
     @Path("getteacherlab")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getTeacherLab(@FormParam("param1") int cid,@FormParam("param2")String tid)
+    public List getTeacherLab(@FormParam("param1") int cid,@FormParam("param2")int tid)
     {
         Session session= DB.Global.getSession();
         Transaction t=session.beginTransaction();
@@ -179,7 +179,7 @@ public class LabBatch_Service {
     @POST
     @Path("getTeacherWise")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getTeacherWise(@FormParam("param1") String cid)
+    public List getTeacherWise(@FormParam("param1") int cid)
     {
         Session session= DB.Global.getSession();
         Transaction t=session.beginTransaction();

@@ -60,7 +60,7 @@
                 function (data) {
                     if(data=='1')
                     {
-                        alert("Database refresh Successfully, Please Relogin to update changes...!!!");
+                        alert("Database refresh Successfully...!!!");
                         window.location = "http://localhost:8080/Feedback_System_war_exploded/abackup.html";
                     }
                     else
@@ -96,8 +96,8 @@
                     <h4><label>Refresh Database</label></h4>
                     <form class="form-text text-left" action="javascript:add();">
                         <div class="form-group">
-                            <label>Name :</label>
-                            <input type="text" class="form-control" id="bname" placeholder="Specify semester name with year" required>
+                            <label>Enter Academic Year</label>
+                            <input type="text" class="form-control" id="bname" placeholder="YYYY-YYYY" required>
                         </div>
                         <!--<div class="form-group">-->
                             <!--<label>Database Name :</label>-->

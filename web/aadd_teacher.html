@@ -24,15 +24,15 @@
     <script>
         function addTeacher()
         {
-            var tid = document.getElementById('tid');
+            // var tid = document.getElementById('tid');
             var tname = document.getElementById('tname');
                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/add",
-                    {param1: tid.value, param2: tname.value},
+                    { param2: tname.value},
                     function (data) {
                         if(data=='1')
                         {
                             var uid=sessionStorage.getItem("uid");
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add1",
                                 {param1: "Teacher added, Name: "+tname.value, param2: uid},
                                 function (data) {
                                 });
@@ -62,10 +62,10 @@
                 <div class="col-sm-8 text-center">
                     <h4><label>Add Teacher</label></h4>
                     <form class="form-text text-left" action="javascript:addTeacher();">
-                        <div class="form-group">
-                            <label>Teacher ID:</label>
-                            <input type="text" class="form-control" id="tid" required>
-                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label>Teacher ID:</label>-->
+                            <!--<input type="text" class="form-control" id="tid" required>-->
+                        <!--</div>-->
                         <div class="form-group">
                             <label>Teacher Name:</label>
                             <input type="text" class="form-control" id="tname" required>

@@ -48,4 +48,20 @@
             <column name="cur" sql-type="int"/>
         </property>
     </class>
+    <class name="DB.Notification" table="notification">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="native"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="text"/>
+        </property>
+        <property name="date">
+            <column name="ndate" sql-type="date"/>
+        </property>
+        <property name="time">
+            <column name="ntime" sql-type="time"/>
+        </property>
+        <many-to-one name="user" class="DB.User" column="user_id" not-null="true" cascade="all"/>
+    </class>
 </hibernate-mapping>

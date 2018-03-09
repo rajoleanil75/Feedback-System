@@ -63,7 +63,7 @@
                     if(data=='1')
                     {
                         var uid=sessionStorage.getItem("uid");
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add1",
                             {param1: "Subject added, Name: "+sname.value, param2: uid},
                             function (data) {
                             });

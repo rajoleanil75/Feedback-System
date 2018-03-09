@@ -27,7 +27,7 @@
                         x.insertCell(0);
                         x.insertCell(1);
                         var y=x.insertCell(2);
-                        tbl.rows[i].cells[0].innerHTML=data[i-1]["id"];
+                        tbl.rows[i].cells[0].innerHTML=i;
                         tbl.rows[i].cells[1].innerHTML=data[i-1]["name"];
                         var checkbox = document.createElement('input');
                         checkbox.type = "checkbox";
@@ -77,7 +77,7 @@
                             x.insertCell(0);
                             x.insertCell(1);
                             var y=x.insertCell(2);
-                            tbl.rows[i].cells[0].innerHTML=data[i-1]["0"];
+                            tbl.rows[i].cells[0].innerHTML=i;
                             tbl.rows[i].cells[1].innerHTML=data[i-1]["1"];
                             var checkbox = document.createElement('input');
                             checkbox.type = "checkbox";
@@ -115,7 +115,7 @@
                     <h4><label>Teacher Details</label></h4>
                     <table class="table table-hover text-left" id="tbl">
                         <tbody>
-                        <tr><td>Teacher ID</td><td>Name</td><td><input type=Button name="delete" value="Delete" onclick="delete_teacher()"/></td></tr>
+                        <tr><td>Sr.No.</td><td>Name</td><td><input type=Button name="delete" value="Delete" onclick="delete_teacher()"/></td></tr>
                         </tbody>
                     </table>
                 </div>

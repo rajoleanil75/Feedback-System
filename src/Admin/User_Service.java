@@ -34,7 +34,8 @@ public class User_Service {
             Session session= DB.Global.getSession();
             Transaction transaction=session.beginTransaction();
             User user = session.load(User.class,uid);
-            String ps=user.getName();
+//            String ps=user.getName();
+            String ps="password";
             user.setPassword(ps);
             user.setLcount(0);
             session.persist(user);
@@ -57,7 +58,49 @@ public class User_Service {
             Session session= DB.Global.getSession();
             Transaction transaction=session.beginTransaction();
             User user = (User) session.createQuery("from User s where s.name=:id").setParameter("id",uid).uniqueResult();
-            user.setLcount(3);
+            user.setLcount(-3);
+            session.persist(user);
+            transaction.commit();
+            session.close();
+            return "0";
+        }
+        catch (Exception e)
+        {
+            return "1";
+        }
+    }
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("block_hod")
+    public String block_hod(@FormParam("param1") String uid)
+    {
+        try
+        {
+            Session session= DB.Global.getSession1();
+            Transaction transaction=session.beginTransaction();
+            User user = (User) session.createQuery("from User s where s.name=:id").setParameter("id",uid).uniqueResult();
+            user.setLcount(-3);
+            session.persist(user);
+            transaction.commit();
+            session.close();
+            return "0";
+        }
+        catch (Exception e)
+        {
+            return "1";
+        }
+    }
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("block_admin")
+    public String block_admin(@FormParam("param1") String uid)
+    {
+        try
+        {
+            Session session= DB.Global.getSession1();
+            Transaction transaction=session.beginTransaction();
+            User user = (User) session.createQuery("from User s where s.name=:id").setParameter("id",uid).uniqueResult();
+            user.setLcount(-3);
             session.persist(user);
             transaction.commit();
             session.close();
@@ -99,7 +142,7 @@ public class User_Service {
     @POST
     @Path("newusercheck")
     @Produces(MediaType.TEXT_PLAIN)
-    public String mcqcheck(@FormParam("param1") String sub)
+    public String newusercheck(@FormParam("param1") String sub)
     {
         try {
             Session session = Global.getSession();

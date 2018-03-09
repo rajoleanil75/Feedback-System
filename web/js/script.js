@@ -24,5 +24,17 @@ function logout() {
 }
 function logout_stud() {
     sessionStorage.setItem("role","0");
-    window.location="http://localhost:8080/Feedback_System_war_exploded/student.html";
+    window.location="http://localhost:8080/Feedback_System_war_exploded/";
+}
+function logout_admin() {
+    sessionStorage.setItem("role","0");
+    window.location="http://localhost:8080/Feedback_System_war_exploded/admin.html";
+}
+function logout_hod() {
+    sessionStorage.setItem("role","0");
+    window.location="http://localhost:8080/Feedback_System_war_exploded/hod.html";
+}
+function logout_teacher() {
+    sessionStorage.setItem("role","0");
+    window.location="http://localhost:8080/Feedback_System_war_exploded/teacher.html";
 }

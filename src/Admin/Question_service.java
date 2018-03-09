@@ -203,7 +203,7 @@ public class Question_service {
     @POST
     @Path("getAllMcqReport")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllMcqReport(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllMcqReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -277,7 +277,7 @@ public class Question_service {
     @POST
     @Path("getAllMcqReport1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllMcqReport1(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3") String subid)
+    public List getAllMcqReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3") String subid)
     {
         try {
             Session session = Global.getSession();
@@ -351,7 +351,7 @@ public class Question_service {
     @POST
     @Path("getOneMcqReport")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneMcqReport(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid)
+    public List getOneMcqReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
         try {
             Session session = Global.getSession();
@@ -442,7 +442,7 @@ public class Question_service {
     @POST
     @Path("getOneMcqReport1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneMcqReport1(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid,@FormParam("param4")String subid)
+    public List getOneMcqReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid,@FormParam("param4")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -533,7 +533,7 @@ public class Question_service {
     @POST
     @Path("getOneMcqGraph")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneMcqGraph(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid)
+    public List getOneMcqGraph(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
         try {
             Session session = Global.getSession();
@@ -571,7 +571,7 @@ public class Question_service {
     @POST
     @Path("getAllRateReport")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllRateReport(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllRateReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -655,7 +655,7 @@ public class Question_service {
     @POST
     @Path("getAllRateReport1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllRateReport1(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")String subid)
+    public List getAllRateReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -737,7 +737,7 @@ public class Question_service {
     @POST
     @Path("getAllRateGraph")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllRategraph(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllRategraph(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -800,7 +800,7 @@ public class Question_service {
     @POST
     @Path("getAllRateGraph1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllRategraph1(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param2")String subid)
+    public List getAllRategraph1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param2")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -863,7 +863,7 @@ public class Question_service {
     @POST
     @Path("getAllCommReport")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -888,7 +888,7 @@ public class Question_service {
     @POST
     @Path("getAllCommReport1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")String subid)
+    public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -913,7 +913,7 @@ public class Question_service {
     @POST
     @Path("getOneRateReport")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneRateReport(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid)
+    public List getOneRateReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
         try {
             Session session = Global.getSession();
@@ -1012,7 +1012,7 @@ public class Question_service {
     @POST
     @Path("getOneRateReport1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneRateReport1(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid,@FormParam("param4")String subid)
+    public List getOneRateReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid,@FormParam("param4")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -1111,7 +1111,7 @@ public class Question_service {
     @POST
     @Path("getOneRateGraph")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneRateGraph(@FormParam("param1") int coid,@FormParam("param2")String tid,@FormParam("param3")int qid)
+    public List getOneRateGraph(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
         try {
             Session session = Global.getSession();
@@ -1803,7 +1803,7 @@ public class Question_service {
     @POST
     @Path("getAllMcqReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllMcqReportT(@FormParam("param1") String ftid,@FormParam("param2")String fsid)
+    public List getAllMcqReportT(@FormParam("param1")int ftid,@FormParam("param2")String fsid)
     {
         try {
             Session session = Global.getSession();
@@ -1862,7 +1862,7 @@ public class Question_service {
     @POST
     @Path("getAllRateReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllRateReportT(@FormParam("param1") String ftid,@FormParam("param2")String fsid)
+    public List getAllRateReportT(@FormParam("param1") int ftid,@FormParam("param2")String fsid)
     {
         try {
             Session session = Global.getSession();
@@ -1931,7 +1931,7 @@ public class Question_service {
     @POST
     @Path("getAllCommReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllCommReportT(@FormParam("param1")String ftid,@FormParam("param2")String fsid)
+    public List getAllCommReportT(@FormParam("param1")int ftid,@FormParam("param2")String fsid)
     {
         try {
             Session session = Global.getSession();
@@ -1957,7 +1957,7 @@ public class Question_service {
     @POST
     @Path("getOneMcqReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneMcqReportT(@FormParam("param1") String tid,@FormParam("param2")int qid,@FormParam("param3")String subid)
+    public List getOneMcqReportT(@FormParam("param1") int tid,@FormParam("param2")int qid,@FormParam("param3")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -2036,7 +2036,7 @@ public class Question_service {
     @POST
     @Path("getOneRateReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneRateReportT(@FormParam("param1")String tid,@FormParam("param2")int qid,@FormParam("param3")String subid)
+    public List getOneRateReportT(@FormParam("param1")int tid,@FormParam("param2")int qid,@FormParam("param3")String subid)
     {
         try {
             Session session = Global.getSession();
@@ -2130,7 +2130,7 @@ public class Question_service {
     @POST
     @Path("getAllQSMcqReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllQSMcqReportT(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllQSMcqReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -2188,7 +2188,7 @@ public class Question_service {
     @POST
     @Path("getAllQSRateReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllQSRateReportT(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllQSRateReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -2255,7 +2255,7 @@ public class Question_service {
     @POST
     @Path("getAllQSCommReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getAllQSCommReportT(@FormParam("param1") int coid,@FormParam("param2")String tid)
+    public List getAllQSCommReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -2280,7 +2280,7 @@ public class Question_service {
     @POST
     @Path("getOneQSMcqReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneQSMcqReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")String tid)
+    public List getOneQSMcqReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();
@@ -2362,7 +2362,7 @@ public class Question_service {
     @POST
     @Path("getOneQSRateReportT")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getOneQSRateReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")String tid)
+    public List getOneQSRateReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int tid)
     {
         try {
             Session session = Global.getSession();

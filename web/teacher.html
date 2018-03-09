@@ -14,17 +14,32 @@
         });
     </script>
     <script>
+        function fetch()
+        {
+            // validate_admin();
+            document.getElementById("cid").length = 0;
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewTeacherLogin",
+                function (data) {
+                    document.getElementById("cid").options[0]=new Option("Select your name","-1");
+                    for(var i=0;i<(data.length);i++)
+                    {
+                        document.getElementById("cid").options[i+1]=new Option(data[i][1],data[i][0]);
+                    }
+                });
+        }
         function getTasks() {
-            var role = document.getElementById('role')
-            if (role.value == 0) {
-                alert("Please select Role...!!!");
+            var role = document.getElementById('role');
+            var uname = document.getElementById('cid');
+            if (uname.value == "-1") {
+                alert("Please select Your Name...!!!");
             }
             else {
-                var uname = document.getElementById('uname');
+                // var uname = document.getElementById('uname');
                 var pass = document.getElementById('pass');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/global/Login/login_check",
-                    {param1: uname.value, param2: pass.value, param3: role.value},
+                $.post("http://localhost:8080/Feedback_System_war_exploded/global/Login/login_check_teacher",
+                    {param1: uname.value, param2: pass.value},
                     function (data) {
+                        // alert(data);
                         if(data=='0')
                             alert("Invalid Username or Password...!!!");
                         else if (data=='E')
@@ -32,11 +47,11 @@
                         else if(data=='B')
                             alert("You are Blocked, Please Contact System Administrator...!!!");
                         else if(data=="-1")
-                            alert("Remaing chances : 2");
+                            alert("Invalid Password, Remaing chances : 2");
                         else if(data=="-2")
-                            alert("Remaing chances : 1");
+                            alert("Invalid Password, Remaing chances : 1");
                         else if(data=="-3")
-                            alert("Remaing chances : 0");
+                            alert("Invalid Password, Remaing chances : 0");
                         else
                         {
                             var user=JSON.parse(data);
@@ -45,36 +60,16 @@
                             sessionStorage.setItem("id",user.id);
                             sessionStorage.setItem("role",user.role);
                             sessionStorage.setItem("llogin",user.llogin);
-                            switch (role.value)
-                            {
-                                case '1':
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/searchById",
-                                        {param1: user.id },
-                                        function (data) {
-                                            // alert(data);
-                                            if (data == "E")
-                                                alert("Invalid Details...!!!");
-                                            else {
-                                                var dt = JSON.parse(data);
-                                                sessionStorage.setItem("studid",dt[1]);
-                                                sessionStorage.setItem("sname",dt[2]);
-                                                sessionStorage.setItem("roll",dt[3]);
-                                                sessionStorage.setItem("sclass",dt[4]);
-                                                sessionStorage.setItem("sdiv",dt[5]);
-                                                window.location="http://localhost:8080/Feedback_System_war_exploded/shome.html";
-                                            }
-                                        });
-                                    break;
-                                case '2':alert("Teacher Called");
-                                    break;
-                                case '3':window.location="http://localhost:8080/Feedback_System_war_exploded/hhome.html";
-                                    break;
-                                case '4':window.location="http://localhost:8080/Feedback_System_war_exploded/ahome.html";
-                                    break;
-                                default:alert("Something went wrong...!!!");
-                                    break;
-                            }
-
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                                {param1: user.id },
+                                function (data) {
+                                    if (data == "E")
+                                        alert("Teacher Details not found...!!!");
+                                    else {
+                                        sessionStorage.setItem("tname", data);
+                                        window.location = "http://localhost:8080/Feedback_System_war_exploded/thome.html";
+                                    }
+                                });
                         }
                     });
             }
@@ -82,7 +77,7 @@
     </script>
 </head>
 <title>Feedback Portal</title>
-<body>
+<body onload="fetch()">
 <div class="container">
     <div id='header'></div>
 
@@ -90,7 +85,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/student.html">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/index.html">
                         Home
                     </a>
                     </div>
@@ -112,20 +107,22 @@
             <hr>
             <form action="javascript:getTasks();" name="fillform" >
                 <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" placeholder="username" id="uname" required>
+                    <label>Select your Name</label>
+                    <!--<input type="text" class="form-control" placeholder="username" id="uname" required>-->
+                    <select name="cid" id="cid" class="form-control">
+                    </select>
                     <br>
                     <label>Password</label>
                     <input type="password" class="form-control" placeholder="password" id="pass" required>
                     <br>
                     <select name="role" class="form-control" id="role" hidden>
                         <!--<option value="0">Select Role</option>-->
-                        <option value="1">Student</option>
-                        <!--<option value="2">Teacher</option>-->
+                        <!--<option value="1">Student</option>-->
+                        <option value="2">Teacher</option>
                         <!--<option value="3">Co-Ordinator</option>-->
                         <!--<option value="4">Admin</option>-->
                     </select>
-                    <br>
+                    <!--<br>-->
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
                     <input class="btn btn-dark" type="reset" value="Reset">
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
@@ -133,9 +130,9 @@
                 </div>
             </form>
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="http://localhost:8080/Feedback_System_war_exploded/new_user.html">new user?</a>
+            <a href="http://localhost:8080/Feedback_System_war_exploded/new_user3.html">new user?</a>
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="http://localhost:8080/Feedback_System_war_exploded/forgetpass.html">Forget Password</a>
+            <a href="http://localhost:8080/Feedback_System_war_exploded/forgetpass1.html">Forget Password</a>
         </div>
         <div class="footer">
             <hr>

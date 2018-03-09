@@ -13,9 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -116,7 +114,9 @@ public class Backup_Services {
     {
         Connection conn = null;
         Statement stmt = null;
-        String dbname=getSaltString();
+        String  result = bname.replaceAll("[^\\w]","_");
+//        String dbname=getSaltString();
+        String dbname="feedback_"+result;
         try{
             //STEP 2: Register JDBC driver
             Class.forName("org.postgresql.Driver");
@@ -155,6 +155,77 @@ public class Backup_Services {
                 return String.valueOf(se);
             }//end finally try
         }//end try
+
+        //////////////////////////////////////refresh
+        BufferedWriter out = null;
+        try
+        {
+            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            out = new BufferedWriter(fstream);
+//                                String dbnme="temp1";
+            out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
+                    "<!DOCTYPE hibernate-configuration PUBLIC\n" +
+                    "        \"-//Hibernate/Hibernate Configuration DTD//EN\"\n" +
+                    "        \"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd\">\n" +
+                    "<hibernate-configuration>\n" +
+                    "    <session-factory>\n" +
+                    "        <property name=\"connection.url\">jdbc:postgresql://localhost:5432/"+dbname+"</property>\n" +
+                    "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
+                    "        <property name=\"connection.username\">postgres</property>\n" +
+                    "        <property name=\"connection.password\">phd</property>\n" +
+                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                    "        <property name=\"show_sql\">true</property>\n" +
+                    "        <property name=\"connection.pool_size\">10000</property>\n" +
+                    "        <property name=\"hbm2ddl.auto\">update</property>\n" +
+                    "\n" +
+                    "        <mapping resource=\"DB/sql.xml\"/>\n" +
+                    "    </session-factory>\n" +
+                    "</hibernate-configuration>");
+            out.close();
+            Global.reload();
+//            return "1";
+        }
+        catch (IOException e)
+        {
+            System.err.println("Error: " + e.getMessage());
+//            return "E";
+        }
+        /////////////////////////////////////
+
+        ////////////////pg_restore//////////////
+        try
+        {
+            Runtime r = Runtime.getRuntime();
+            Process p;
+            ProcessBuilder pb;
+            r = Runtime.getRuntime();
+
+//            pb1 = new ProcessBuilder("C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe -U postgres -d "+dbname+" -l -f qz.sql");
+            pb = new ProcessBuilder(
+                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe",
+                    "-U",
+                    "postgres",
+                    "-d",
+                    dbname,
+                    "-l",
+                    "-f",
+                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\qz1.sql");
+            pb.redirectErrorStream(true);
+            p = pb.start();
+            InputStream is = p.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String ll;
+            while ((ll = br.readLine()) != null) {
+                System.out.println(ll);
+            }
+//            String s="C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe  -U postgres -d "+dbname+" -l -f qz.sql";
+//            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+s+"\"");
+        } catch (IOException e) {
+            System.out.print(e);
+            e.printStackTrace();
+        }
+        ///////////////////////////////////////
 
 
         try

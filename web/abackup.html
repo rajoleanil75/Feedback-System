@@ -46,8 +46,8 @@
                         y1.innerText = data[i][0];
                         y2 = x.insertCell(2);
                         y2.innerText = data[i][1];
-                        y3 = x.insertCell(3);
-                        y3.innerText = data[i][2];
+                        // y3 = x.insertCell(3);
+                        // y3.innerText = data[i][2];
                     }
                 });
         }
@@ -64,9 +64,9 @@
                 });
             fetch();
         }
-        function refreshdb() {
-            window.location = "http://localhost:8080/Feedback_System_war_exploded/arefresh.html";
-        }
+        // function refreshdb() {
+        //     window.location = "http://localhost:8080/Feedback_System_war_exploded/arefresh.html";
+        // }
 
     </script>
 </head>
@@ -84,12 +84,12 @@
                     <br>
                     <table class="table text-left table-bordered" id="ques1">
                         <tbody>
-                        <tr class="text-center"><th colspan="4">Backup List</th></tr>
+                        <tr class="text-center"><th colspan="3">Backup List</th></tr>
                         <tr class="text-center">
                             <th>Sr.No.</th>
                             <th>Name</th>
                             <th>Date</th>
-                            <th>Current</th>
+                            <!--<th>Current</th>-->
                         </tr>
 
                         </tbody>
@@ -100,8 +100,8 @@
                 <div class="col-sm-4">
                     <br>
                     <button type="submit" class="btn btn-block btn-danger" onclick="backupdb()">Backup</button>
-                    <br>
-                    <button type="submit" class="btn btn-block btn-danger" onclick="refreshdb()">Refresh</button>
+                    <!--<br>-->
+                    <!--<button type="submit" class="btn btn-block btn-danger" onclick="refreshdb()">Refresh</button>-->
 
 
 

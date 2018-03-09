@@ -91,8 +91,8 @@
         {
             var did=document.getElementById("did");
             var roll=document.getElementById("roll");
-            alert(did.value);
-            alert(roll.value);
+            // alert(did.value);
+            // alert(roll.value);
             $.post("http://localhost:8080/Feedback_System_war_exploded/global/newuser/getId",
                 {param1: roll.value, param2:did.value},
                 function (data) {
@@ -101,6 +101,17 @@
                     else
                     {
                         sessionStorage.setItem("regid",data);
+                        // window.location="http://localhost:8080/Feedback_System_war_exploded/new_user1.html";
+                    }
+                });
+            $.post("http://localhost:8080/Feedback_System_war_exploded/global/newuser/getStudId",
+                {param1: roll.value, param2:did.value},
+                function (data) {
+                    if(data=="-1")
+                        alert("Data not found...");
+                    else
+                    {
+                        sessionStorage.setItem("regidstud",data);
                         window.location="http://localhost:8080/Feedback_System_war_exploded/new_user1.html";
                     }
                 });
@@ -117,7 +128,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/student.html">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/">
                         Home
                     </a>
                     </div>

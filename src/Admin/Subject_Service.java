@@ -24,7 +24,7 @@ public class Subject_Service
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("add")
-    public String add(@FormParam("param1") String scode, @FormParam("param2") String sname, @FormParam("param3") String tid, @FormParam("param4") int cid)
+    public String add(@FormParam("param1") String scode, @FormParam("param2") String sname, @FormParam("param3")int tid, @FormParam("param4") int cid)
     {
         try {
             Session session = DB.Global.getSession();
@@ -94,7 +94,7 @@ public class Subject_Service
     @POST
     @Path("getCourseTeachWise")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getCourseTeachWise(@FormParam("param1") int cid,@FormParam("param2") String tid)
+    public List getCourseTeachWise(@FormParam("param1") int cid,@FormParam("param2") int tid)
     {
         Session session= DB.Global.getSession();
         Transaction t=session.beginTransaction();
@@ -143,7 +143,7 @@ public class Subject_Service
     @POST
     @Path("getTeacherWise")
     @Produces(MediaType.APPLICATION_JSON)
-    public List getTeacherWise(@FormParam("param1") String cid)
+    public List getTeacherWise(@FormParam("param1") int cid)
     {
         Session session= DB.Global.getSession();
         Transaction t=session.beginTransaction();
