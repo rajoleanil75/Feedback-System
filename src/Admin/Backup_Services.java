@@ -54,9 +54,10 @@ public class Backup_Services {
     @Path("viewAll")
     public List viewAll()
     {
+        Session session = DB.Global.getSession1();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession1();
-            Transaction t = session.beginTransaction();
+
             java.util.List<Backup> tlist = session.createQuery("from Backup s order by s.date desc ").list();
             List list = new ArrayList();
             for (Iterator iterator = tlist.iterator(); iterator.hasNext(); ) {
@@ -81,6 +82,8 @@ public class Backup_Services {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return Collections.singletonList(e);
 //            return String.valueOf(e);
         }
@@ -91,10 +94,11 @@ public class Backup_Services {
     @Path("backup")
     public String backup()
     {
+        Session session= Global.getSession1();
+        Transaction transaction = session.beginTransaction();
         try
         {
-            Session session= Global.getSession1();
-            Transaction transaction = session.beginTransaction();
+
             Backup backup = (Backup) session.createQuery("from Backup s where s.cur=:id").setParameter("id",1).uniqueResult();
             backup.setDate(LocalDate.now());
             session.persist(backup);
@@ -103,6 +107,8 @@ public class Backup_Services {
             return "1";
         }
         catch (Exception e){
+            transaction.commit();
+            session.close();
 //            return String.valueOf(e);
             return "E";
         }
@@ -160,7 +166,8 @@ public class Backup_Services {
         BufferedWriter out = null;
         try
         {
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+//        FileWriter fstream = new FileWriter("/root/Desktop/Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -173,15 +180,16 @@ public class Backup_Services {
                     "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                     "        <property name=\"connection.username\">postgres</property>\n" +
                     "        <property name=\"connection.password\">phd</property>\n" +
-                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                     "        <property name=\"show_sql\">true</property>\n" +
-                    "        <property name=\"connection.pool_size\">10000</property>\n" +
+                    "        <property name=\"connection.pool_size\">1000000</property>\n" +
                     "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                     "\n" +
                     "        <mapping resource=\"DB/sql.xml\"/>\n" +
                     "    </session-factory>\n" +
                     "</hibernate-configuration>");
             out.close();
+            Global.closeFactory();
             Global.reload();
 //            return "1";
         }
@@ -192,24 +200,26 @@ public class Backup_Services {
         }
         /////////////////////////////////////
 
-        ////////////////pg_restore//////////////
+        ////////////////pg_restore for ubuntu/////////////////
+
         try
         {
-            Runtime r = Runtime.getRuntime();
+//            Runtime r = Runtime.getRuntime();
             Process p;
             ProcessBuilder pb;
-            r = Runtime.getRuntime();
+//            r = Runtime.getRuntime();
 
 //            pb1 = new ProcessBuilder("C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe -U postgres -d "+dbname+" -l -f qz.sql");
+
             pb = new ProcessBuilder(
-                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe",
+                    "psql",
                     "-U",
                     "postgres",
                     "-d",
-                    dbname,
-                    "-l",
+                    ""+dbname+"",
+                    "-1",
                     "-f",
-                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\qz1.sql");
+                    "/opt/qz.sql");
             pb.redirectErrorStream(true);
             p = pb.start();
             InputStream is = p.getInputStream();
@@ -219,12 +229,53 @@ public class Backup_Services {
             while ((ll = br.readLine()) != null) {
                 System.out.println(ll);
             }
-//            String s="C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe  -U postgres -d "+dbname+" -l -f qz.sql";
-//            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+s+"\"");
-        } catch (IOException e) {
-            System.out.print(e);
-            e.printStackTrace();
+
+
         }
+        catch (Exception e)
+        {
+            System.out.print(e);
+        }
+
+        //////////////////////////////////////////////////////
+
+
+
+//        ////////////////pg_restore for windows//////////////
+//        try
+//        {
+//            Runtime r = Runtime.getRuntime();
+//            Process p;
+//            ProcessBuilder pb;
+//            r = Runtime.getRuntime();
+//
+////            pb1 = new ProcessBuilder("C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe -U postgres -d "+dbname+" -l -f qz.sql");
+//
+//            pb = new ProcessBuilder(
+//                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe",
+//                    "-U",
+//                    "postgres",
+//                    "-d",
+//                    dbname,
+//                    "-l",
+//                    "-f",
+//                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\qz1.sql");
+//            pb.redirectErrorStream(true);
+//            p = pb.start();
+//            InputStream is = p.getInputStream();
+//            InputStreamReader isr = new InputStreamReader(is);
+//            BufferedReader br = new BufferedReader(isr);
+//            String ll;
+//            while ((ll = br.readLine()) != null) {
+//                System.out.println(ll);
+//            }
+//
+////            String s="C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe  -U postgres -d "+dbname+" -l -f qz.sql";
+////            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+s+"\"");
+//        } catch (IOException e) {
+//            System.out.print(e);
+//            e.printStackTrace();
+//        }
         ///////////////////////////////////////
 
 
@@ -267,7 +318,7 @@ public class Backup_Services {
         BufferedWriter out = null;
         try
         {
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -280,15 +331,16 @@ public class Backup_Services {
                     "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                     "        <property name=\"connection.username\">postgres</property>\n" +
                     "        <property name=\"connection.password\">phd</property>\n" +
-                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                     "        <property name=\"show_sql\">true</property>\n" +
-                    "        <property name=\"connection.pool_size\">10000</property>\n" +
+                    "        <property name=\"connection.pool_size\">1000000</property>\n" +
                     "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                     "\n" +
                     "        <mapping resource=\"DB/sql.xml\"/>\n" +
                     "    </session-factory>\n" +
                     "</hibernate-configuration>");
             out.close();
+            Global.closeFactory();
             Global.reload();
             return "1";
         }

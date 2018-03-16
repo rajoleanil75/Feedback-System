@@ -2,6 +2,7 @@ package Admin;
 
 import DB.CSClass;
 import DB.Division;
+import DB.Global;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -26,7 +27,28 @@ public class Division_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<Division> tlist=session.createQuery("from Division s where s.csClass.id=:id").setParameter("id",cid).list();
+        List list=new ArrayList();
+        for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+        {
+            Division division= (Division) iterator.next();
+            List list1=new ArrayList();
+            list1.add(division.getId());
+            list1.add(division.getName());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+    @POST
+    @Path("getClassWise1")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List viewAll1(@FormParam("param1") int cid)
+    {
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Division> tlist=session.createQuery("from Division s where s.csClass.id=:id").setParameter("id",cid).list();
         List list=new ArrayList();

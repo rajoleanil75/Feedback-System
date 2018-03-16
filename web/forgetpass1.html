@@ -24,7 +24,7 @@
         {
             // validate_admin();
             document.getElementById("cid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewTeacherLogin",
+            $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/viewTeacherLogin",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select your name","-1");
                     for(var i=0;i<(data.length);i++)
@@ -40,7 +40,7 @@
                 alert("Please select Your Name...!!!");
             }
             else {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/user_services/block",
+                $.post("http://192.168.100.175:9090/feedback/admin/user_services/block",
                     {param1: roll.value},
                     function (data) {
                         if (data == "0")
@@ -62,7 +62,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/teacher.html">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://192.168.100.175:9090/feedback/teacher.html">
                         Home
                     </a>
                     </div>

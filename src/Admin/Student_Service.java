@@ -27,6 +27,8 @@ public class Student_Service {
     @Path("add")
     public String add(@FormParam("param1")String studjson,@FormParam("param2") int cl, @FormParam("param3") int dv)
     {
+        Session session= Global.getSession();
+        Transaction transaction=session.beginTransaction();
         try
         {
             Object object=null;
@@ -35,8 +37,7 @@ public class Student_Service {
             object=jsonParser.parse(studjson);
             arrayObj=(JSONArray) object;
 
-            Session session= Global.getSession();
-            Transaction transaction=session.beginTransaction();
+
             CSClass csClass= (CSClass) session.createQuery("from CSClass c where c.id= :id").setParameter("id",cl).uniqueResult();
             Division division= (Division) session.createQuery("from Division d where d.id=:id").setParameter("id",dv).uniqueResult();
 
@@ -61,6 +62,8 @@ public class Student_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return ""+e+"";
         }
     }
@@ -69,10 +72,11 @@ public class Student_Service {
     @Path("viewDivisionWise")
     public List viewDivisionWise(@FormParam("param1")int div)
     {
+        Session session1= Global.getSession();
+        Transaction t=session1.beginTransaction();
         try
         {
-            Session session1= DB.Global.getSession();
-            Transaction t=session1.beginTransaction();
+
             java.util.List<Student> tlist=session1.createQuery("from Student s where s.division.id=:id").setParameter("id",div).list();
             List list=new ArrayList();
             for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
@@ -90,6 +94,41 @@ public class Student_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session1.close();
+            return Collections.singletonList("" + e + "");
+        }
+    }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("viewDivisionWise1")
+    public List viewDivisionWise1(@FormParam("param1")int div)
+    {
+        Session session1= Global.getSession();
+        Transaction t=session1.beginTransaction();
+        try
+        {
+//            Global.reload();
+
+            java.util.List<Student> tlist=session1.createQuery("from Student s where s.division.id=:id").setParameter("id",div).list();
+            List list=new ArrayList();
+            for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+            {
+                Student student= (Student) iterator.next();
+                List list1=new ArrayList();
+                list1.add(student.getId());
+                list1.add(student.getName());
+                list1.add(student.getRoll());
+                list.add(list1);
+            }
+            t.commit();
+            session1.close();
+            return list;
+        }
+        catch (Exception e)
+        {
+            t.commit();
+            session1.close();
             return Collections.singletonList("" + e + "");
         }
     }
@@ -99,7 +138,7 @@ public class Student_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll()
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Student> slist=session.createQuery("select s.id,s.name,s.roll,s.CSClass,s.division from Student s").list();
         t.commit();
@@ -111,9 +150,10 @@ public class Student_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List  search(@FormParam("param1") String sname,@FormParam("param2")int div)
     {
+        Session session = Global.getSession();
+        Transaction transaction=session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction=session.beginTransaction();
+
             java.util.List<Student> tlist=session.createQuery("from Student s where s.division.id=:id1 and s.name like :id ").setParameter("id","%"+sname+"%").setParameter("id1",div).list();
             List list=new ArrayList();
             for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
@@ -131,6 +171,8 @@ public class Student_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return null;
         }
     }
@@ -139,9 +181,10 @@ public class Student_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String searchById(@FormParam("param1") int sid)
     {
+        Session session = Global.getSession();
+        Transaction transaction=session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction=session.beginTransaction();
+
             Student student= (Student) session.createQuery("from Student s where s.id=:sid").setParameter("sid",sid).uniqueResult();
             JSONObject jsonObject=new JSONObject();
             jsonObject.put("1",student.getId());
@@ -155,6 +198,8 @@ public class Student_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "E";
         }
     }
@@ -165,7 +210,7 @@ public class Student_Service {
     {
 //        try
 //        {
-            Session session= DB.Global.getSession();
+            Session session= Global.getSession();
             Transaction t=session.beginTransaction();
             Student student= session.get(Student.class,tid);
             if (student==null) {

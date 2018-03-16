@@ -28,7 +28,7 @@
         function searchTeacher()
         {
             var tid = document.getElementById('tid')
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/search",
+            $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/search",
                 {param1: tid.value},
                 function (data) {
                     var d=JSON.parse(data)

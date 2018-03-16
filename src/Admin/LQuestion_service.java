@@ -25,9 +25,10 @@ public class LQuestion_service {
     @Path("add")
     public String add(@FormParam("param1") int sub, @FormParam("param2") int m, @FormParam("param3") int r, @FormParam("param4") int c)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Course course= (Course) session.createQuery("from  Course s where s.id=:id").setParameter("id",sub).uniqueResult();
 
             Lquestion squestion=new Lquestion();
@@ -54,6 +55,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return String.valueOf(e);
         }
 
@@ -63,7 +66,7 @@ public class LQuestion_service {
     @Produces(MediaType.TEXT_PLAIN)
     public String viewAll(@FormParam("param1") int sid)
     {
-        Session session1= DB.Global.getSession();
+        Session session1= Global.getSession();
         Transaction t1=session1.beginTransaction();
 //        java.util.List<Lquestion> tlist=session1.createQuery("select s.id,s.qtype,s.total,s.subject  from Lquestion s").list();
 //        java.util.List<Student> tlist=session1.createQuery("select s.id,s.name,s.roll,s.CSClass,s.division from Student s").list();
@@ -88,7 +91,7 @@ public class LQuestion_service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getMSq(@FormParam("param1") int sid)
     {
-        Session session1= DB.Global.getSession();
+        Session session1= Global.getSession();
         Transaction t1=session1.beginTransaction();
         Lquestion m= (Lquestion) session1.createQuery("from Lquestion s where s.course.id=:sid and s.qtype=:qid").setParameter("sid",sid).setParameter("qid",1).uniqueResult();
         t1.commit();
@@ -103,7 +106,7 @@ public class LQuestion_service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getRSq(@FormParam("param1") int sid)
     {
-        Session session1= DB.Global.getSession();
+        Session session1= Global.getSession();
         Transaction t1=session1.beginTransaction();
         Lquestion r= (Lquestion) session1.createQuery("from Lquestion s where s.course.id=:sid and s.qtype=:qid").setParameter("sid",sid).setParameter("qid",2).uniqueResult();
         t1.commit();
@@ -118,7 +121,7 @@ public class LQuestion_service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getCSq(@FormParam("param1") int sid)
     {
-        Session session1= DB.Global.getSession();
+        Session session1= Global.getSession();
         Transaction t1=session1.beginTransaction();
         Lquestion c= (Lquestion) session1.createQuery("from Lquestion s where s.course.id=:sid and s.qtype=:qid").setParameter("sid",sid).setParameter("qid",3).uniqueResult();
         t1.commit();
@@ -132,7 +135,7 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAllQues(@FormParam("param1") int sid)
     {
-        Session session=Global.getSession();
+        Session session= Global.getSession();
         Transaction transaction=session.beginTransaction();
         List<Lmcq> smcqs=session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",sid).list();
         List<Lrate> srates=session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",sid).list();
@@ -171,9 +174,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllMcqReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -221,6 +225,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -229,9 +235,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllMcqReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int lid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -279,6 +286,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -287,9 +296,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneMcqReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -358,6 +368,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -366,9 +378,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneMcqReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid,@FormParam("param4")int subid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -449,6 +462,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -457,9 +472,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllRateReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -517,6 +533,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -525,9 +543,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllRateReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int lid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -584,6 +603,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -592,9 +613,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneRateReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -683,6 +705,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -691,9 +715,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneRateReport1(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int qid,@FormParam("param4")int subid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -785,6 +810,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -793,9 +820,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.teacher_labBatch.teacher.id=:id and s.lcomment.lquestion.course.id=:id1").setParameter("id", tid).setParameter("id1",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = sScomment.iterator(); iterator.hasNext(); ) {
@@ -810,6 +838,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -818,9 +848,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCommReport(@FormParam("param1") int coid,@FormParam("param2")int tid,@FormParam("param3")int subid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.teacher_labBatch.teacher.id=:id and s.lcomment.lquestion.course.id=:id1 and s.teacher_labBatch.labBatch.id=:id2").setParameter("id2",subid).setParameter("id", tid).setParameter("id1",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = sScomment.iterator(); iterator.hasNext(); ) {
@@ -835,6 +866,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -843,9 +876,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLMcqReport(@FormParam("param1") int coid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -893,6 +927,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -901,9 +937,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLRateReport(@FormParam("param1") int coid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -960,6 +997,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -968,9 +1007,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLCommReport(@FormParam("param1") int coid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.lcomment.lquestion.course.id=:id1").setParameter("id1",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = sScomment.iterator(); iterator.hasNext(); ) {
@@ -985,6 +1025,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -993,9 +1035,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneQLMcqReport(@FormParam("param1") int coid,@FormParam("param3")int qid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -1067,6 +1110,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1075,9 +1120,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneQLRateReport(@FormParam("param1") int coid,@FormParam("param3")int qid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -1160,6 +1206,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1170,9 +1218,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCLMcqReport(@FormParam("param1") int coid,@FormParam("param2")int clid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -1220,6 +1269,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1228,9 +1279,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCLRateReport(@FormParam("param1") int coid,@FormParam("param2")int clid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -1287,6 +1339,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1295,9 +1349,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCLCommReport(@FormParam("param1") int coid,@FormParam("param2")int clid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.lcomment.lquestion.course.id=:id1 and s.student.CSClass.id=:id2").setParameter("id2",clid).setParameter("id1",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = sScomment.iterator(); iterator.hasNext(); ) {
@@ -1312,6 +1367,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1320,9 +1377,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneCLMcqReport(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int clid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -1394,6 +1452,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1402,9 +1462,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneCLRateReport(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int clid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -1487,6 +1548,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1529,9 +1592,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllMcqReportT(@FormParam("param1") int ftid,@FormParam("param2")int fsid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             LabBatch subject=session.get(LabBatch.class,fsid);
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",subject.getCSClass().getCourse().getId()).list();
             List list = new ArrayList();
@@ -1580,6 +1644,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1588,9 +1654,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllRateReportT(@FormParam("param1") int ftid,@FormParam("param2")int fsid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             LabBatch subject=session.get(LabBatch.class,fsid);
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",subject.getCSClass().getCourse().getId()).list();
             List list = new ArrayList();
@@ -1649,6 +1716,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1657,9 +1726,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllCommReportT(@FormParam("param1")int ftid,@FormParam("param2")int fsid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             LabBatch subject=session.get(LabBatch.class,fsid);
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.teacher_labBatch.teacher.id=:id and s.lcomment.lquestion.course.id=:id1 and s.teacher_labBatch.labBatch.id=:id2").setParameter("id2",fsid).setParameter("id", ftid).setParameter("id1",subject.getCSClass().getCourse().getId()).list();
             List list = new ArrayList();
@@ -1675,6 +1745,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1683,9 +1755,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneMcqReportT(@FormParam("param1")int tid,@FormParam("param2")int qid,@FormParam("param3")int subid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -1754,6 +1827,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1762,9 +1837,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneRateReportT(@FormParam("param1")int tid,@FormParam("param2")int qid,@FormParam("param3")int subid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -1847,6 +1923,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1856,9 +1934,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLMcqReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lmcq> smcqs = session.createQuery("from Lmcq s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -1906,6 +1985,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1914,9 +1995,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLRateReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<Lrate> smcqs = session.createQuery("from Lrate s where s.lquestion.course.id=:id").setParameter("id",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = smcqs.iterator(); iterator.hasNext(); ) {
@@ -1973,6 +2055,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -1981,9 +2065,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getAllQLCommReportT(@FormParam("param1") int coid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List<LScomment> sScomment=session.createQuery("from LScomment s where s.lcomment.lquestion.course.id=:id1 and s.teacher_labBatch.teacher.id=:id3").setParameter("id3",tid).setParameter("id1",coid).list();
             List list = new ArrayList();
             for (Iterator iterator = sScomment.iterator(); iterator.hasNext(); ) {
@@ -1998,6 +2083,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -2006,9 +2093,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneQLMcqReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lmcq smcq =  session.get(Lmcq.class,qid);
             List list1 = new ArrayList();
@@ -2080,6 +2168,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -2088,9 +2178,10 @@ public class LQuestion_service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getOneQLRateReportT(@FormParam("param1") int coid,@FormParam("param3")int qid,@FormParam("param2")int tid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             List list = new ArrayList();
             Lrate smcq =  session.get(Lrate.class,qid);
             List list1 = new ArrayList();
@@ -2173,6 +2264,8 @@ public class LQuestion_service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return (List) e;
         }
     }

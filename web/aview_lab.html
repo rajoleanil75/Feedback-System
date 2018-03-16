@@ -26,7 +26,7 @@
         {
             validate_admin();
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-2");
                     for(var i=0;i<(data.length);i++)
@@ -36,7 +36,7 @@
                 });
 
             document.getElementById("tid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
                 function (data) {
                     document.getElementById("tid").options[0]=new Option("Select Teacher","-1");
                     for(var i=0;i<(data.length);i++)
@@ -54,7 +54,7 @@
                 // while(tbl.rows.length > 1) {
                 //     tbl.deleteRow(1);
                 // }
-                // $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
+                // $.get("http://192.168.100.175:9090/feedback/admin/subject_services/viewAll",
                 //     function (data) {
                 //         var tbl = document.getElementById('tbl');
                 //         for(var i=1;i<(data.length+1);i++)
@@ -75,7 +75,7 @@
                 //     });
             }
             else {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+                $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
                     {param1: cid.value},
                     function (data) {
                         document.getElementById("clid").options[0] = new Option("Select Class", "-1");
@@ -87,7 +87,7 @@
                 // while(tbl.rows.length > 1) {
                 //     tbl.deleteRow(1);
                 // }
-                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getCourseWise",
+                // $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getCourseWise",
                 //     {param1: cid.value},
                 //     function (data) {
                 //         var tbl = document.getElementById('tbl');
@@ -115,7 +115,7 @@
             while(tbl.rows.length > 1) {
                 tbl.deleteRow(1);
             }
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getClassWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getClassWise",
                 {param1: cid.value},
                 function (data) {
                     var tbl = document.getElementById('tbl');
@@ -144,7 +144,7 @@
             while(tbl.rows.length > 1) {
                 tbl.deleteRow(1);
             }
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getTeacherWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getTeacherWise",
                 {param1: cid.value},
                 function (data) {
                     var tbl = document.getElementById('tbl');
@@ -173,7 +173,7 @@
             for (i = 0; i < l; i++) {
                 if (q[i].checked == true) {
                     // alert(q[i].value);
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/delete",
+                    $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/delete",
                         {param1: q[i].value},
                         function (data) {
                         // alert(data);

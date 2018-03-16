@@ -23,7 +23,7 @@
         function fetch()
         {
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll1",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -35,7 +35,7 @@
         function cidchange() {
             var cid=document.getElementById("cid");
             document.getElementById("clid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise1",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("clid").options[0]=new Option("Select Class","-1");
@@ -48,7 +48,7 @@
         function clidchange() {
             var cid=document.getElementById("clid");
             document.getElementById("did").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/division_services/getClassWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/division_services/getClassWise1",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("did").options[0]=new Option("Select Division","-1");
@@ -61,7 +61,7 @@
         function didchange() {
             var did = document.getElementById("did");
             document.getElementById("roll").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise1",
                 {param1: did.value},
                 function (data) {
                     document.getElementById("roll").options[0]=new Option("Select Name","-1");
@@ -89,30 +89,88 @@
         }
         function newuser()
         {
+            var sub=document.getElementById("Button");
+            sub.innerText="Wait";
+            sub.disabled=true;
+            setTimeout(f1(),2000);
+            setTimeout(f2(),5000);
+            // setTimeout(function showPopup()
+            // {
+            //     alert("hi");
+            //     //write functionality for the code here
+            // },3000);
+            setTimeout(function () {
+
+                window.location="http://192.168.100.175:9090/feedback/new_user1.html";
+            },7000);
+
+            // var did=document.getElementById("did");
+            // var roll=document.getElementById("roll");
+            // // alert(did.value);
+            // // alert(roll.value);
+            // $.post("http://192.168.100.175:9090/feedback/global/newuser/getId",
+            //     {param1: roll.value, param2:did.value},
+            //     function (data) {
+            //         if(data=="-1")
+            //             alert("Data not found...");
+            //         else
+            //         {
+            //             sessionStorage.setItem("regid",data);
+            //             // window.location="http://192.168.100.175:9090/feedback/new_user1.html";
+            //         }
+            //     });
+            // $.post("http://192.168.100.175:9090/feedback/global/newuser/getStudId",
+            //     {param1: roll.value, param2:did.value},
+            //     function (data) {
+            //         if(data=="-1")
+            //             alert("Data not found...");
+            //         else
+            //         {
+            //
+            //             sessionStorage.setItem("regidstud",data);
+            //             window.location="http://192.168.100.175:9090/feedback/new_user1.html";
+            //         }
+            //     });
+        }
+        function f1() {
             var did=document.getElementById("did");
             var roll=document.getElementById("roll");
             // alert(did.value);
             // alert(roll.value);
-            $.post("http://localhost:8080/Feedback_System_war_exploded/global/newuser/getId",
+            $.post("http://192.168.100.175:9090/feedback/global/newuser/getId",
                 {param1: roll.value, param2:did.value},
                 function (data) {
-                    if(data=="-1")
+                    if(data=="-1") {
                         alert("Data not found...");
+                        window.location="http://192.168.100.175:9090/feedback";
+                      //  return 0;
+                    }
                     else
                     {
                         sessionStorage.setItem("regid",data);
-                        // window.location="http://localhost:8080/Feedback_System_war_exploded/new_user1.html";
+                        // window.location="http://192.168.100.175:9090/feedback/new_user1.html";
+                        // return 0;
                     }
                 });
-            $.post("http://localhost:8080/Feedback_System_war_exploded/global/newuser/getStudId",
+        }
+        function f2() {
+            var did=document.getElementById("did");
+            var roll=document.getElementById("roll");
+            // alert(did.value);
+            // alert(roll.value);
+            $.post("http://192.168.100.175:9090/feedback/global/newuser/getStudId",
                 {param1: roll.value, param2:did.value},
                 function (data) {
-                    if(data=="-1")
+                    if(data=="-1") {
                         alert("Data not found...");
+                        window.location="http://192.168.100.175:9090/feedback";
+                       // return 0;
+                    }
                     else
                     {
                         sessionStorage.setItem("regidstud",data);
-                        window.location="http://localhost:8080/Feedback_System_war_exploded/new_user1.html";
+
+                        // return 0;
                     }
                 });
         }
@@ -128,7 +186,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://192.168.100.175:9090/feedback/">
                         Home
                     </a>
                     </div>
@@ -172,7 +230,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-block btn-danger" onclick="newuser()">Next</button>
+                    <button type="submit" class="btn btn-block btn-danger" id="Button" onclick="newuser()">Next</button>
 
                 </div>
                 <div class="col-sm-2">

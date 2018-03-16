@@ -23,10 +23,11 @@ public class UpdatePass
     @Produces(MediaType.TEXT_PLAIN)
     public String updatepass(@FormParam("param1")int uid,@FormParam("param2")String opass,@FormParam("param3")String npass)
     {
+        Session session= Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try
         {
-            Session session= Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             User user = session.load(User.class,uid);
             if (opass.equals(user.getPassword())) {
                 user.setPassword(npass);
@@ -42,6 +43,8 @@ public class UpdatePass
             }
         }
         catch (Exception e){
+            transaction.commit();
+            session.close();
             return "E";
         }
     }

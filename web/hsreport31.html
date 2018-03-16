@@ -34,7 +34,7 @@
             var lbl0 = document.getElementById('lbl');
             var sid=sessionStorage.getItem("subid");
             var commid=document.getElementById("cid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getsname",
+            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getsname",
                 {param1: sid },
                 function (data) {
                     // alert(data);
@@ -48,7 +48,7 @@
 
             //
             // c=0;
-            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
+            // $.post("http://192.168.100.175:9090/feedback/admin/class_services/getClassCourse",
             //     {param1: cls },
             //     function (data) {
             //         if (data == "0")
@@ -56,7 +56,7 @@
             //         else {
             //             c=data;
             //             sessionStorage.setItem("scourse",c);
-            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+            //             $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAll",
             //                 {param1: c },
             //                 function (data) {
             //                     if(data=="0"||data=="E")
@@ -72,7 +72,7 @@
             //                         var prv = document.getElementById('ques');
             //                         var j=0;
             //                         var qn=1;
-            //                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/viewAll",
+            //                         $.post("http://192.168.100.175:9090/feedback/admin/rate_services/viewAll",
             //                             {param1: rateid},
             //                             function (data) {
             //                                 for(var i=0;i<(data.length);i++)
@@ -101,7 +101,7 @@
                                                 //
 
 
-                                                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/searchrsrate",
+                                                $.post("http://192.168.100.175:9090/feedback/admin/rate_services/searchrsrate",
                                                     {  param1:sid, param2:commid},
                                                     function (data1) {
                                                         // alert(data1);

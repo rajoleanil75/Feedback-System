@@ -31,18 +31,18 @@
                 if(pass1.value.length>=6) {
                     var opass = document.getElementById('opass');
                     var uid=sessionStorage.getItem("uid");
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/global/UpdatePass",
+                    $.post("http://192.168.100.175:9090/feedback/global/UpdatePass",
                         {param1: uid, param2: opass.value, param3: pass1.value},
                         function (data) {
                             if(data=='1')
                             {
                                 var uid=sessionStorage.getItem("uid");
-                                $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add",
+                                $.post("http://192.168.100.175:9090/feedback/global/notification/add",
                                     {param1: "Password Updated", param2: uid},
                                     function (data) {
                                     });
                                 alert("Password Updated Successfully...!!!");
-                                window.location="http://localhost:8080/Feedback_System_war_exploded/shome.html";
+                                window.location="http://192.168.100.175:9090/feedback/shome.html";
                             }
                             else if(data=='0')
                                 alert("Invalid Password...!!!");

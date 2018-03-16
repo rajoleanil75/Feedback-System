@@ -4,11 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:postgresql://localhost:5432/feedback</property>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/feedback_2017_2018</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">phd</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL93Dialect</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
     <property name="show_sql">true</property>
     <property name="connection.pool_size">100000</property>
     <!--<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>-->

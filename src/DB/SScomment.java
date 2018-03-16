@@ -1,5 +1,7 @@
 package DB;
 
+import java.time.LocalDate;
+
 /**
  * Created by Anil on 22/01/2018
  */
@@ -10,6 +12,7 @@ public class SScomment
     private Student student;
     private Subject subject;
     private Scomment scomment;
+    private LocalDate date;
 
     public int getId() {
         return id;
@@ -49,5 +52,13 @@ public class SScomment
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

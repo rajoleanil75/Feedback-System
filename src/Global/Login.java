@@ -217,7 +217,7 @@ public class Login {
                     BufferedWriter out = null;
                     try
                     {
-                        FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+                        FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
                         out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
                         out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -230,15 +230,16 @@ public class Login {
                                 "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                                 "        <property name=\"connection.username\">postgres</property>\n" +
                                 "        <property name=\"connection.password\">phd</property>\n" +
-                                "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                                "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                                 "        <property name=\"show_sql\">true</property>\n" +
-                                "        <property name=\"connection.pool_size\">10000</property>\n" +
+                                "        <property name=\"connection.pool_size\">1000000</property>\n" +
                                 "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                                 "\n" +
                                 "        <mapping resource=\"DB/sql.xml\"/>\n" +
                                 "    </session-factory>\n" +
                                 "</hibernate-configuration>");
                         out.close();
+                        Global.closeFactory();
                         Global.reload();
                     }
                     catch (IOException e)
@@ -247,7 +248,7 @@ public class Login {
                         return "E";
                     }
 
-                    Session session15 = DB.Global.getSession();
+                    Session session15 = Global.getSession();
                     Transaction t15 = session15.beginTransaction();
                     User user15 = (User) session15.createQuery("from User l where l.name='" + uname + "' and role=" + role + " ").uniqueResult();
                     t15.commit();
@@ -298,6 +299,7 @@ public class Login {
         }
         catch (Exception e)
         {
+
             return "E";
         }
     }
@@ -524,7 +526,7 @@ public class Login {
 //                return "E";
 //            }
 
-            Session session15 = DB.Global.getSession();
+            Session session15 = Global.getSession();
             Transaction t15 = session15.beginTransaction();
             User user15 = (User) session15.createQuery("from User l where l.name='" + uname + "' and role=" + 2 + " ").uniqueResult();
             t15.commit();
@@ -588,7 +590,7 @@ public class Login {
         {
             switch (role) {
                 case 3:
-                    Session session = DB.Global.getSession1();
+                    Session session = Global.getSession1();
                     Transaction t = session.beginTransaction();
                     User user = (User) session.createQuery("from User l where l.name='" + uname + "' and role=" + role + " ").uniqueResult();
                     t.commit();
@@ -630,7 +632,7 @@ public class Login {
                             BufferedWriter out = null;
                             try
                             {
-                                FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+                                FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
                                 out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
                                 out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -643,15 +645,16 @@ public class Login {
                                         "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                                         "        <property name=\"connection.username\">postgres</property>\n" +
                                         "        <property name=\"connection.password\">phd</property>\n" +
-                                        "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                                        "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                                         "        <property name=\"show_sql\">true</property>\n" +
-                                        "        <property name=\"connection.pool_size\">10000</property>\n" +
+                                        "        <property name=\"connection.pool_size\">1000000</property>\n" +
                                         "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                                         "\n" +
                                         "        <mapping resource=\"DB/sql.xml\"/>\n" +
                                         "    </session-factory>\n" +
                                         "</hibernate-configuration>");
                                 out.close();
+                                Global.closeFactory();
                                 Global.reload();
 
                             }
@@ -663,15 +666,16 @@ public class Login {
 
                             return message;
                         } else {
-                            Session session2 = Global.getSession1();
-                            Transaction transaction1 = session2.beginTransaction();
-                            User user2 = session2.load(User.class, user.getUid());
-                            int l = user2.getLcount();
-                            user2.setLcount(l - 1);
-                            session2.persist(user2);
-                            transaction1.commit();
-                            session2.close();
-                            return "" + (l - 1) + "";
+//                            Session session2 = Global.getSession1();
+//                            Transaction transaction1 = session2.beginTransaction();
+//                            User user2 = session2.load(User.class, user.getUid());
+//                            int l = user2.getLcount();
+//                            user2.setLcount(l - 1);
+//                            session2.persist(user2);
+//                            transaction1.commit();
+//                            session2.close();
+//                            return "" + (l - 1) + "";
+                            return "0";
                         }
                     }
 //                break;
@@ -718,7 +722,7 @@ public class Login {
                             BufferedWriter out = null;
                             try
                             {
-                                FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+                                FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
                                 out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
                                 out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -731,15 +735,16 @@ public class Login {
                                         "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                                         "        <property name=\"connection.username\">postgres</property>\n" +
                                         "        <property name=\"connection.password\">phd</property>\n" +
-                                        "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                                        "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                                         "        <property name=\"show_sql\">true</property>\n" +
-                                        "        <property name=\"connection.pool_size\">10000</property>\n" +
+                                        "        <property name=\"connection.pool_size\">1000000</property>\n" +
                                         "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                                         "\n" +
                                         "        <mapping resource=\"DB/sql.xml\"/>\n" +
                                         "    </session-factory>\n" +
                                         "</hibernate-configuration>");
                                 out.close();
+                                Global.closeFactory();
                                 Global.reload();
                             }
                             catch (IOException e)
@@ -750,15 +755,16 @@ public class Login {
 
                             return message;
                         } else {
-                            Session session8 = Global.getSession1();
-                            Transaction transaction8 = session8.beginTransaction();
-                            User user2 = session8.load(User.class, user5.getUid());
-                            int l = user2.getLcount();
-                            user2.setLcount(l - 1);
-                            session8.persist(user2);
-                            transaction8.commit();
-                            session8.close();
-                            return "" + (l - 1) + "";
+//                            Session session8 = Global.getSession1();
+//                            Transaction transaction8 = session8.beginTransaction();
+//                            User user2 = session8.load(User.class, user5.getUid());
+//                            int l = user2.getLcount();
+//                            user2.setLcount(l - 1);
+//                            session8.persist(user2);
+//                            transaction8.commit();
+//                            session8.close();
+//                            return "" + (l - 1) + "";
+                            return "0";
                         }
                     }
 //                break;
@@ -772,7 +778,7 @@ public class Login {
                     BufferedWriter out = null;
                     try
                     {
-                        FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+                        FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
                         out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
                         out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -785,15 +791,16 @@ public class Login {
                                 "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                                 "        <property name=\"connection.username\">postgres</property>\n" +
                                 "        <property name=\"connection.password\">phd</property>\n" +
-                                "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                                "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                                 "        <property name=\"show_sql\">true</property>\n" +
-                                "        <property name=\"connection.pool_size\">10000</property>\n" +
+                                "        <property name=\"connection.pool_size\">1000000</property>\n" +
                                 "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                                 "\n" +
                                 "        <mapping resource=\"DB/sql.xml\"/>\n" +
                                 "    </session-factory>\n" +
                                 "</hibernate-configuration>");
                         out.close();
+                        Global.closeFactory();
                         Global.reload();
                     }
                     catch (IOException e)
@@ -836,15 +843,16 @@ public class Login {
                             session16.close();
                             return message;
                         } else {
-                            Session session18 = Global.getSession();
-                            Transaction transaction18 = session18.beginTransaction();
-                            User user2 = session18.load(User.class, user15.getUid());
-                            int l = user2.getLcount();
-                            user2.setLcount(l - 1);
-                            session18.persist(user2);
-                            transaction18.commit();
-                            session18.close();
-                            return "" + (l - 1) + "";
+//                            Session session18 = Global.getSession();
+//                            Transaction transaction18 = session18.beginTransaction();
+//                            User user2 = session18.load(User.class, user15.getUid());
+//                            int l = user2.getLcount();
+//                            user2.setLcount(l - 1);
+//                            session18.persist(user2);
+//                            transaction18.commit();
+//                            session18.close();
+//                            return "" + (l - 1) + "";
+                            return "0";
                         }
                     }
 //                break;

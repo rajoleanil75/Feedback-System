@@ -50,7 +50,7 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-310)
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
+                $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
                     {param1: fcid },
                     function (data) {
                         if (data == "E")
@@ -60,7 +60,7 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getOneQSMcqReport",
+                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getOneQSMcqReport",
                     {param1: fcid, param3: fqid},
                     function (data) {
                         j=0;

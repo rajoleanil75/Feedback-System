@@ -18,7 +18,7 @@
         {
             // validate_admin();
             document.getElementById("cid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewTeacherLogin",
+            $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/viewTeacherLogin",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select your name","-1");
                     for(var i=0;i<(data.length);i++)
@@ -36,7 +36,7 @@
             else {
                 // var uname = document.getElementById('uname');
                 var pass = document.getElementById('pass');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/global/Login/login_check_teacher",
+                $.post("http://192.168.100.175:9090/feedback/global/Login/login_check_teacher",
                     {param1: uname.value, param2: pass.value},
                     function (data) {
                         // alert(data);
@@ -60,14 +60,14 @@
                             sessionStorage.setItem("id",user.id);
                             sessionStorage.setItem("role",user.role);
                             sessionStorage.setItem("llogin",user.llogin);
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                            $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
                                 {param1: user.id },
                                 function (data) {
                                     if (data == "E")
                                         alert("Teacher Details not found...!!!");
                                     else {
                                         sessionStorage.setItem("tname", data);
-                                        window.location = "http://localhost:8080/Feedback_System_war_exploded/thome.html";
+                                        window.location = "http://192.168.100.175:9090/feedback/thome.html";
                                     }
                                 });
                         }
@@ -85,7 +85,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/index.html">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://192.168.100.175:9090/feedback/index.html">
                         Home
                     </a>
                     </div>
@@ -130,9 +130,9 @@
                 </div>
             </form>
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="http://localhost:8080/Feedback_System_war_exploded/new_user3.html">new user?</a>
+            <a href="http://192.168.100.175:9090/feedback/new_user3.html">new user?</a>
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="http://localhost:8080/Feedback_System_war_exploded/forgetpass1.html">Forget Password</a>
+            <a href="http://192.168.100.175:9090/feedback/forgetpass1.html">Forget Password</a>
         </div>
         <div class="footer">
             <hr>

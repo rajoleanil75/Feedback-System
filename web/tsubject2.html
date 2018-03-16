@@ -51,14 +51,14 @@
             var ftid=sessionStorage.getItem("id");
             if(feedlid==-120)
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
+                            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getcousname",
                                 {param1: fsid },
                                 function (data) {
                                     if (data == "E")
@@ -70,7 +70,7 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllCommReportT",
+                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllCommReportT",
                     { param1: ftid,param2:fsid},
                     function (data) {
                         j=1;

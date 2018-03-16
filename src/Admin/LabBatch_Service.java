@@ -26,9 +26,10 @@ public class LabBatch_Service {
     @Path("add")
     public String add(@FormParam("param1") String lname, @FormParam("param2") int from, @FormParam("param3") int to, @FormParam("param4") int cid, @FormParam("param5") int did)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             CSClass csClass = (CSClass) session.createQuery("from CSClass c where c.id= :id").setParameter("id", cid).uniqueResult();
             Division division =(Division) session.createQuery("from Division c where c.id= :id").setParameter("id", did).uniqueResult();
             LabBatch labBatch=new LabBatch();
@@ -45,6 +46,8 @@ public class LabBatch_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "E";
         }
     }
@@ -53,9 +56,10 @@ public class LabBatch_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getLName(@FormParam("param1") int cid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             LabBatch subject = session.load(LabBatch.class, cid);
             String s=subject.getName();
             t.commit();
@@ -64,6 +68,8 @@ public class LabBatch_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -72,9 +78,10 @@ public class LabBatch_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getCouLName(@FormParam("param1") int lid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             LabBatch subject = session.load(LabBatch.class, lid);
             String s=subject.getCSClass().getCourse().getName()+", Class: "+subject.getCSClass().getName()+", Lab Name: "+subject.getName();
             t.commit();
@@ -83,6 +90,8 @@ public class LabBatch_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -91,9 +100,10 @@ public class LabBatch_Service {
     @Path("addteacherlab")
     public String add(@FormParam("param1") int tname, @FormParam("param2") int lab)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Teacher teacher= (Teacher) session.createQuery("from Teacher c where c.id= :id").setParameter("id", tname).uniqueResult();
             LabBatch labBatch= (LabBatch) session.createQuery("from LabBatch c where c.id= :id").setParameter("id", lab).uniqueResult();
             Teacher_LabBatch teacher_labBatch=new Teacher_LabBatch();
@@ -106,6 +116,8 @@ public class LabBatch_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "E";
         }
     }
@@ -114,7 +126,7 @@ public class LabBatch_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getClassWise(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<LabBatch> tlist=session.createQuery("from LabBatch s where s.CSClass.id=:id").setParameter("id",cid).list();
         List list=new ArrayList();
@@ -137,7 +149,7 @@ public class LabBatch_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getTeacherLab(@FormParam("param1") int cid,@FormParam("param2")int tid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.labBatch.CSClass.course.id=:id and s.teacher.id=:id1").setParameter("id1",tid).setParameter("id",cid).list();
         List list=new ArrayList();
@@ -159,7 +171,7 @@ public class LabBatch_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getTeacher(@FormParam("param1") int lid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.labBatch.id=:id").setParameter("id",lid).list();
         List list=new ArrayList();
@@ -181,7 +193,7 @@ public class LabBatch_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List getTeacherWise(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.teacher.id=:id").setParameter("id",cid).list();
         List list=new ArrayList();
@@ -204,10 +216,11 @@ public class LabBatch_Service {
     @Path("delete")
     public String delete(@FormParam("param1") int tid)
     {
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
         try
         {
-            Session session= DB.Global.getSession();
-            Transaction t=session.beginTransaction();
+
 //            LabBatch labBatch= session.get(LabBatch.class,tid);
 //            if (labBatch==null) {
 //
@@ -247,6 +260,8 @@ public class LabBatch_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return String.valueOf(e);
         }
     }

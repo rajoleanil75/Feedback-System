@@ -57,7 +57,7 @@
             <column name="id" sql-type="varchar(15)"/>
         </id>
         <property name="name">
-            <column name="name" sql-type="varchar(20)" not-null="true" length="20"/>
+            <column name="name" sql-type="varchar(50)" not-null="true" length="50"/>
         </property>
         <many-to-one name="CSClass" class="DB.CSClass" column="csclass_id" not-null="true" cascade="all"/>
         <many-to-one name="teacher" class="DB.Teacher" column="teacher_id" not-null="true" cascade="all"/>
@@ -175,6 +175,9 @@
         <many-to-one name="smcq" class="DB.Smcq" column="smcq_id" not-null="true" cascade="all"/>
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.SSrate" table="ssrate">
@@ -188,6 +191,9 @@
         <many-to-one name="srate" class="DB.Srate" column="srate_id" not-null="true" cascade="all"/>
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.SScomment" table="sscomment">
@@ -201,6 +207,9 @@
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="scomment" class="DB.Scomment" column="scomment_id" not-null="true" cascade="all"/>
         <many-to-one name="subject" class="DB.Subject" column="subject_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.Lquestion" table="lquestion">
@@ -273,6 +282,9 @@
         <many-to-one name="lmcq" class="DB.Lmcq" column="lmcq_id" not-null="true" cascade="all"/>
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="teacher_labBatch" class="DB.Teacher_LabBatch" column="teacher_lab_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.LScomment" table="lscomment">
@@ -286,6 +298,9 @@
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="lcomment" class="DB.Lcomment" column="lcomment_id" not-null="true" cascade="all"/>
         <many-to-one name="teacher_labBatch" class="DB.Teacher_LabBatch" column="teacher_lab_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.LSrate" table="lsrate">
@@ -299,6 +314,9 @@
         <many-to-one name="student" class="DB.Student" column="student_id" not-null="true" cascade="all"/>
         <many-to-one name="lrate" class="DB.Lrate" column="lrate_id" cascade="all" not-null="true"/>
         <many-to-one name="teacher_labBatch" class="DB.Teacher_LabBatch" column="teacher_lab_id" not-null="true" cascade="all"/>
+        <property name="date">
+            <column name="fdate" sql-type="date"/>
+        </property>
     </class>
 
     <class name="DB.User" table="uuser">

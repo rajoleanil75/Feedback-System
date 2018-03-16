@@ -20,7 +20,7 @@
 
             validate_admin();
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -32,7 +32,7 @@
         function cidchange() {
             var cid=document.getElementById("cid");
             document.getElementById("clid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("clid").options[0]=new Option("Select Class","-1");
@@ -45,7 +45,7 @@
         function clidchange() {
             var cid = document.getElementById("clid");
             document.getElementById("did").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/division_services/getClassWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/division_services/getClassWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("did").options[0] = new Option("Select Division", "-1");
@@ -61,7 +61,7 @@
             while(tbl.rows.length > 1) {
                 tbl.deleteRow(1);
             }
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
                 {param1: did.value},
                 function (data) {
                     var tbl = document.getElementById('tbl');
@@ -87,7 +87,7 @@
             var q = document.querySelectorAll("input[type=checkbox][name=chk]"), l = q.length, i;
             for (i = 0; i < l; i++) {
                 if (q[i].checked == true) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/delete",
+                    $.post("http://192.168.100.175:9090/feedback/admin/student_services/delete",
                         {param1: q[i].value},
                         function (data) {
                         // alert(data);
@@ -110,7 +110,7 @@
             }
             var tid = document.getElementById('tid');
             var did = document.getElementById("did");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/search",
+            $.post("http://192.168.100.175:9090/feedback/admin/student_services/search",
                 {param1: tid.value,param2: did.value},
                 function (data) {
                     if(data==""||data==null||data==undefined)
@@ -147,7 +147,7 @@
         //         case "1" :
         //             switch (listindex) {
         //                 case "1" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "1"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -169,7 +169,7 @@
         //                         });
         //                     break;
         //                 case "2" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "2"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -195,7 +195,7 @@
         //         case "2" :
         //             switch (listindex) {
         //                 case "3" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "3"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -217,7 +217,7 @@
         //                         });
         //                     break;
         //                 case "4" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "4"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -243,7 +243,7 @@
         //         case "3" :
         //             switch (listindex) {
         //                 case "5" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "5"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -265,7 +265,7 @@
         //                         });
         //                     break;
         //                 case "6" :
-        //                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //                     $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                         {param1: "6"},
         //                         function (data) {
         //                             var tbl = document.getElementById('tbl');
@@ -289,7 +289,7 @@
         //             }
         //             break;
         //         case "4" :
-        //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //             $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                 {param1: "7"},
         //                 function (data) {
         //                     var tbl = document.getElementById('tbl');
@@ -311,7 +311,7 @@
         //                 });
         //             break;
         //         case "5" :
-        //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/viewDivisionWise",
+        //             $.post("http://192.168.100.175:9090/feedback/admin/student_services/viewDivisionWise",
         //                 {param1: "8"},
         //                 function (data) {
         //                     var tbl = document.getElementById('tbl');

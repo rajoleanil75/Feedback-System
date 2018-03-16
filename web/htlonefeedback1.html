@@ -50,14 +50,14 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-310)
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
+                            $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
                                 {param1: fcid },
                                 function (data) {
                                     if (data == "E")
@@ -69,7 +69,7 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getOneRateReport",
+                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getOneRateReport",
                     {param1: fcid, param2: ftid, param3: fqid},
                     function (data) {
                         j=0;
@@ -124,14 +124,14 @@
             }
             else  if(feedlid==-320)
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
+                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getcoulname",
+                            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getcoulname",
                                 {param1: flid },
                                 function (data) {
                                     if (data == "E")
@@ -143,7 +143,7 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getOneRateReport1",
+                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getOneRateReport1",
                     {param1: fcid, param2: ftid, param3: fqid,param4:flid},
                     function (data) {
                         j=0;

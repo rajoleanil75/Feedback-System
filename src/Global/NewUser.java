@@ -27,7 +27,7 @@ public class NewUser {
     @Path("getId")
     public String getId(@FormParam("param1")int roll, @FormParam("param2") int div)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         Student student= (Student) session.createQuery("from Student s where s.roll=:id and s.division.id=:id1").setParameter("id",roll).setParameter("id1",div).uniqueResult();
         if(student==null)
@@ -44,7 +44,7 @@ public class NewUser {
     @Path("getStudId")
     public String getStudId(@FormParam("param1")int roll, @FormParam("param2") int div)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         Student student= (Student) session.createQuery("from Student s where s.roll=:id and s.division.id=:id1").setParameter("id",roll).setParameter("id1",div).uniqueResult();
         if(student==null)
@@ -60,9 +60,10 @@ public class NewUser {
     @Path("add")
     public String add(@FormParam("param1")String name, @FormParam("param2") String pass, @FormParam("param3")String sid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             User user = new User();
             user.setName(name);
             user.setPassword(pass);
@@ -78,6 +79,8 @@ public class NewUser {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -86,9 +89,10 @@ public class NewUser {
     @Path("addteach")
     public String addteach(@FormParam("param1")String name, @FormParam("param2") String pass, @FormParam("param3")int tid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             User user = new User();
             user.setName(name);
             user.setPassword(pass);
@@ -107,6 +111,8 @@ public class NewUser {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -115,9 +121,10 @@ public class NewUser {
     @Path("add1")
     public String add1(@FormParam("param1")String name, @FormParam("param2") String pass, @FormParam("param3")int role)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             User user = new User();
             user.setName(name);
             user.setPassword(pass);
@@ -133,6 +140,8 @@ public class NewUser {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -141,9 +150,10 @@ public class NewUser {
     @Path("add_hod")
     public String add_hod(@FormParam("param1")String name, @FormParam("param2") String pass)
     {
+        Session session = Global.getSession1();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession1();
-            Transaction t = session.beginTransaction();
+
             User user = new User();
             user.setName(name);
             user.setPassword(pass);
@@ -159,6 +169,8 @@ public class NewUser {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -167,9 +179,10 @@ public class NewUser {
     @Path("add_admin")
     public String add_admin(@FormParam("param1")String name, @FormParam("param2") String pass)
     {
+        Session session = Global.getSession1();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession1();
-            Transaction t = session.beginTransaction();
+
             User user = new User();
             user.setName(name);
             user.setPassword(pass);
@@ -185,6 +198,8 @@ public class NewUser {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }

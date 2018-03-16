@@ -30,7 +30,7 @@
             validate_stud();
             var cid=sessionStorage.getItem("sclass");
             document.getElementById("sid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/subject_services/viewAll",
                 function (data) {
                     for(var i=0,j=0;i<(data.length);i++)
                     {
@@ -46,17 +46,17 @@
             var stud=sessionStorage.getItem("studid");
             // alert(sid.value);
             // alert(stud);
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/subcheck",
+            $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/subcheck",
                 {param1:stud, param2:sid.value},
                 function (data) {
                     // alert(data);
                     if (data == "0"){
-                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/subcheck",
+                        $.post("http://192.168.100.175:9090/feedback/admin/rate_services/subcheck",
                             {param1:stud, param2:sid.value},
                             function (data) {
                                 // alert(data);
                                 if (data == "0"){
-                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/subcheck",
+                                    $.post("http://192.168.100.175:9090/feedback/admin/comment_services/subcheck",
                                         {param1:stud, param2:sid.value},
                                         function (data) {
                                             // alert(data);
@@ -65,19 +65,19 @@
                                             }
                                             else {
                                                 sessionStorage.setItem("subid",sid.value);
-                                                window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
+                                                window.location="http://192.168.100.175:9090/feedback/ssview_feedback1.html";
                                             }
                                         });
                                 }
                                 else {
                                     sessionStorage.setItem("subid",sid.value);
-                                    window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
+                                    window.location="http://192.168.100.175:9090/feedback/ssview_feedback1.html";
                                 }
                             });
                     }
                     else {
                         sessionStorage.setItem("subid",sid.value);
-                        window.location="http://localhost:8080/Feedback_System_war_exploded/ssview_feedback1.html";
+                        window.location="http://192.168.100.175:9090/feedback/ssview_feedback1.html";
                     }
                 });
 

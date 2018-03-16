@@ -31,9 +31,10 @@ public class Notification_service {
     @Path("add")
     public String add(@FormParam("param1")String nme,@FormParam("param2")int uid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             User user = session.get(User.class, uid);
             Notification notification = new Notification();
             notification.setDate(LocalDate.now());
@@ -45,7 +46,10 @@ public class Notification_service {
             session.close();
             return "1";
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -55,9 +59,10 @@ public class Notification_service {
     @Path("viewAll")
     public List viewAll(@FormParam("param1")int uid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             java.util.List<Notification> tlist = session.createQuery("from Notification s where s.user.uid=:id order by s.date desc ").setParameter("id", uid).setMaxResults(25).list();
             List list = new ArrayList();
             for (Iterator iterator = tlist.iterator(); iterator.hasNext(); ) {
@@ -76,6 +81,8 @@ public class Notification_service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return Collections.singletonList(e);
 //            return String.valueOf(e);
         }
@@ -86,9 +93,10 @@ public class Notification_service {
     @Path("add1")
     public String add1(@FormParam("param1")String nme,@FormParam("param2")int uid)
     {
+        Session session = Global.getSession1();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession1();
-            Transaction transaction = session.beginTransaction();
+
             User user = session.get(User.class, uid);
             Notification notification = new Notification();
             notification.setDate(LocalDate.now());
@@ -101,6 +109,8 @@ public class Notification_service {
             return "1";
         }
         catch (Exception e) {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -110,9 +120,10 @@ public class Notification_service {
     @Path("viewAll1")
     public List viewAll1(@FormParam("param1")int uid)
     {
+        Session session = Global.getSession1();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession1();
-            Transaction t = session.beginTransaction();
+
             java.util.List<Notification> tlist = session.createQuery("from Notification s where s.user.uid=:id order by s.date desc ").setParameter("id", uid).setMaxResults(25).list();
             List list = new ArrayList();
             for (Iterator iterator = tlist.iterator(); iterator.hasNext(); ) {
@@ -131,6 +142,8 @@ public class Notification_service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return Collections.singletonList(e);
 //            return String.valueOf(e);
         }

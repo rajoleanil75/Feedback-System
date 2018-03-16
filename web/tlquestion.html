@@ -26,7 +26,7 @@
         {
             validate_teacher();
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -39,7 +39,7 @@
             var cid=document.getElementById("cid");
             document.getElementById("qid").length = 0;
             if(cid.value!=-1) {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/viewAllQues",
+                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/viewAllQues",
                     {param1: cid.value},
                     function (data) {
                         document.getElementById("qid").options[0] = new Option("All Question", "-1");
@@ -62,23 +62,23 @@
             if(cid.value!=-1) {
                 if (qid.value == -1 ) {
                     sessionStorage.setItem("feedlid",-110);
-                    window.location = "http://localhost:8080/Feedback_System_war_exploded/tlquestion1.html";
+                    window.location = "http://192.168.100.175:9090/feedback/tlquestion1.html";
                 }
                 else if ( qid.value == -2) {
                     sessionStorage.setItem("feedlid", -210);
-                    window.location = "http://localhost:8080/Feedback_System_war_exploded/tlquestion2.html";
+                    window.location = "http://192.168.100.175:9090/feedback/tlquestion2.html";
                 }
                 else if (qid.value != -1 && qid.value!=-2) {
                     sessionStorage.setItem("feedlid", -310);
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/mcqcheck",
+                    $.post("http://192.168.100.175:9090/feedback/admin/lmcq_services/mcqcheck",
                         {param1: qid.value},
                         function (data) {
                             // alert(data);
                             if (data=="0") {
-                                window.location="http://localhost:8080/Feedback_System_war_exploded/tlquestion4.html";
+                                window.location="http://192.168.100.175:9090/feedback/tlquestion4.html";
                             }
                             else {
-                                window.location="http://localhost:8080/Feedback_System_war_exploded/tlquestion3.html";
+                                window.location="http://192.168.100.175:9090/feedback/tlquestion3.html";
                             }
                         });
                 }

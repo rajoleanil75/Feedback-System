@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.time.LocalDate.now;
+
 /**
  * Created by Anil on 08/02/2018
  */
@@ -24,9 +26,10 @@ public class LRate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String addS(@FormParam("param1") int sid, @FormParam("param2") String q)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Lquestion r= (Lquestion) session.createQuery("from Lquestion s where s.course.id=:sid and s.qtype=:qid").setParameter("sid",sid).setParameter("qid",2).uniqueResult();
             Lrate srate=new Lrate();
             srate.setName(q);
@@ -38,6 +41,8 @@ public class LRate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -46,9 +51,10 @@ public class LRate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String subcheck(@FormParam("param1") int stud, @FormParam("param2") int sub)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             LSrate sSmcq= (LSrate) session.createQuery("from LSrate s where s.student.id=:id and s.teacher_labBatch.id=:id1").setParameter("id",stud).setParameter("id1",sub).getSingleResult();
             if (sSmcq==null) {
                 transaction.commit();
@@ -63,14 +69,20 @@ public class LRate_Service {
         }
         catch (NoResultException e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
         catch (NonUniqueResultException e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
     }
@@ -79,9 +91,10 @@ public class LRate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String add(@FormParam("param1") int ans,@FormParam("param2") int stud, @FormParam("param3") int sub, @FormParam("param4") int sm)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Student student= (Student) session.createQuery("from Student s where s.id=:sid ").setParameter("sid",stud).uniqueResult();
             Teacher_LabBatch subject= (Teacher_LabBatch) session.createQuery("from Teacher_LabBatch s where s.id=:id").setParameter("id",sub).uniqueResult();
             Lrate srate= (Lrate) session.createQuery("from Lrate s where s.id=:id").setParameter("id",sm).uniqueResult();
@@ -90,6 +103,7 @@ public class LRate_Service {
             ssmcq.setStudent(student);
             ssmcq.setTeacher_labBatch(subject);
             ssmcq.setLrate(srate);
+            ssmcq.setDate(now());
             session.save(ssmcq);
             transaction.commit();
             session.close();
@@ -97,6 +111,8 @@ public class LRate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -105,7 +121,7 @@ public class LRate_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll(@FormParam("param1")int sid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Lrate> tlist=session.createQuery("from Lrate s where s.lquestion.id=:id").setParameter("id",sid).list();
         List list=new ArrayList();

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.time.LocalDate.now;
+
 /**
  * Created by Anil on 08/02/2018
  */
@@ -26,9 +28,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String addS(@FormParam("param1") int sid, @FormParam("param2") String q)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Squestion r= (Squestion) session.createQuery("from Squestion s where s.course.id=:sid and s.qtype=:qid").setParameter("sid",sid).setParameter("qid",2).uniqueResult();
             Srate srate=new Srate();
             srate.setName(q);
@@ -40,6 +43,8 @@ public class Rate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -48,9 +53,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String add(@FormParam("param1") int ans,@FormParam("param2") int stud, @FormParam("param3") String sub, @FormParam("param4") int sm)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Student student= (Student) session.createQuery("from Student s where s.id=:sid ").setParameter("sid",stud).uniqueResult();
             Subject subject= (Subject) session.createQuery("from Subject s where s.id=:id").setParameter("id",sub).uniqueResult();
             Srate srate= (Srate) session.createQuery("from Srate s where s.id=:id").setParameter("id",sm).uniqueResult();
@@ -59,6 +65,7 @@ public class Rate_Service {
             ssmcq.setStudent(student);
             ssmcq.setSubject(subject);
             ssmcq.setSrate(srate);
+            ssmcq.setDate(now());
             session.save(ssmcq);
             transaction.commit();
             session.close();
@@ -66,6 +73,8 @@ public class Rate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -74,9 +83,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String subcheck(@FormParam("param1") int stud, @FormParam("param2") String sub)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             SSrate sSmcq= (SSrate) session.createQuery("from SSrate s where s.student.id=:id and s.subject.id=:id1").setParameter("id",stud).setParameter("id1",sub).getSingleResult();
             if (sSmcq==null) {
                 transaction.commit();
@@ -91,14 +101,20 @@ public class Rate_Service {
         }
         catch (NoResultException e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
         catch (NonUniqueResultException e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
     }
@@ -107,9 +123,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String subcheck1(@FormParam("param1") String sub)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             SSrate sSmcq= (SSrate) session.createQuery("from SSrate s where s.subject.id=:id1").setParameter("id1",sub).getSingleResult();
             if (sSmcq==null) {
                 transaction.commit();
@@ -117,20 +134,27 @@ public class Rate_Service {
                 return "0";
             }
             else {
-
+                transaction.commit();
+                session.close();
                 return "1";
             }
         }
         catch (NoResultException e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
         catch (NonUniqueResultException e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "1";
         }
     }
@@ -139,9 +163,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String searchSSrate(@FormParam("param1") int stud, @FormParam("param2") String sub, @FormParam("param3") int sm)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             SSrate sSrate= (SSrate) session.createQuery("from SSrate s where s.subject.id=:id and s.student.id=:id1 and s.srate.id=:id2").setParameter("id",sub).setParameter("id1",stud).setParameter("id2",sm).uniqueResult();
             int i=sSrate.getAns();
             transaction.commit();
@@ -150,6 +175,8 @@ public class Rate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "0";
         }
     }
@@ -158,7 +185,7 @@ public class Rate_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll(@FormParam("param1")int sid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Srate> tlist=session.createQuery("from Srate s where s.squestion.id=:id").setParameter("id",sid).list();
         List list=new ArrayList();
@@ -179,9 +206,10 @@ public class Rate_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String searchRSrate( @FormParam("param1") String sub, @FormParam("param2") int sm)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             Query query1 = session.createQuery("select count (s.ans) from SSrate s where s.subject.id=:id and s.srate.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", 1);
             Long cnt1 = (Long) query1.uniqueResult();
             Query query2 = session.createQuery("select count (s.ans) from SSrate s where s.subject.id=:id and s.srate.id=:id1 and s.ans=:id2").setParameter("id", sub).setParameter("id1", sm).setParameter("id2", 2);
@@ -204,6 +232,8 @@ public class Rate_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "E";
         }
 

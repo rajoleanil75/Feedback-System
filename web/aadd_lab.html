@@ -31,7 +31,7 @@
         {
             validate_admin();
             document.getElementById("cid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -40,7 +40,7 @@
                     }
                 });
             document.getElementById("tid").length = 0;
-            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
+            $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
                 function (data) {
                     for(var i=0;i<(data.length);i++)
                     {
@@ -51,7 +51,7 @@
         function cidchange() {
             var cid=document.getElementById("cid");
             document.getElementById("clid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("clid").options[0]=new Option("Select Class","-1");
@@ -64,7 +64,7 @@
         function clidchange() {
             var cid=document.getElementById("clid");
             document.getElementById("did").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/division_services/getClassWise",
+            $.post("http://192.168.100.175:9090/feedback/admin/division_services/getClassWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("did").options[0]=new Option("Select Division","-1");
@@ -92,7 +92,7 @@
                 alert("Please select at least one Instructor...!!!");
             else
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/add",
+                $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/add",
                     {param1: lname.value, param2: from.value, param3: to.value,param4:cid.value,param5:clid.value},
                     function (data) {
                         if (data == 'E') {
@@ -100,7 +100,7 @@
                         }
                         else {
                             for(i=0;i<values.length;i++) {
-                                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/addteacherlab",
+                                $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/addteacherlab",
                                     {param1: values[i], param2: data},
                                     function (data) {
                                         if (data == 'E') {
@@ -111,13 +111,13 @@
                                     });
                             }
                             var uid=sessionStorage.getItem("uid");
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add1",
+                            $.post("http://192.168.100.175:9090/feedback/global/notification/add1",
                                 {param1: "Lab Batch added, Name: "+lname.value, param2: uid},
                                 function (data) {
                                 });
                             alert("Lab batch Added Successfully...!!!");
 
-                            window.location = "http://localhost:8080/Feedback_System_war_exploded/aadd_lab.html";
+                            window.location = "http://192.168.100.175:9090/feedback/aadd_lab.html";
                         }
                     });
             }

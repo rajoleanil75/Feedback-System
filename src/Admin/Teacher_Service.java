@@ -27,10 +27,11 @@ public class Teacher_Service {
     @Path("add")
     public String add( @FormParam("param2")String tname)
     {
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
         try
         {
-            Session session= DB.Global.getSession();
-            Transaction t=session.beginTransaction();
+
             DB.Teacher teacher=new DB.Teacher();
 //            teacher.setId(tid);
             teacher.setName(tname);
@@ -42,6 +43,8 @@ public class Teacher_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return ""+e+"";
         }
     }
@@ -50,15 +53,19 @@ public class Teacher_Service {
     @Path("delete")
     public String delete(@FormParam("param1") int tid) {
 //        try {
-        Session session = DB.Global.getSession();
+        Session session = Global.getSession();
         Transaction t = session.beginTransaction();
         Teacher teacher = session.load(Teacher.class, tid);
 //      session.delete(teacher);
 //        Serializable id = tid;
 //      String i=teacher.getId();
 //        Object o = session.load(Teacher.class, id);
-        if (teacher== null)
+        if (teacher== null){
+
+            t.commit();
+            session.close();
             return "0";
+        }
         else {
 
 
@@ -79,9 +86,10 @@ public class Teacher_Service {
     @Produces(MediaType.TEXT_PLAIN)
     public String getTName(@FormParam("param1") int cid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             Teacher teacher = session.load(Teacher.class, cid);
             String s=teacher.getName();
             t.commit();
@@ -90,6 +98,8 @@ public class Teacher_Service {
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -98,7 +108,7 @@ public class Teacher_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll()
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Teacher> tlist=session.createQuery("from Teacher").list();
         t.commit();
@@ -110,9 +120,10 @@ public class Teacher_Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List  search(@FormParam("param1") String tname)
     {
+        Session session = Global.getSession();
+        Transaction transaction=session.beginTransaction();
         try {
-            Session session = Global.getSession();
-            Transaction transaction=session.beginTransaction();
+
             java.util.List<Teacher> tlist=session.createQuery("from Teacher s where s.name like :id").setParameter("id","%"+tname+"%").list();
             List list=new ArrayList();
             for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
@@ -138,6 +149,8 @@ public class Teacher_Service {
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return null;
         }
 
@@ -156,7 +169,7 @@ public class Teacher_Service {
         BufferedWriter out = null;
         try
         {
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -169,15 +182,16 @@ public class Teacher_Service {
                     "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                     "        <property name=\"connection.username\">postgres</property>\n" +
                     "        <property name=\"connection.password\">phd</property>\n" +
-                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                     "        <property name=\"show_sql\">true</property>\n" +
-                    "        <property name=\"connection.pool_size\">10000</property>\n" +
+                    "        <property name=\"connection.pool_size\">1000000</property>\n" +
                     "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                     "\n" +
                     "        <mapping resource=\"DB/sql.xml\"/>\n" +
                     "    </session-factory>\n" +
                     "</hibernate-configuration>");
             out.close();
+            Global.closeFactory();
             Global.reload();
         }
         catch (IOException e)
@@ -224,7 +238,7 @@ public class Teacher_Service {
         BufferedWriter out = null;
         try
         {
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -237,15 +251,16 @@ public class Teacher_Service {
                     "        <property name=\"connection.driver_class\">org.postgresql.Driver</property>\n" +
                     "        <property name=\"connection.username\">postgres</property>\n" +
                     "        <property name=\"connection.password\">phd</property>\n" +
-                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL93Dialect</property>\n" +
+                    "        <property name=\"hibernate.dialect\">org.hibernate.dialect.PostgreSQL95Dialect</property>\n" +
                     "        <property name=\"show_sql\">true</property>\n" +
-                    "        <property name=\"connection.pool_size\">10000</property>\n" +
+                    "        <property name=\"connection.pool_size\">1000000</property>\n" +
                     "        <property name=\"hbm2ddl.auto\">update</property>\n" +
                     "\n" +
                     "        <mapping resource=\"DB/sql.xml\"/>\n" +
                     "    </session-factory>\n" +
                     "</hibernate-configuration>");
             out.close();
+            Global.closeFactory();
             Global.reload();
         }
         catch (IOException e)

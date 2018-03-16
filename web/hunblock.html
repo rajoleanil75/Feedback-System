@@ -18,7 +18,7 @@
     <script>
         function fetch() {
             validate_hod();
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/user_services/viewAll",
+            $.post("http://192.168.100.175:9090/feedback/admin/user_services/viewAll",
                 function (data) {
                     var tbl = document.getElementById('tbl');
                     while(tbl.rows.length > 1) {
@@ -47,7 +47,7 @@
             i=0;
             for (; i < l; i++) {
                 if (q[i].checked == true) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/user_services/unblock",
+                    $.post("http://192.168.100.175:9090/feedback/admin/user_services/unblock",
                         {param1: q[i].value},
                         function (data) {
                             if(data=="0")

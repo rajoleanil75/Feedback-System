@@ -2,6 +2,7 @@ package Admin;
 
 import DB.CSClass;
 import DB.Student;
+import DB.Global;
 import DB.Subject;
 import DB.Teacher;
 import org.hibernate.Session;
@@ -26,9 +27,10 @@ public class Subject_Service
     @Path("add")
     public String add(@FormParam("param1") String scode, @FormParam("param2") String sname, @FormParam("param3")int tid, @FormParam("param4") int cid)
     {
+        Session session = Global.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction transaction = session.beginTransaction();
+
             CSClass csClass = (CSClass) session.createQuery("from CSClass c where c.id= :id").setParameter("id", cid).uniqueResult();
             Teacher teacher = (Teacher) session.createQuery("from Teacher t where t.id=:id").setParameter("id", tid).uniqueResult();
             Subject subject = new Subject();
@@ -43,6 +45,8 @@ public class Subject_Service
         }
         catch (Exception e)
         {
+            transaction.commit();
+            session.close();
             return "E";
         }
     }
@@ -51,7 +55,7 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List viewAll()
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Subject> tlist=session.createQuery("from Subject").list();
         List list=new ArrayList();
@@ -75,7 +79,7 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List getCourseWise(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Subject> tlist=session.createQuery("from Subject s where s.CSClass.course.id=:id").setParameter("id",cid).list();
         List list=new ArrayList();
@@ -96,7 +100,7 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List getCourseTeachWise(@FormParam("param1") int cid,@FormParam("param2") int tid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Subject> tlist=session.createQuery("from Subject s where s.CSClass.course.id=:id and s.teacher.id=:id1").setParameter("id",cid).setParameter("id1",tid).list();
         List list=new ArrayList();
@@ -118,9 +122,10 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List getClassWise(@FormParam("param1") int cid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             java.util.List<Subject> tlist = session.createQuery("from Subject s where s.CSClass.id=:id").setParameter("id", cid).list();
             List list = new ArrayList();
             for (Iterator iterator = tlist.iterator(); iterator.hasNext(); ) {
@@ -136,6 +141,8 @@ public class Subject_Service
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return (List) e;
         }
     }
@@ -145,7 +152,7 @@ public class Subject_Service
     @Produces(MediaType.APPLICATION_JSON)
     public List getTeacherWise(@FormParam("param1") int cid)
     {
-        Session session= DB.Global.getSession();
+        Session session= Global.getSession();
         Transaction t=session.beginTransaction();
         java.util.List<Subject> tlist=session.createQuery("from Subject s where s.teacher.id=:id").setParameter("id",cid).list();
         List list=new ArrayList();
@@ -166,9 +173,10 @@ public class Subject_Service
     @Produces(MediaType.TEXT_PLAIN)
     public String getSName(@FormParam("param1") String cid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             Subject subject = session.load(Subject.class, cid);
             String s=subject.getName();
             t.commit();
@@ -177,6 +185,8 @@ public class Subject_Service
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -185,9 +195,10 @@ public class Subject_Service
     @Produces(MediaType.TEXT_PLAIN)
     public String getCouSName(@FormParam("param1") String cid)
     {
+        Session session = Global.getSession();
+        Transaction t = session.beginTransaction();
         try {
-            Session session = DB.Global.getSession();
-            Transaction t = session.beginTransaction();
+
             Subject subject = session.load(Subject.class, cid);
             String s=subject.getCSClass().getCourse().getName()+", Class: "+subject.getCSClass().getName()+", Subject: "+  subject.getName();
             t.commit();
@@ -196,6 +207,8 @@ public class Subject_Service
         }
         catch (Exception e)
         {
+            t.commit();
+            session.close();
             return "E";
         }
     }
@@ -206,7 +219,7 @@ public class Subject_Service
     {
 //        try
 //        {
-            Session session= DB.Global.getSession();
+            Session session= Global.getSession();
             Transaction t=session.beginTransaction();
             Subject subject= session.get(Subject.class,tid);
             if (subject==null) {

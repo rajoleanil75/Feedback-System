@@ -41,11 +41,25 @@ public class Global {
     public static Session getSession() throws HibernateException
     {
 //        reload();
-        return ourSessionFactory.openSession();
+        try {
+            return ourSessionFactory.getCurrentSession();
+
+        }
+        catch (Exception e)
+        {
+            return ourSessionFactory.openSession();
+        }
     }
-    public static void closeFactory() throws Exception
+    public static void closeFactory()
     {
-        ourSessionFactory.close();
+        try {
+            ourSessionFactory.close();
+        }
+        catch (Exception e)
+        {
+            ourSessionFactory.getCurrentSession().close();
+            ourSessionFactory.close();
+        }
     }
 
     private static final SessionFactory ourSessionFactory1;
@@ -61,16 +75,29 @@ public class Global {
     }
     public static Session getSession1() throws HibernateException
     {
-        return ourSessionFactory1.openSession();
+        try {
+            return ourSessionFactory1.getCurrentSession();
 //        return ourSessionFactory.getCurrentSession();
+        }
+        catch (Exception e)
+        {
+            return ourSessionFactory1.openSession();
+        }
     }
 //    public static Session getCSession1() throws HibernateException
 //    {
 //        return ourSessionFactory1.getCurrentSession();
 //    }
-    public static void closeFactory1() throws Exception
+    public static void closeFactory1()
     {
-        ourSessionFactory1.close();
+        try {
+            ourSessionFactory1.close();
+        }
+        catch (Exception e)
+        {
+            ourSessionFactory1.getCurrentSession().close();
+            ourSessionFactory1.close();
+        }
     }
 
 

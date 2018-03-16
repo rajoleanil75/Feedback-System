@@ -34,7 +34,7 @@
                 ques1.deleteRow(2);
             }
             // var uid=sessionStorage.getItem("uid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/backup_services/viewAll",
+            $.post("http://192.168.100.175:9090/feedback/admin/backup_services/viewAll",
                 function (data) {
                     // alert(data);
                     j = 1;
@@ -70,7 +70,7 @@
             for (i = 0; i < l; i++) {
                 if (q[i].checked == true) {
                     // alert(q[i].value);
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/backup_services/restore",
+                    $.post("http://192.168.100.175:9090/feedback/admin/backup_services/restore",
                         {param1: q[i].value},
                         function (data) {
                             // alert(data);
@@ -84,7 +84,7 @@
 
             // alert(q[0]);
 
-            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/backup_services/backup",
+            // $.post("http://192.168.100.175:9090/feedback/admin/backup_services/backup",
             //     function (data) {
             //         if(data=="1")
             //             alert("Data Successfully Backup...!!!");
@@ -97,7 +97,7 @@
             fetch();
         }
         // function refreshdb() {
-        //     window.location = "http://localhost:8080/Feedback_System_war_exploded/arefresh.html";
+        //     window.location = "http://192.168.100.175:9090/feedback/arefresh.html";
         // }
 
     </script>

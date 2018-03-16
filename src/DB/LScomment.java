@@ -1,5 +1,7 @@
 package DB;
 
+import java.time.LocalDate;
+
 /**
  * Created by Anil on 22/01/2018
  */
@@ -10,6 +12,7 @@ public class LScomment
     private Student student;
     private Lcomment lcomment;
     private Teacher_LabBatch teacher_labBatch;
+    private LocalDate date;
 
     public Lcomment getLcomment() {
         return lcomment;
@@ -50,5 +53,13 @@ public class LScomment
 
     public void setTeacher_labBatch(Teacher_LabBatch teacher_labBatch) {
         this.teacher_labBatch = teacher_labBatch;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

@@ -41,63 +41,63 @@
         var qcur=-1;
 
         function validate() {
-            mcur = 0;
-            rcur = 0;
-            ccur = 0;
-            flag=true;
-            if (mcur < tmcq) {
-                for(;mcur<tmcq;mcur++)
-                {
-                    if (mcq[mcur]['q'] == "" || mcq[mcur]['o1'] == "" || mcq[mcur]['o2'] == "")
-                        flag=false;
-                }
-                if(rcur < trate)
-                {
-                    for(;rcur<trate;rcur++)
-                    {
-                        if (rate[rcur]['q'] == "")
-                            flag=false;
-                    }
-                }
-                // if(ccur < tcomm)
-                // {
-                //     for(;ccur<tcomm;ccur++)
-                //     {
-                //         if (comm[ccur]['q'] == "")
-                //             flag=false;
-                //     }
-                // }
-            }
-            else if (rcur < trate) {
-                for(;rcur<trate;rcur++)
-                {
-                    if (rate[rcur]['q'] == "")
-                        flag = false;
-                }
-                if(ccur < tcomm)
-                {
-                    for(;ccur<tcomm;ccur++)
-                    {
-                        if (comm[ccur]['q'] == "")
-                            flag = false;
-                    }
-                }
-            }
-            // else if (ccur < tcomm) {
-            //     for(;ccur<tcomm;ccur++)
+            // mcur = 0;
+            // rcur = 0;
+            // ccur = 0;
+            // flag=true;
+            // if (mcur < tmcq) {
+            //     for(;mcur<tmcq;mcur++)
             //     {
-            //         if (comm[ccur]['q'] == "")
+            //         if (mcq[mcur]['q'] == "" || mcq[mcur]['o1'] == "" || mcq[mcur]['o2'] == "")
+            //             flag=false;
+            //     }
+            //     if(rcur < trate)
+            //     {
+            //         for(;rcur<trate;rcur++)
+            //         {
+            //             if (rate[rcur]['q'] == "")
+            //                 flag=false;
+            //         }
+            //     }
+            //     // if(ccur < tcomm)
+            //     // {
+            //     //     for(;ccur<tcomm;ccur++)
+            //     //     {
+            //     //         if (comm[ccur]['q'] == "")
+            //     //             flag=false;
+            //     //     }
+            //     // }
+            // }
+            // else if (rcur < trate) {
+            //     for(;rcur<trate;rcur++)
+            //     {
+            //         if (rate[rcur]['q'] == "")
             //             flag = false;
             //     }
+            //     if(ccur < tcomm)
+            //     {
+            //         for(;ccur<tcomm;ccur++)
+            //         {
+            //             if (comm[ccur]['q'] == "")
+            //                 flag = false;
+            //         }
+            //     }
             // }
-            else {
-                flag = false;
-                alert("Something went wrong...!!!");
-            }
-            if (flag)
+            // // else if (ccur < tcomm) {
+            // //     for(;ccur<tcomm;ccur++)
+            // //     {
+            // //         if (comm[ccur]['q'] == "")
+            // //             flag = false;
+            // //     }
+            // // }
+            // else {
+            //     flag = false;
+            //     alert("Something went wrong...!!!");
+            // }
+            // if (flag)
                 addQues();
-            else
-                alert("Please enter all the question...!!!");
+            // else
+            //     alert("Please enter all the question...!!!");
         }
 
         function addMCQ(cr) {
@@ -289,7 +289,7 @@
             }
             var lbl0 = document.getElementById('lbl');
             var sid=sessionStorage.getItem("sid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
+            $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
                 {param1: sid },
                 function (data) {
                     if(data=="0"||data=="E")
@@ -490,7 +490,7 @@
         function fetch() {
             validate_admin();
             var sid=sessionStorage.getItem("sid");
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
+            $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAll",
                 {param1: sid },
                 function (data) {
                     document.getElementById('edit').style.visibility = 'hidden';
@@ -626,7 +626,7 @@
 
             if (mcur < tmcq) {
                 for (; mcur < tmcq; mcur++) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/adds",
+                    $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/adds",
                         {param1: sid, param2:mcq[mcur]['q'], param3:mcq[mcur]['o1'], param4:mcq[mcur]['o2'], param5:mcq[mcur]['o3'], param6:mcq[mcur]['o4']},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -636,7 +636,7 @@
             }
             if (rcur < trate) {
                 for (; rcur < trate; rcur++) {
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/adds",
+                    $.post("http://192.168.100.175:9090/feedback/admin/rate_services/adds",
                         {param1: sid, param2:rate[rcur]['q']},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -645,7 +645,7 @@
                 }
             }
 
-                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/adds",
+                    $.post("http://192.168.100.175:9090/feedback/admin/comment_services/adds",
                         {param1: sid, param2:"Comment"},
                         function (data) {
                             if (data == "0" || data == "E")
@@ -654,7 +654,7 @@
 
 
             alert("Feedback Form Created...!!!");
-            window.location="http://localhost:8080/Feedback_System_war_exploded/asfeedback.html";
+            window.location="http://192.168.100.175:9090/feedback/asfeedback.html";
         }
 
     </script>
