@@ -51,17 +51,18 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-310)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/class_services/getClassCourseNames",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourseNames",
                     {param1: fclid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
-                            lbl0.innerHTML = " Course: "+data+"<br> Rating Question Report <br>All Labs";
+                            var s=sessionStorage.getItem("question_name");
+                            lbl0.innerHTML = " Course: "+data+"<br> Rating Question Report <br>All Labs <br> Question : "+s;
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getOneCLRateReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getOneCLRateReport",
                     {param1: fcid, param3: fqid,param2:fclid},
                     function (data) {
                         j=0;
@@ -70,6 +71,7 @@
                             var x = ques1.insertRow(++j);
 
                             y1 = x.insertCell(0);
+                            if(i!=0)
                             y1.innerText=data[i][0];
                             y2 = x.insertCell(1);
                             y2.innerText=data[i][1];

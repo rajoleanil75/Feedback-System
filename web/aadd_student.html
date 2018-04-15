@@ -31,7 +31,7 @@
         {
             validate_admin();
             document.getElementById("cid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -43,7 +43,7 @@
         function cidchange() {
             var cid=document.getElementById("cid");
             document.getElementById("clid").length = 0;
-            $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("clid").options[0]=new Option("Select Class","-1");
@@ -56,7 +56,7 @@
         function clidchange() {
             var cid=document.getElementById("clid");
             document.getElementById("did").length = 0;
-            $.post("http://192.168.100.175:9090/feedback/admin/division_services/getClassWise",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/division_services/getClassWise",
                 {param1: cid.value},
                 function (data) {
                     document.getElementById("did").options[0]=new Option("Select Division","-1");
@@ -111,17 +111,17 @@
                             var dv = document.getElementById("did");
                             // alert(cl.value);
                             // alert(dv.value);
-                            $.post("http://192.168.100.175:9090/feedback/admin/student_services/add",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/student_services/add",
                                 {param1: slist, param2: cl.value, param3: dv.value},
                                 function (data) {
                                     if (data == '1') {
                                         var uid=sessionStorage.getItem("uid");
-                                        $.post("http://192.168.100.175:9090/feedback/global/notification/add1",
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add1",
                                             {param1: "Student added", param2: uid},
                                             function (data) {
                                             });
                                         alert("Student Added Successfully...!!!");
-                                        window.location = "http://192.168.100.175:9090/feedback/aadd_student.html";
+                                        window.location = "http://localhost:8080/Feedback_System_war_exploded/aadd_student.html";
                                     }
                                     else {
                                         alert("Invalid Details...!!!");

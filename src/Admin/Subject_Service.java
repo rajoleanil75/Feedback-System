@@ -1,10 +1,6 @@
 package Admin;
 
-import DB.CSClass;
-import DB.Student;
-import DB.Global;
-import DB.Subject;
-import DB.Teacher;
+import DB.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -62,6 +58,46 @@ public class Subject_Service
         for(Iterator iterator=tlist.iterator();iterator.hasNext();)
         {
             Subject subject= (Subject) iterator.next();
+            List list1=new ArrayList();
+            list1.add(subject.getId());
+            list1.add(subject.getName());
+            list1.add(subject.getCSClass().getCourse().getId());
+            list1.add(subject.getCSClass().getId());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+    @POST
+    @Path("viewAllFeedbackWise")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List viewAllFeedbackWise(@FormParam("param1")int sid)
+    {
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
+        Student student=session.load(Student.class,sid);
+        java.util.List<Subject> tlist=session.createQuery("from Subject s where s.CSClass.id=:id").setParameter("id",student.getCSClass().getId()).list();
+        List list=new ArrayList();
+        for(Iterator iterator=tlist.iterator();iterator.hasNext();)
+        {
+            Subject subject= (Subject) iterator.next();
+            List<SSmcq> sSmcq=  session.createQuery("from SSmcq s where s.student.id=:id and s.subject.id=:id1").setParameter("id",sid).setParameter("id1",subject.getId()).list();
+            List<SSrate> sSrate=  session.createQuery("from SSrate s where s.student.id=:id and s.subject.id=:id1").setParameter("id",sid).setParameter("id1",subject.getId()).list();
+            List<SScomment> sScomments= session.createQuery("from SScomment s where s.student.id=:id and s.subject.id=:id1").setParameter("id",sid).setParameter("id1",subject.getId()).list();
+            int flag=0;
+            Iterator iterator5=sSmcq.iterator();
+            if(iterator5.hasNext())
+                flag=1;
+            Iterator iterator6=sSrate.iterator();
+            if(iterator6.hasNext())
+                flag=1;
+            Iterator iterator7=sScomments.iterator();
+            if(iterator7.hasNext())
+                flag=1;
+
+            if(flag==1)
+                continue;
             List list1=new ArrayList();
             list1.add(subject.getId());
             list1.add(subject.getName());

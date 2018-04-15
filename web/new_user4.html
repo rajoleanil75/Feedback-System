@@ -28,7 +28,7 @@
 
             if(pass1.value==pass2.value && pass1.value.length>=6 && roll.value.length>=6) {
                 r=sessionStorage.getItem("regid");
-                $.post("http://192.168.100.175:9090/feedback/global/newuser/add_hod",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/global/newuser/add_hod",
                     {param1: roll.value, param2:pass1.value},
                     function (data) {
                         if(data=="E")
@@ -37,7 +37,7 @@
                         {
                             alert("Username: "+roll.value);
                             alert("Registration Successful, Please login...!!!");
-                            window.location="http://192.168.100.175:9090/feedback/hod.html";
+                            window.location="http://localhost:8080/Feedback_System_war_exploded/hod.html";
                         }
                     });
             }
@@ -61,7 +61,7 @@
         <nav class="navbar navbar-expand-xl">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="font-color"><a class="nav-link dropdown" href="http://192.168.100.175:9090/feedback/hod.html">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/hod.html">
                         Home
                     </a>
                     </div>

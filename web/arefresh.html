@@ -20,7 +20,7 @@
         {
             validate_admin();
             // document.getElementById("tid").length = 0;
-            // $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
+            // $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
             //     function (data) {
             //         for(var i=0;i<(data.length);i++)
             //         {
@@ -28,7 +28,7 @@
             //         }
             //     });
             // document.getElementById("cid").length = 0;
-            // $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            // $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
             //     function (data) {
             //         document.getElementById("cid").options[0]=new Option("Select Course","-1");
             //         for(var i=0;i<(data.length);i++)
@@ -40,7 +40,7 @@
         // function cidchange() {
         //     var cid=document.getElementById("cid");
         //     document.getElementById("clid").length = 0;
-        //     $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
+        //     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
         //         {param1: cid.value},
         //         function (data) {
         //             document.getElementById("clid").options[0]=new Option("Select Class","-1");
@@ -55,13 +55,13 @@
             var bname = document.getElementById('bname');
             // var dname = document.getElementById('dname');
 
-            $.post("http://192.168.100.175:9090/feedback/admin/backup_services/add",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/backup_services/add",
                 {param1: bname.value},
                 function (data) {
                     if(data=='1')
                     {
                         alert("Database refresh Successfully...!!!");
-                        window.location = "http://192.168.100.175:9090/feedback/abackup.html";
+                        window.location = "http://localhost:8080/Feedback_System_war_exploded/abackup.html";
                     }
                     else
                     {

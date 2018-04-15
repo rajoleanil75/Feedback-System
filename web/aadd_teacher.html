@@ -26,18 +26,18 @@
         {
             // var tid = document.getElementById('tid');
             var tname = document.getElementById('tname');
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/add",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/add",
                     { param2: tname.value},
                     function (data) {
                         if(data=='1')
                         {
                             var uid=sessionStorage.getItem("uid");
-                            $.post("http://192.168.100.175:9090/feedback/global/notification/add1",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/global/notification/add1",
                                 {param1: "Teacher added, Name: "+tname.value, param2: uid},
                                 function (data) {
                                 });
                             alert("Teacher Added Successfully...!!!");
-                            window.location="http://192.168.100.175:9090/feedback/aadd_teacher.html";
+                            window.location="http://localhost:8080/Feedback_System_war_exploded/aadd_teacher.html";
                         }
                         else
                         {

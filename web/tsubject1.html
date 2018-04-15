@@ -50,14 +50,14 @@
             var ftid=sessionStorage.getItem("id");
             if(feedlid==-110)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getcousname",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
                                 {param1: fsid },
                                 function (data) {
                                     if (data == "E")
@@ -73,7 +73,7 @@
                 ll=[];
                 lbl=[];
                 clr=[];
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllMcqReportT",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllMcqReportT",
                     {param1: ftid, param2: fsid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -89,7 +89,7 @@
                             y2.innerText=data[i][1];
                         }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateReportT",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateReportT",
                     {param1: ftid, param2: fsid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -137,7 +137,7 @@
                 // console.warn(lbl);
                 // console.warn(ll);
                 // alert("Feedback Report Generated Successfully...!!!")
-                // $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateGraphT",
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraphT",
                 //     {param1: ftid, param2: fsid},
                 //     function (data) {
                                            // });

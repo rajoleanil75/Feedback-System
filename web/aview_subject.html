@@ -26,7 +26,7 @@
         {
             validate_admin();
             document.getElementById("cid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-2");
                     document.getElementById("cid").options[1]=new Option("All Courses","-1");
@@ -37,7 +37,7 @@
                 });
 
             document.getElementById("tid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
                 function (data) {
                     document.getElementById("tid").options[0]=new Option("Select Teacher","-1");
                     for(var i=0;i<(data.length);i++)
@@ -55,7 +55,7 @@
                 while(tbl.rows.length > 1) {
                     tbl.deleteRow(1);
                 }
-                $.get("http://192.168.100.175:9090/feedback/admin/subject_services/viewAll",
+                $.get("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/viewAll",
                     function (data) {
                         var tbl = document.getElementById('tbl');
                         for(var i=1;i<(data.length+1);i++)
@@ -76,7 +76,7 @@
                     });
             }
             else {
-                $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
                     {param1: cid.value},
                     function (data) {
                         document.getElementById("clid").options[0] = new Option("Select Class", "-1");
@@ -88,7 +88,7 @@
                 while(tbl.rows.length > 1) {
                     tbl.deleteRow(1);
                 }
-                $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getCourseWise",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getCourseWise",
                     {param1: cid.value},
                     function (data) {
                         var tbl = document.getElementById('tbl');
@@ -116,7 +116,7 @@
             while(tbl.rows.length > 1) {
                 tbl.deleteRow(1);
             }
-            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getClassWise",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getClassWise",
                 {param1: cid.value},
                 function (data) {
                     var tbl = document.getElementById('tbl');
@@ -143,7 +143,7 @@
             while(tbl.rows.length > 1) {
                 tbl.deleteRow(1);
             }
-            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getTeacherWise",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getTeacherWise",
                 {param1: cid.value},
                 function (data) {
                     var tbl = document.getElementById('tbl');
@@ -169,7 +169,7 @@
             var q = document.querySelectorAll("input[type=checkbox][name=chk]"), l = q.length, i;
             for (i = 0; i < l; i++) {
                 if (q[i].checked == true) {
-                    $.post("http://192.168.100.175:9090/feedback/admin/subject_services/delete",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/delete",
                         {param1: q[i].value},
                         function (data) {
                             if(data=="0")

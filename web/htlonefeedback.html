@@ -50,26 +50,27 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-310)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
                                 {param1: fcid },
                                 function (data) {
                                     if (data == "E")
                                         alert("Invalid Details...!!!");
                                     else {
-                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Lab Report";
+                                        var s=sessionStorage.getItem("question_name");
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Lab Report <br> Question : "+s;
                                     }
                                 });
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getOneMcqReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getOneMcqReport",
                     {param1: fcid, param2: ftid, param3: fqid},
                     function (data) {
                         j=0;
@@ -78,7 +79,8 @@
                             var x = ques1.insertRow(++j);
 
                             y1 = x.insertCell(0);
-                            y1.innerText=data[i][0];
+                            if(i!=0)
+                                y1.innerText=data[i][0];
                             y2 = x.insertCell(1);
                             y2.innerText=data[i][1];
                             y3 = x.insertCell(2);
@@ -121,14 +123,14 @@
             }
             else if(feedlid==-320)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getcoulname",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getcoulname",
                                 {param1: flid },
                                 function (data) {
                                     if (data == "E")
@@ -140,7 +142,7 @@
                         }
                     });
                 var ques1 = document.getElementById('ques1');
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getOneMcqReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getOneMcqReport1",
                     {param1: fcid, param2: ftid, param3: fqid,param4:flid},
                     function (data) {
                         j=0;

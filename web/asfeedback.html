@@ -30,7 +30,7 @@
         {
             validate_admin();
             document.getElementById("sid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     for(var i=0;i<(data.length);i++)
                     {
@@ -45,17 +45,17 @@
             var rate = document.getElementById('rate');
             var comm = document.getElementById('comm');
 
-            $.post("http://192.168.100.175:9090/feedback/admin/question_services/getMSq",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getMSq",
                 {param1: sid.value},
                 function (data) {
                     if(data=='0')
                     {
-                        $.post("http://192.168.100.175:9090/feedback/admin/question_services/getRSq",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getRSq",
                             {param1: sid.value},
                             function (data) {
                                 if(data=='0')
                                 {
-                                    $.post("http://192.168.100.175:9090/feedback/admin/question_services/getCSq",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getCSq",
                                         {param1: sid.value},
                                         function (data) {
                                             if(data=='0')
@@ -66,14 +66,14 @@
                                                 }
                                                 else
                                                 {
-                                                    $.post("http://192.168.100.175:9090/feedback/admin/question_services/add",
+                                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/add",
                                                         {param1: sid.value, param2: mcq.value, param3: rate.value, param4: comm.value},
                                                         function (data) {
                                                             if(data=='1')
                                                             {
                                                                 alert("Question Type Added Successfully...!!!");
                                                                 sessionStorage.setItem("sid",sid.value);
-                                                                window.location="http://192.168.100.175:9090/feedback/asfeedbacktemplate.html";
+                                                                window.location="http://localhost:8080/Feedback_System_war_exploded/asfeedbacktemplate.html";
                                                             }
                                                             else
                                                             {

@@ -26,7 +26,7 @@
         {
             validate_teacher();
             document.getElementById("cid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -39,10 +39,10 @@
             var cid=document.getElementById("cid");
             document.getElementById("qid").length = 0;
             if(cid.value!=-1) {
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAllQues",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAllQues",
                     {param1: cid.value},
                     function (data) {
-                        document.getElementById("qid").options[0] = new Option("All Question", "-1");
+                        document.getElementById("qid").options[0] = new Option("All Questions Report", "-1");
                         i=0;
                         for (; i < (data.length); i++) {
                             document.getElementById("qid").options[i + 1] = new Option(data[i]["1"], data[i]["0"]);
@@ -55,6 +55,8 @@
         function addFeed() {
             var cid=document.getElementById("cid");
             var qid=document.getElementById("qid");
+            var strUser = qid.options[qid.selectedIndex].text;
+            sessionStorage.setItem("question_name",strUser);
 
             sessionStorage.setItem("fcid",cid.value);
             sessionStorage.setItem("fqid",qid.value);
@@ -62,23 +64,23 @@
             if(cid.value!=-1) {
                 if (qid.value == -1 ) {
                     sessionStorage.setItem("feedlid",-110);
-                    window.location = "http://192.168.100.175:9090/feedback/tsquestion1.html";
+                    window.location = "http://localhost:8080/Feedback_System_war_exploded/tsquestion1.html";
                 }
                 else if ( qid.value == -2) {
                     sessionStorage.setItem("feedlid", -210);
-                    window.location = "http://192.168.100.175:9090/feedback/tsquestion2.html";
+                    window.location = "http://localhost:8080/Feedback_System_war_exploded/tsquestion2.html";
                 }
                 else if (qid.value != -1 && qid.value!=-2) {
                     sessionStorage.setItem("feedlid", -310);
-                    $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/mcqcheck",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/mcqcheck",
                         {param1: qid.value},
                         function (data) {
                             // alert(data);
                             if (data=="0") {
-                                window.location="http://192.168.100.175:9090/feedback/tsquestion4.html";
+                                window.location="http://localhost:8080/Feedback_System_war_exploded/tsquestion4.html";
                             }
                             else {
-                                window.location="http://192.168.100.175:9090/feedback/tsquestion3.html";
+                                window.location="http://localhost:8080/Feedback_System_war_exploded/tsquestion3.html";
                             }
                         });
                 }

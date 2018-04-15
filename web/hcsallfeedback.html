@@ -52,7 +52,7 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-110)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/class_services/getClassCourseNames",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourseNames",
                     {param1: fclid },
                     function (data) {
                         if (data == "E")
@@ -67,7 +67,7 @@
                 lbl=[];
                 clr=[];
 
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllCSMcqReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllCSMcqReport",
                     {param1: fcid,param2:fclid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -83,7 +83,7 @@
                             y2.innerText=data[i][1];
                         }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllCSRateReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllCSRateReport",
                     {param1: fcid,param2:fclid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -127,7 +127,7 @@
                     });
                 // alert(ll);
                 // alert(lbl);
-                // $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllQRateReport",
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllQRateReport",
                 //     {param1: fcid},
                 //     function (data) {
 

@@ -26,7 +26,7 @@
         {
             validate_hod();
             document.getElementById("cid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -43,7 +43,7 @@
 
             }
             else {
-                $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
                     {param1: cid.value},
                     function (data) {
                         document.getElementById("clid").options[0] = new Option("Select Class", "-1");
@@ -57,7 +57,7 @@
             var cid=document.getElementById("clid");
             document.getElementById("tid").length = 0;
             if(cid.value!=-1) {
-                $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getClassWise",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getClassWise",
                     {param1: cid.value},
                     function (data) {
                         document.getElementById("tid").options[0] = new Option("Select Subect", "-1");
@@ -71,17 +71,17 @@
             var tid=document.getElementById("tid");
             if(tid.value!=-1)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/subcheck1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/subcheck1",
                     {param1: tid.value},
                     function (data) {
                         // alert(data);
                         if (data != "0"){
-                            $.post("http://192.168.100.175:9090/feedback/admin/rate_services/subcheck1",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/rate_services/subcheck1",
                                 {param1:tid.value},
                                 function (data) {
                                     // alert(data);
                                     if (data != "0"){
-                                        $.post("http://192.168.100.175:9090/feedback/admin/comment_services/subcheck1",
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/subcheck1",
                                             {param1:tid.value},
                                             function (data) {
                                                 // alert(data);
@@ -94,11 +94,11 @@
                                                     sessionStorage.setItem("subid",tid.value);
                                                     switch (qid.value)
                                                     {
-                                                        case "1":window.location="http://192.168.100.175:9090/feedback/hsreport1.html";
+                                                        case "1":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport1.html";
                                                             break;
-                                                        case "2":window.location="http://192.168.100.175:9090/feedback/hsreport2.html";
+                                                        case "2":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport2.html";
                                                             break;
-                                                        case "3":window.location="http://192.168.100.175:9090/feedback/hsreport3.html";
+                                                        case "3":window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport3.html";
                                                             break;
                                                         default:break;
                                                     }

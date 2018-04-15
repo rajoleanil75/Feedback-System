@@ -319,7 +319,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where s.teacher_labBatch.teacher.id=:id and s.lmcq.id=:id1 and s.ans=:id2").setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -346,7 +346,7 @@ public class LQuestion_service {
             }
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -401,7 +401,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where s.teacher_labBatch.teacher.id=:id and s.lmcq.id=:id1 and s.ans=:id2 and s.teacher_labBatch.labBatch.id=:id3").setParameter("id3",subid).setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -440,7 +440,7 @@ public class LQuestion_service {
 
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -640,7 +640,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.teacher_labBatch.teacher.id=:id and s.lrate.id=:id1 and s.ans=:id2").setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -685,7 +685,7 @@ public class LQuestion_service {
 //            else
 //                list2.add("Good");
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -742,7 +742,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.teacher_labBatch.teacher.id=:id and s.lrate.id=:id1 and s.ans=:id2 and s.teacher_labBatch.labBatch.id=:id3").setParameter("id3",subid).setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -790,7 +790,7 @@ public class LQuestion_service {
 //            else
 //                list2.add("Good");
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1058,7 +1058,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where  s.lmcq.id=:id1 and s.ans=:id2").setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1088,7 +1088,7 @@ public class LQuestion_service {
             }
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1147,7 +1147,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.lrate.id=:id1 and s.ans=:id2").setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1186,7 +1186,7 @@ public class LQuestion_service {
                 list2.add("0");
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1400,7 +1400,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where  s.lmcq.id=:id1 and s.ans=:id2 and s.student.CSClass.id=:id3").setParameter("id3",clid).setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1430,7 +1430,7 @@ public class LQuestion_service {
             }
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1489,7 +1489,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.lrate.id=:id1 and s.ans=:id2 and s.student.CSClass.id=:id3").setParameter("id3",clid).setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1528,7 +1528,7 @@ public class LQuestion_service {
                 list2.add("0");
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1778,7 +1778,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where s.teacher_labBatch.teacher.id=:id and s.lmcq.id=:id1 and s.ans=:id2 and s.teacher_labBatch.labBatch.id=:id3").setParameter("id3",subid).setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1805,7 +1805,7 @@ public class LQuestion_service {
             }
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -1864,7 +1864,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.teacher_labBatch.teacher.id=:id and s.lrate.id=:id1 and s.ans=:id2 and s.teacher_labBatch.labBatch.id=:id3").setParameter("id3",subid).setParameter("id", tid).setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -1903,7 +1903,7 @@ public class LQuestion_service {
             list.add(list2);
 
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -2116,7 +2116,7 @@ public class LQuestion_service {
             Query query4 = session.createQuery("select count (s.ans) from LSmcq s where  s.lmcq.id=:id1 and s.ans=:id2 and s.teacher_labBatch.teacher.id=:id3").setParameter("id3",tid).setParameter("id1", smcq.getId()).setParameter("id2", "4");
             Long cnt4 = (Long) query4.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -2146,7 +2146,7 @@ public class LQuestion_service {
             }
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=(double) cnt1+cnt2+cnt3+cnt4;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;
@@ -2205,7 +2205,7 @@ public class LQuestion_service {
             Query query5 = session.createQuery("select count (s.ans) from LSrate s where s.lrate.id=:id1 and s.ans=:id2 and s.teacher_labBatch.teacher.id=:id3").setParameter("id3",tid).setParameter("id1", smcq.getId()).setParameter("id2", 5);
             Long cnt5 = (Long) query5.uniqueResult();
             List list2 = new ArrayList();
-            list2.add("Total Count");
+            list2.add("No.of Students with Rating");
             list2.add(cnt1);
             list2.add(cnt2);
             list2.add(cnt3);
@@ -2244,7 +2244,7 @@ public class LQuestion_service {
                 list2.add("0");
             list.add(list2);
             List list3 = new ArrayList();
-            list3.add("Percentage");
+            list3.add("Percentage Student");
             double sum=cnt1+cnt2+cnt3+cnt4+cnt5;
             double s1=(cnt1/sum)*100;
             double s2=(cnt2/sum)*100;

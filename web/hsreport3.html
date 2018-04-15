@@ -28,7 +28,7 @@
             var sid=sessionStorage.getItem("subid");
             var cls=sessionStorage.getItem("sclass");
             c=0;
-            $.post("http://192.168.100.175:9090/feedback/admin/class_services/getClassCourse",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
                 {param1: cls },
                 function (data) {
                     if (data == "0")
@@ -36,7 +36,7 @@
                     else {
                         c = data;
                         sessionStorage.setItem("scourse", c);
-                        $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAll",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
                             {param1: c},
                             function (data) {
                                 if (data == "0" || data == "E")
@@ -52,7 +52,7 @@
                                     var prv = document.getElementById('ques');
                                     var j = 0;
                                     var qn = 1;
-                                    $.post("http://192.168.100.175:9090/feedback/admin/comment_services/viewAll",
+                                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/comment_services/viewAll",
                                         {param1: commid},
                                         function (data) {
                                         // alert(data);
@@ -73,7 +73,7 @@
             if(tid.value!=-1)
             {
                 sessionStorage.setItem("scommentid",tid.value);
-                window.location="http://192.168.100.175:9090/feedback/hsreport31.html";
+                window.location="http://localhost:8080/Feedback_System_war_exploded/hsreport31.html";
             }
         }
     </script>

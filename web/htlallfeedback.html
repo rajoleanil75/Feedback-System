@@ -52,20 +52,20 @@
             var feedlid=sessionStorage.getItem("feedlid");
             if(feedlid==-110)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
                                 {param1: fcid },
                                 function (data) {
                                     if (data == "E")
                                         alert("Invalid Details...!!!");
                                     else {
-                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Lab Report";
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Labs Report";
                                     }
                                 });
                         }
@@ -76,7 +76,7 @@
                 lbl=[];
                 clr=[];
 
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllMcqReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllMcqReport",
                     {param1: fcid, param2: ftid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -92,7 +92,7 @@
                             y2.innerText=data[i][1];
                             }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllRateReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllRateReport",
                     {param1: fcid, param2: ftid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -108,7 +108,7 @@
                             y2.innerText=data[i][1];
                     }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllRateReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllRateReport",
                     {param1: fcid, param2: ftid},
                     function (data) {
                         var myLine=new Chart(document.getElementById("bar-chart"), {
@@ -140,14 +140,14 @@
                     });
             }
             else if(feedlid==-120) {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: ftid },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getcoulname",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getcoulname",
                                 {param1: flid },
                                 function (data) {
                                     if (data == "E")
@@ -164,7 +164,7 @@
                 lbl=[];
                 clr=[];
 
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllMcqReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllMcqReport1",
                     {param1: fcid, param2: ftid, param3:flid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -180,7 +180,7 @@
                             y2.innerText=data[i][1];
                         }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllRateReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllRateReport1",
                     {param1: fcid, param2: ftid, param3:flid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -196,7 +196,7 @@
                             y2.innerText=data[i][1];
                         }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/lquestion_services/getAllRateReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lquestion_services/getAllRateReport1",
                     {param1: fcid, param2: ftid, param3:flid},
                     function (data) {
                         var myLine=new Chart(document.getElementById("bar-chart"), {

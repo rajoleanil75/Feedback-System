@@ -18,7 +18,7 @@
     <script>
         function fetch() {
             validate_admin();
-            $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
                 function (data) {
                     var tbl = document.getElementById('tbl')
                     for(var i=1;i<(data.length+1);i++)
@@ -44,7 +44,7 @@
             i=0;
             for (; i < l; i++) {
                 if (q[i].checked == true) {
-                    $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/delete",
+                    $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/delete",
                         {param1: q[i].value},
                         function (data) {
                             if(data=="0")
@@ -61,7 +61,7 @@
         function searchTeacher()
         {
             var tid = document.getElementById('tid')
-            $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/search",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/search",
                 {param1: tid.value},
                 function (data) {
                     if(data=="" || data==null || data==undefined)

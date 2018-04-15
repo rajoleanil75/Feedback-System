@@ -31,7 +31,7 @@
             var cid=sessionStorage.getItem("sclass");
             var roll=sessionStorage.getItem("roll");
             document.getElementById("sid").length = 0;
-            $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getClassWise",
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getClassWise",
                 {param1:cid},
                 function (data) {
                     document.getElementById("sid").options[0]=new Option("Select Lab Batch","-1");
@@ -46,7 +46,7 @@
             sid=document.getElementById("sid");
             if(sid.value!="-1")
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/labbatch_services/getteacher",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getteacher",
                     {param1:sid.value},
                     function (data) {
                         document.getElementById("tid").options[0]=new Option("Select Instructor","-1");
@@ -69,24 +69,24 @@
             // alert(sid.value);
             // alert(stud);
             if(tid.value!="-1" && sid.value!="-1") {
-                $.post("http://192.168.100.175:9090/feedback/admin/lmcq_services/subcheck",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/subcheck",
                     {param1: stud, param2: tid.value},
                     function (data) {
                         // alert(data);
                         if (data == "0") {
-                            $.post("http://192.168.100.175:9090/feedback/admin/lrate_services/subcheck",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/subcheck",
                                 {param1: stud, param2: tid.value},
                                 function (data) {
                                     // alert(data);
                                     if (data == "0") {
-                                        $.post("http://192.168.100.175:9090/feedback/admin/lcomment_services/subcheck",
+                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/subcheck",
                                             {param1: stud, param2: tid.value},
                                             function (data) {
                                                 // alert(data);
                                                 if (data == "0") {
                                                     sessionStorage.setItem("lid", tid.value);
                                                     sessionStorage.setItem("labid", sid.value);
-                                                    window.location = "http://192.168.100.175:9090/feedback/slfeedbacktemp.html";
+                                                    window.location = "http://localhost:8080/Feedback_System_war_exploded/slfeedbacktemp.html";
                                                 }
                                                 else {
                                                     alert("Feedback already given...!!!")
@@ -108,7 +108,7 @@
                 alert("Please select Instructor...!!!");
             }
             // sessionStorage.setItem("subid",sid.value);
-            // window.location="http://192.168.100.175:9090/feedback/ssfeedbacktemp.html";
+            // window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
         }
 
     </script>

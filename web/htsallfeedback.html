@@ -90,20 +90,20 @@
             var subjid=sessionStorage.getItem("subjid");
             if(vtssid==-11)
             {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: teach },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/course_services/getCourse",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/getCourse",
                                 {param1: cou },
                                 function (data) {
                                     if (data == "E")
                                         alert("Invalid Details...!!!");
                                     else {
-                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Subject Report";
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br> All Subjects Report";
                                     }
                                 });
                         }
@@ -134,7 +134,7 @@
                 //     }
                 // });
 
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllMcqReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllMcqReport",
                     {param1: cou, param2: teach},
                     function (data) {
 
@@ -168,7 +168,7 @@
                     });
                 // var ques2 = document.getElementById('ques2');
 
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateReport",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateReport",
                     {param1: cou, param2: teach},
                     function (data) {
                         // j=1;
@@ -203,7 +203,7 @@
                     });
                 // alert(ll);
                 // alert(lbl);
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateGraph",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph",
                     {param1: cou, param2: teach},
                     function (data) {
                     // alert(data);
@@ -240,14 +240,14 @@
                     });
             }
             else if(vtssid==-110) {
-                $.post("http://192.168.100.175:9090/feedback/admin/teacher_services/gettname",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/gettname",
                     {param1: teach },
                     function (data) {
                         if (data == "E")
                             alert("Invalid Details...!!!");
                         else {
                             temp=data;
-                            $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getcousname",
+                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getcousname",
                                 {param1: subjid },
                                 function (data) {
                                     if (data == "E")
@@ -263,7 +263,7 @@
                 ll=[];
                 lbl=[];
                 clr=[];
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllMcqReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllMcqReport1",
                     {param1: cou, param2: teach,param3:subjid},
                     function (data) {
                         // j=1;
@@ -292,7 +292,7 @@
                     });
                 var ques2 = document.getElementById('ques2');
                 // ll=[];
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateReport1",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateReport1",
                     {param1: cou, param2: teach,param3:subjid},
                     function (data) {
                         for (var i = 0; i < (data.length); i++) {
@@ -359,7 +359,7 @@
                         // });
 
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateGraph",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph",
                     {param1: cou, param2: teach},
                     function (data) {
                         // alert(data);
@@ -394,7 +394,7 @@
                         // chart.render();
                         // chart.print();
                     });
-                // $.post("http://192.168.100.175:9090/feedback/admin/question_services/getAllRateGraph1",
+                // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/getAllRateGraph1",
                 //     {param1: cou, param2: teach,param3:subjid},
                 //     function (data) {
                 //         // alert(data);
@@ -423,7 +423,7 @@
 
             // var lbl0 = document.getElementById('lbl');
             // var sid=sessionStorage.getItem("subid");
-            // $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getsname",
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getsname",
             //     {param1: sid },
             //     function (data) {
             //         // alert(data);
@@ -437,7 +437,7 @@
             //
             //
             // c=0;
-            // $.post("http://192.168.100.175:9090/feedback/admin/class_services/getClassCourse",
+            // $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getClassCourse",
             //     {param1: cls },
             //     function (data) {
             //         if (data == "0")
@@ -445,7 +445,7 @@
             //         else {
             //             c=data;
             //             sessionStorage.setItem("scourse",c);
-            //             $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAll",
+            //             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAll",
             //                 {param1: c },
             //                 function (data) {
             //                     if(data=="0"||data=="E")
@@ -461,7 +461,7 @@
             //                         var prv = document.getElementById('ques');
             //                         var j=0;
             //                         var qn=1;
-            //                         $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/viewAll",
+            //                         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/viewAll",
             //                             {param1: mcqid},
             //                             function (data) {
             //                                 for(var i=0;i<(data.length);i++)
@@ -492,7 +492,7 @@
             //                                     tmp3=data[i]["4"];
             //                                     tmp4=data[i]["5"];
             //
-            //                                     $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/searchrsmcq",
+            //                                     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/searchrsmcq",
             //                                         {  param1:sid, param2:data[i]["0"]},
             //                                         function (data1) {
             //                                             // alert(data1);

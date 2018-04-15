@@ -26,7 +26,7 @@
         {
             validate_hod();
             document.getElementById("cid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/course_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/course_services/viewAll",
                 function (data) {
                     document.getElementById("cid").options[0]=new Option("Select Course","-1");
                     for(var i=0;i<(data.length);i++)
@@ -35,7 +35,7 @@
                     }
                 });
             document.getElementById("ttid").length = 0;
-            $.get("http://192.168.100.175:9090/feedback/admin/teacher_services/viewAll",
+            $.get("http://localhost:8080/Feedback_System_war_exploded/admin/teacher_services/viewAll",
                 function (data) {
                     document.getElementById("ttid").options[0]=new Option("Select Teacher","-1");
                     for(var i=0;i<(data.length);i++)
@@ -53,7 +53,7 @@
         //
         //     }
         //     else {
-        //         $.post("http://192.168.100.175:9090/feedback/admin/class_services/getCourseWise",
+        //         $.post("http://localhost:8080/Feedback_System_war_exploded/admin/class_services/getCourseWise",
         //             {param1: cid.value},
         //             function (data) {
         //                 document.getElementById("clid").options[0] = new Option("Select Class", "-1");
@@ -69,18 +69,18 @@
             document.getElementById("tid").length = 0;
             document.getElementById("clid").length = 0;
             if(cid.value!=-1) {
-                $.post("http://192.168.100.175:9090/feedback/admin/subject_services/getCourseTeachWise",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/subject_services/getCourseTeachWise",
                     {param1: cid.value,param2:ttid.value},
                     function (data) {
-                        document.getElementById("tid").options[0] = new Option("All Subject", "-1");
+                        document.getElementById("tid").options[0] = new Option("All Subjects Report", "-1");
                         for (var i = 0; i < (data.length); i++) {
                             document.getElementById("tid").options[i + 1] = new Option(data[i]["1"], data[i]["0"]);
                         }
                     });
-                $.post("http://192.168.100.175:9090/feedback/admin/question_services/viewAllQues",
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/question_services/viewAllQues",
                     {param1: cid.value},
                     function (data) {
-                        document.getElementById("clid").options[0] = new Option("All Question", "-1");
+                        document.getElementById("clid").options[0] = new Option("All Questions Report", "-1");
                         i=0;
                         for (; i < (data.length); i++) {
                             document.getElementById("clid").options[i + 1] = new Option(data[i]["1"], data[i]["0"]);
@@ -92,10 +92,15 @@
         function addSubject() {
             var ttid=document.getElementById("ttid");
             var cid=document.getElementById("cid");
+            var clid=document.getElementById("clid");
+
+            var strUser = clid.options[clid.selectedIndex].text;
+            sessionStorage.setItem("question_name",strUser);
+
             if(ttid.value!=-1 && cid.value!=-1)
             {
                 var tid=document.getElementById("tid");
-                var clid=document.getElementById("clid");
+
                 if(tid.value==-1)
                 {
                     sessionStorage.setItem("vtsid",ttid.value);
@@ -103,26 +108,26 @@
                     if(clid.value==-1)
                     {
                         sessionStorage.setItem("vtssid",-11);
-                        window.location="http://192.168.100.175:9090/feedback/htsallfeedback.html";
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htsallfeedback.html";
                     }
                     else if(clid.value==-2)
                     {
                         sessionStorage.setItem("vtssid",-12);
-                        window.location="http://192.168.100.175:9090/feedback/htscommfeedback.html";
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htscommfeedback.html";
                     }
                     else
                     {
                         sessionStorage.setItem("vtssid",-13);
                         sessionStorage.setItem("vtssoneid",clid.value);
-                        $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/mcqcheck",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/mcqcheck",
                             {param1: clid.value},
                             function (data) {
                             // alert(data);
                                 if (data=="0") {
-                                    window.location="http://192.168.100.175:9090/feedback/htsonefeedback1.html";
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback1.html";
                                 }
                                 else {
-                                    window.location="http://192.168.100.175:9090/feedback/htsonefeedback.html";
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback.html";
                                 }
                             });
                     }
@@ -135,26 +140,26 @@
                     {
 
                         sessionStorage.setItem("vtssid",-110);
-                        window.location="http://192.168.100.175:9090/feedback/htsallfeedback.html";
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htsallfeedback.html";
                     }
                     else if(clid.value==-2)
                     {
                         sessionStorage.setItem("vtssid",-120);
-                        window.location="http://192.168.100.175:9090/feedback/htscommfeedback.html";
+                        window.location="http://localhost:8080/Feedback_System_war_exploded/htscommfeedback.html";
                     }
                     else
                     {
                         sessionStorage.setItem("vtssid",-130);
                         sessionStorage.setItem("vtssoneid",clid.value);
-                        $.post("http://192.168.100.175:9090/feedback/admin/mcq_services/mcqcheck",
+                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/mcq_services/mcqcheck",
                             {param1: clid.value},
                             function (data) {
                                 // alert(data);
                                 if (data=="0") {
-                                    window.location="http://192.168.100.175:9090/feedback/htsonefeedback1.html";
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback1.html";
                                 }
                                 else {
-                                    window.location="http://192.168.100.175:9090/feedback/htsonefeedback.html";
+                                    window.location="http://localhost:8080/Feedback_System_war_exploded/htsonefeedback.html";
                                 }
                             });
                     }
