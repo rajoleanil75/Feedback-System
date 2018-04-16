@@ -121,31 +121,20 @@ public class Backup_Services {
         Connection conn = null;
         Statement stmt = null;
         String  result = bname.replaceAll("[^\\w]","_");
-//        String dbname=getSaltString();
         String dbname="feedback_"+result;
         try{
-            //STEP 2: Register JDBC driver
             Class.forName("org.postgresql.Driver");
-
-            //STEP 3: Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            //STEP 4: Execute a query
             System.out.println("Creating database...");
             stmt = conn.createStatement();
-
             String sql = "CREATE DATABASE "+dbname;
             stmt.executeUpdate(sql);
             System.out.println("Database created successfully...");
         }catch(SQLException se){
-            //Handle errors for JDBC
             se.printStackTrace();
-            return String.valueOf(se);
         }catch(Exception e){
-            //Handle errors for Class.forName
             e.printStackTrace();
-            return String.valueOf(e);
         }finally{
             //finally block used to close resources
             try{
@@ -158,7 +147,7 @@ public class Backup_Services {
                     conn.close();
             }catch(SQLException se){
                 se.printStackTrace();
-                return String.valueOf(se);
+//                return String.valueOf(se);
             }//end finally try
         }//end try
 
@@ -167,8 +156,8 @@ public class Backup_Services {
         try
         {
 //        FileWriter fstream = new FileWriter("/root/Desktop/Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
-//            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
+//            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -199,26 +188,51 @@ public class Backup_Services {
             System.err.println("Error: " + e.getMessage());
 //            return "E";
         }
+        String oldbackup="";
+        try
+        {
+            Session session= DB.Global.getSession1();
+            Transaction transaction = session.beginTransaction();
+            Backup backup1 = (Backup) session.createQuery("from Backup s where s.cur=:id").setParameter("id",1).uniqueResult();
+            oldbackup=backup1.getDname();
+            backup1.setCur(0);
+            session.persist(backup1);
+            Backup backup =new Backup();
+            backup.setBname(bname);
+            backup.setDname(dbname);
+            backup.setCur(1);
+            backup.setDate(LocalDate.now());
+            session.persist(backup);
+            transaction.commit();
+            session.close();
+//            return "1";
+        }
+        catch (Exception e){
+
+        }
         /////////////////////////////////////
 
         ////////////////pg_restore for ubuntu/////////////////
 
         try
         {
-//            Runtime r = Runtime.getRuntime();
             Process p;
             ProcessBuilder pb;
-//            r = Runtime.getRuntime();
-
-//            pb1 = new ProcessBuilder("C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe -U postgres -d "+dbname+" -l -f qz.sql");
-
             pb = new ProcessBuilder(
-                    "psql",
+                    "pg_dump",
+                    "-a",
+                    "-t",
+                    "course",
+                    "-t",
+                    "csclass",
+                    "-t",
+                    "division",
+                    "-t",
+                    "teacher",
                     "-U",
                     "postgres",
                     "-d",
-                    ""+dbname+"",
-                    "-1",
+                    ""+oldbackup+"",
                     "-f",
                     "/opt/qz.sql");
             pb.redirectErrorStream(true);
@@ -230,8 +244,6 @@ public class Backup_Services {
             while ((ll = br.readLine()) != null) {
                 System.out.println(ll);
             }
-
-
         }
         catch (Exception e)
         {
@@ -278,31 +290,84 @@ public class Backup_Services {
 //            e.printStackTrace();
 //        }
         ///////////////////////////////////////
-
-
         try
         {
+            ////////////for centos start
+            Process p;
+            ProcessBuilder pb;
+            pb = new ProcessBuilder(
+                    "psql",
+                    "-U",
+                    "postgres",
+                    "-d",
+                    ""+dbname+"",
+                    "-1",
+                    "-f",
+                    "/opt/qz.sql");
+            pb.redirectErrorStream(true);
+            p = pb.start();
+            InputStream is = p.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String ll;
+            while ((ll = br.readLine()) != null) {
+                System.out.println(ll);
+            }
+            //////////////////for centos end
+//        ////////////////for win 10 start
+//            Runtime r = Runtime.getRuntime();
+//            Process p;
+//            ProcessBuilder pb;
+//            r = Runtime.getRuntime();
+//            pb = new ProcessBuilder(
+//                    "C:\\Program Files (x86)\\PostgreSQL\\9.3\\bin\\psql.exe",
+//                    "-U",
+//                    "postgres",
+//                    "-d",
+//                    ""+dbname+"",
+//                    "-l",
+//                    "-f",
+//                    "attendance.sql");
+//            pb.redirectErrorStream(true);
+//            p = pb.start();
+//            InputStream is = p.getInputStream();
+//            InputStreamReader isr = new InputStreamReader(is);
+//            BufferedReader br = new BufferedReader(isr);
+//            String ll;
+//            while ((ll = br.readLine()) != null) {
+//                System.out.println(ll);
+//            }
+//            ///////////////for win 10 end
+        }
+        catch (Exception e)
+        {
+            System.out.print(e);
+        }
 
-            Session session= Global.getSession1();
-            Transaction transaction = session.beginTransaction();
-            Backup backup1 = (Backup) session.createQuery("from Backup s where s.cur=:id").setParameter("id",1).uniqueResult();
-            backup1.setCur(0);
-            session.persist(backup1);
-            Backup backup =new Backup();
-            backup.setBname(bname);
-            backup.setDname(dbname);
-            backup.setCur(1);
-            backup.setDate(LocalDate.now());
-            session.persist(backup);
-            transaction.commit();
-            session.close();
-//            Global.reload();
-            return "1";
-        }
-        catch (Exception e){
-//            return String.valueOf(e);
-            return "E";
-        }
+//        try
+//        {
+//
+//            Session session= Global.getSession1();
+//            Transaction transaction = session.beginTransaction();
+//            Backup backup1 = (Backup) session.createQuery("from Backup s where s.cur=:id").setParameter("id",1).uniqueResult();
+//            backup1.setCur(0);
+//            session.persist(backup1);
+//            Backup backup =new Backup();
+//            backup.setBname(bname);
+//            backup.setDname(dbname);
+//            backup.setCur(1);
+//            backup.setDate(LocalDate.now());
+//            session.persist(backup);
+//            transaction.commit();
+//            session.close();
+////            Global.reload();
+//            return "1";
+//        }
+//        catch (Exception e){
+////            return String.valueOf(e);
+//            return "E";
+//        }
+        return "1";
     }
 
     @POST
@@ -319,8 +384,8 @@ public class Backup_Services {
         BufferedWriter out = null;
         try
         {
-            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
-//            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
+//            FileWriter fstream = new FileWriter("F:\\IdeaProjects\\REST\\Feedback System\\out\\artifacts\\Feedback_System_war_exploded\\WEB-INF\\classes\\hibernate.cfg.xml", false); //true tells to append data.
+            FileWriter fstream = new FileWriter("/opt/Feedback_System_war_exploded/WEB-INF/classes/hibernate.cfg.xml", false); //true tells to append data.
             out = new BufferedWriter(fstream);
 //                                String dbnme="temp1";
             out.write("<?xml version='1.0' encoding='utf-8'?>\n" +

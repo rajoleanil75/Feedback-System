@@ -145,6 +145,29 @@ public class LabBatch_Service {
         return list;
     }
     @POST
+    @Path("getClassWise1")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List getClassWise1(@FormParam("param1") int cid,@FormParam("param2")int roll)
+    {
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<LabBatch> tlist=session.createQuery("from LabBatch s where s.CSClass.id=:id and s.from<=:id1 and s.to>=:id2").setParameter("id2",roll).setParameter("id1",roll).setParameter("id",cid).list();
+        List list=new ArrayList();
+        for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+        {
+            LabBatch labBatch= (LabBatch) iterator.next();
+            List list1=new ArrayList();
+            list1.add(labBatch.getId());
+            list1.add(labBatch.getName());
+            list1.add(labBatch.getFrom());
+            list1.add(labBatch.getTo());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+    @POST
     @Path("getteacherlab")
     @Produces(MediaType.APPLICATION_JSON)
     public List getTeacherLab(@FormParam("param1") int cid,@FormParam("param2")int tid)
@@ -178,6 +201,45 @@ public class LabBatch_Service {
         for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
         {
             Teacher_LabBatch teacher_labBatch= (Teacher_LabBatch) iterator.next();
+            List list1=new ArrayList();
+            list1.add(teacher_labBatch.getId());
+            list1.add(teacher_labBatch.getTeacher().getName());
+            list.add(list1);
+        }
+        t.commit();
+        session.close();
+        return list;
+    }
+    @POST
+    @Path("getteacherFeedbackWise")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List getTeacherFeedbackWise(@FormParam("param1") int lid,@FormParam("param2")int sid)
+    {
+        Session session= Global.getSession();
+        Transaction t=session.beginTransaction();
+        java.util.List<Teacher_LabBatch> tlist=session.createQuery("from Teacher_LabBatch s where s.labBatch.id=:id").setParameter("id",lid).list();
+        List list=new ArrayList();
+        for(Iterator iterator = tlist.iterator(); iterator.hasNext();)
+        {
+            Teacher_LabBatch teacher_labBatch= (Teacher_LabBatch) iterator.next();
+
+            List<LSmcq> smcqs=  session.createQuery("from LSmcq s where s.student.id=:id and s.teacher_labBatch.id=:id1").setParameter("id",sid).setParameter("id1",teacher_labBatch.getId()).list();
+            List<LSrate> srates=  session.createQuery("from LSrate s where s.student.id=:id and s.teacher_labBatch.id=:id1").setParameter("id",sid).setParameter("id1",teacher_labBatch.getId()).list();
+            List<LScomment> scomments=  session.createQuery("from LScomment s where s.student.id=:id and s.teacher_labBatch.id=:id1").setParameter("id",sid).setParameter("id1",teacher_labBatch.getId()).list();
+
+            int flag=0;
+            Iterator iterator5=smcqs.iterator();
+            if(iterator5.hasNext())
+                flag=1;
+            Iterator iterator6=srates.iterator();
+            if(iterator6.hasNext())
+                flag=1;
+            Iterator iterator7=scomments.iterator();
+            if(iterator7.hasNext())
+                flag=1;
+
+            if(flag==1)
+                continue;
             List list1=new ArrayList();
             list1.add(teacher_labBatch.getId());
             list1.add(teacher_labBatch.getTeacher().getName());

@@ -31,23 +31,25 @@
             var cid=sessionStorage.getItem("sclass");
             var roll=sessionStorage.getItem("roll");
             document.getElementById("sid").length = 0;
-            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getClassWise",
-                {param1:cid},
+            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getClassWise1",
+                {param1:cid, param2:roll},
                 function (data) {
                     document.getElementById("sid").options[0]=new Option("Select Lab Batch","-1");
                     for(var i=0,j=1;i<(data.length);i++)
                     {
-                        if(data[i]["2"]<=roll && roll<=data[i]["3"])
+                        // if(data[i]["2"]<=roll && roll<=data[i]["3"])
                             document.getElementById("sid").options[j++]=new Option(data[i]["1"],data[i]["0"]);
                     }
                 });
         }
         function change() {
             sid=document.getElementById("sid");
+            var stud=sessionStorage.getItem("studid");
+            document.getElementById("tid").length = 0;
             if(sid.value!="-1")
             {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getteacher",
-                    {param1:sid.value},
+                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/labbatch_services/getteacherFeedbackWise",
+                    {param1:sid.value,param2:stud},
                     function (data) {
                         document.getElementById("tid").options[0]=new Option("Select Instructor","-1");
                         for(var i=0,j=1;i<(data.length);i++)
@@ -68,47 +70,58 @@
             var stud=sessionStorage.getItem("studid");
             // alert(sid.value);
             // alert(stud);
-            if(tid.value!="-1" && sid.value!="-1") {
-                $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/subcheck",
-                    {param1: stud, param2: tid.value},
-                    function (data) {
-                        // alert(data);
-                        if (data == "0") {
-                            $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/subcheck",
-                                {param1: stud, param2: tid.value},
-                                function (data) {
-                                    // alert(data);
-                                    if (data == "0") {
-                                        $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/subcheck",
-                                            {param1: stud, param2: tid.value},
-                                            function (data) {
-                                                // alert(data);
-                                                if (data == "0") {
-                                                    sessionStorage.setItem("lid", tid.value);
-                                                    sessionStorage.setItem("labid", sid.value);
-                                                    window.location = "http://localhost:8080/Feedback_System_war_exploded/slfeedbacktemp.html";
-                                                }
-                                                else {
-                                                    alert("Feedback already given...!!!")
-                                                }
-                                            });
-                                    }
-                                    else {
-                                        alert("Feedback already given...!!!")
-                                    }
-                                });
-                        }
-                        else {
-                            alert("Feedback already given...!!!")
-                        }
-                    });
-            }
-            else
-            {
-                alert("Please select Instructor...!!!");
-            }
+            // if(tid.value!="-1" && sid.value!="-1") {
+            //     $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lmcq_services/subcheck",
+            //         {param1: stud, param2: tid.value},
+            //         function (data) {
+            //             // alert(data);
+            //             if (data == "0") {
+            //                 $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lrate_services/subcheck",
+            //                     {param1: stud, param2: tid.value},
+            //                     function (data) {
+            //                         // alert(data);
+            //                         if (data == "0") {
+            //                             $.post("http://localhost:8080/Feedback_System_war_exploded/admin/lcomment_services/subcheck",
+            //                                 {param1: stud, param2: tid.value},
+            //                                 function (data) {
+            //                                     // alert(data);
+            //                                     if (data == "0") {
+            //                                         sessionStorage.setItem("lid", tid.value);
+            //                                         sessionStorage.setItem("labid", sid.value);
+            //                                         window.location = "http://localhost:8080/Feedback_System_war_exploded/slfeedbacktemp.html";
+            //                                     }
+            //                                     else {
+            //                                         alert("Feedback already given...!!!")
+            //                                     }
+            //                                 });
+            //                         }
+            //                         else {
+            //                             alert("Feedback already given...!!!")
+            //                         }
+            //                     });
+            //             }
+            //             else {
+            //                 alert("Feedback already given...!!!")
+            //             }
+            //         });
+            // }
+            // else
+            // {
+            //     alert("Please select Instructor...!!!");
+            // }
             // sessionStorage.setItem("subid",sid.value);
             // window.location="http://localhost:8080/Feedback_System_war_exploded/ssfeedbacktemp.html";
+            if(tid.value!="-1" && sid.value!="-1") {
+                sessionStorage.setItem("lid", tid.value);
+                sessionStorage.setItem("labid", sid.value);
+                window.location = "http://localhost:8080/Feedback_System_war_exploded/slfeedbacktemp.html";
+            }
+            else if(tid.value=="-1")
+                alert("Please select Instructor...!!!");
+            else if(sid.value=="-1")
+                alert("Please select Lab Batch...!!!");
+
+
         }
 
     </script>

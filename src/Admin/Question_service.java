@@ -250,6 +250,9 @@ public class Question_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -326,6 +329,9 @@ public class Question_service {
                         list1.add("4");
                     else
                         list1.add("3");
+                }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
                 }
                 else {
                     list1.add("5");
@@ -409,6 +415,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -503,6 +512,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1237,6 +1249,9 @@ public class Question_service {
                     else
                         list1.add("3");
                 }
+               else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                   list1.add("0");
+               }
                 else {
                     list1.add("5");
                 }
@@ -1403,6 +1418,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1580,6 +1598,9 @@ public class Question_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -1746,6 +1767,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1921,9 +1945,11 @@ public class Question_service {
                     else
                         list1.add("3");
                 }
-                else {
-                    list1.add("5");
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
                 }
+                else
+                    list1.add("5");
            list.add(list1);
             }
             transaction.commit();
@@ -2087,6 +2113,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -2262,6 +2291,9 @@ public class Question_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -2428,6 +2460,9 @@ public class Question_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");

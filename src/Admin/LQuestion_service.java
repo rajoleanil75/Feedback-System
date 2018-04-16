@@ -214,6 +214,9 @@ public class LQuestion_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -274,6 +277,9 @@ public class LQuestion_service {
                         list1.add("4");
                     else
                         list1.add("3");
+                }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
                 }
                 else {
                     list1.add("5");
@@ -340,6 +346,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -425,6 +434,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -916,6 +928,9 @@ public class LQuestion_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -1082,6 +1097,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1258,6 +1276,9 @@ public class LQuestion_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -1424,6 +1445,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1633,6 +1657,9 @@ public class LQuestion_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -1799,6 +1826,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
@@ -1974,6 +2004,9 @@ public class LQuestion_service {
                     else
                         list1.add("3");
                 }
+                else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                    list1.add("0");
+                }
                 else {
                     list1.add("5");
                 }
@@ -2140,6 +2173,9 @@ public class LQuestion_service {
                     list2.add("4");
                 else
                     list2.add("3");
+            }
+            else if(cnt1==0&&cnt2==0&&cnt3==0&&cnt4==0){
+                list1.add("0");
             }
             else {
                 list2.add("5");
