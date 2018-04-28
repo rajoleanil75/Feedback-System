@@ -178,7 +178,8 @@
                                     if (data == "E")
                                         alert("Invalid Details...!!!");
                                     else {
-                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data;
+                                        var s = sessionStorage.getItem("question_name");
+                                        lbl0.innerHTML = "Teacher Name: " + temp + "<br> Course: "+data+"<br>Question: "+s;
                                     }
                                 });
                         }
@@ -193,7 +194,10 @@
                             var x = ques1.insertRow(++j);
 
                             y1 = x.insertCell(0);
-                            y1.innerText=data[i][0];
+                            if(i==0)
+                                y.innerText="";
+                            else
+                                y1.innerText=data[i][0];
                             y2 = x.insertCell(1);
                             y2.innerText=data[i][1];
                             y3 = x.insertCell(2);
