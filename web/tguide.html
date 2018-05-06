@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function(){
+            $( "#header" ).load( "header.html" );
+            $( "#footer" ).load( "footer.html" );
+        });
+    </script>
+    <style>
+        .btnprt{
+            padding-left: 400px;
+            padding-right: 400px;
+        }
+        .pad{
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .bor{
+            width: 100%;
+            border: 1px solid #11e0fc;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</head>
+<title>Feedback System</title>
+<body>
+<div class="container">
+    <div id='header'></div>
+
+    <div class="divnavbar">
+        <nav class="navbar navbar-expand-xl">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <div class="font-color"><a class="nav-link dropdown" href="http://localhost:8080/Feedback_System_war_exploded/teacher.html">
+                        Home
+                    </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="row content">
+        &nbsp
+        <div class="container">
+            <div class="row content1">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 text-center" id="prt">
+                    <h4><label>Teacher Guide</label></h4>
+                    <hr class="border-primary">
+                    <br>
+
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>New User Registration</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Click on<b><i>New User?</i></b> in Home page.
+                                <br>
+                                2) Select your name from dropdown list (Note: If name not present in dropdown list then please contact admin)
+                                <br>
+                                3) Enter new password.
+                                <br>
+                                4) Submit. Now you can login into system
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Forget Password</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Click on<b><i>Forget Password</i></b> in Home page.
+                                <br>
+                                2) Select your name and click submit
+                                <br>
+                                3) Now your password reset request send to Admin
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Login</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Goto Home page.
+                                <br>
+                                2) Select your name
+                                <br>
+                                3) Enter your password
+                                <br>
+                                4) Login
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Dashboard</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) When your login is successful, then Dashboard page is displayed
+                                <br>
+                                2) Dashboard shows your name with last login information
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Update password</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Home</i></b>, select <b><i>Update password</i></b>.
+                                <br>
+                                2) Enter your old password
+                                <br>
+                                3) Enter new password and submit
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>View Subject Feedback</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Subject Feedback</i></b>
+                                <br>
+                                Note: In these report You can view one subject feedback or all subject feedback for subject you teach
+                                <br>
+                                Select question from dropdown to view report for particular question
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>View Lab Batch Feedback</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Lab Feedback</i></b>
+                                <br>
+                                Note: In these report You can view one lab batch feedback or all lab batch feedback for lab batch you teach.
+                                <br>
+                                Select question from dropdown to view report for particular question
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>View Question wise Feedback (All Subject)</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Question Feedback</i></b>, select <b><i>Subject Feedback</i></b>.
+                                <br>
+                                Note: In these report You can view Subject feedback for particular course In which subject you teach.
+                                <br>
+                                Select question from dropdown to view report for particular question
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>View Question wise Feedback (All Lab Batch)</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Question Feedback</i></b>, select <b><i>Lab Batch Feedback</i></b>.
+                                <br>
+                                Note: In these report You can view Lab batch feedback for particular course In which lab batch you teach.
+                                <br>
+                                Select question from dropdown to view report for particular question
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Notification</b></label>
+                        </div>
+                        <div class="text-left">
+                            <p class="pad">
+                                1) Double click on <b><i>Notification</i></b>
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="bor">
+                        <div class="text-center">
+                            <label><b>Thank you</b></label>
+                            <br>
+                            <label>We will add some new feature in upcoming update</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                </div>
+                <div class="btnprt">
+                    <br>
+                    <button type="submit" id="save" class="btn btn-block btn-danger" onclick="printDiv('prt')">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='footer'></div>
