@@ -24,6 +24,11 @@ function logout() {
 }
 function logout_stud() {
     sessionStorage.setItem("role","0");
+    sessionStorage.setItem("studid","0");
+    sessionStorage.setItem("roll","0");
+    sessionStorage.setItem("sclass","0");
+    sessionStorage.setItem("sdiv","0");
+    sessionStorage.setItem("sname","0");
     window.location="http://localhost:8080/Feedback_System_war_exploded/";
 }
 function logout_admin() {
